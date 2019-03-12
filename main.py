@@ -8,4 +8,5 @@ eyes = Picture(app, image="eyes1.gif")
 hejhopp = 4
 
 hej = 2
+da = 3
 app.display()
