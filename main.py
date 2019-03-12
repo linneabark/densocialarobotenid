@@ -4,6 +4,4 @@ app = App(title="Den sociala roboten", height=480, width=800)
 
 eyes = Picture(app, image="eyes1.gif")
 
-hej =5
-
 app.display()
