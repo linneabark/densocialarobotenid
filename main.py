@@ -4,4 +4,6 @@ app = App(title="Den sociala", height=480, width=800)
 
 eyes = Picture(app, image="eyes1.gif")
 
+hejhopp = 4
+
 app.display()
