@@ -11,7 +11,7 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.animation import Animation
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
-from WebTest import WebManager
+#from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 
 
@@ -25,8 +25,8 @@ class MainScreen(Screen):
 
 class SchemaScreen(Screen):
     def showSchema(self,*args):
-        wb = WebManager()
-        wb.findSchema()
+       # wb = WebManager()
+        #wb.findSchema()
         self.children[0].children[1].background_normal = 'test.png'
 
 
