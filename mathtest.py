@@ -1,25 +1,28 @@
 from sys import exit
 
+# Variables
+first_term = 0
+second_term = 0
 
-def main():
-    # Variables
-    first_term = 0
-    second_term = 0
-
-    # Input string
-    str = input("Enter string: ")
-
-    # Find terms
-    temp_term = find_numbers(str)
-    first_term = int(temp_term[1])
-    second_term = int(temp_term[2])
-
-    # Find operator
-    operator = find_operator(str)
+# Input string
+str_input = input("Enter string: ")
+print(str_input)
 
 
-def find_numbers(str):
-    input_str = str
+def subtraction(first_term, second_term):
+    return first_term - second_term
+
+
+def addition(first_term, second_term):
+    return first_term + second_term
+
+
+def multiplication(first_term, second_term):
+    return first_term * second_term
+
+
+def find_numbers(str_input):
+    input_str = str_input
     terms = []
     i = 0
     while i < len(input_str):
@@ -35,27 +38,22 @@ def find_numbers(str):
                 terms[1] = temporary[1]
                 terms[2] = temporary[2]
             else:
-                print("No digits in expression")
+                exit("No digits in expression")
     return terms
 
 
-def find_operator(str):
-    input_str = str
-    i = 0
-    while i < len(input_str):
-        if input_str[i].i
-        i = i + 1
-    operator = ""
-    return operator
+# Find terms
+temp_term = find_numbers(str_input)
+first_term = int(temp_term[1])
+second_term = int(temp_term[2])
 
-
-def subtraction(first_term, second_term):
-    return first_term - second_term
-
-
-def addition(first_term, second_term):
-    return first_term + second_term
-
-
-def multiplication(first_term, second_term):
-    return first_term * second_term
+# Find operator
+operator = str_input.lower()
+if operator.find("minus") != -1:
+    print(subtraction(first_term, second_term))
+elif operator.find("pluss") != -1:
+    print(addition(first_term, second_term))
+elif operator.find("multiplicerat") != -1:
+    print(multiplication(first_term, second_term))
+else:
+    exit("Dunno WHAT u want!")
