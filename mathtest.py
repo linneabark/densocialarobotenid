@@ -1,10 +1,6 @@
-from sys import exit
-
-# Variables
 first_term = 0
 second_term = 0
 
-# Input string
 str_input = input("Enter string: ")
 print(str_input)
 
@@ -22,32 +18,27 @@ def multiplication(first_term, second_term):
 
 
 def find_numbers(str_input):
-    input_str = str_input
-    terms = []
+    temporary = list()
     i = 0
-    while i < len(input_str):
-        temporary = []
-        if input_str[i].isdigit() and input_str[i + 1].isdigit():
-            temporary.append(input_str[i] + input_str[i + 2])
-        elif input_str[i].isdigit():
-            temporary.append(input_str[i])
-
+    while i < len(str_input):
+        if str_input[i].isdigit() and str_input[i+1].isdigit():
+            temporary.append(str_input[i] + str_input[i+1])
+        elif str_input[i].isdigit():
+            temporary.append(str_input[i])
         i = i + 1
-        if i == len(input_str) - 1:
-            if len(temporary) < 3:
-                terms[1] = temporary[1]
-                terms[2] = temporary[2]
-            else:
-                exit("No digits in expression")
-    return terms
+    print(temporary)
+    return temporary
 
 
-# Find terms
-temp_term = find_numbers(str_input)
-first_term = int(temp_term[1])
-second_term = int(temp_term[2])
+temp = list()
+temp.extend(find_numbers(str_input))
 
-# Find operator
+first_term = int(temp[0])
+second_term = int(temp[1])
+print(first_term)
+print(second_term)
+
+
 operator = str_input.lower()
 if operator.find("minus") != -1:
     print(subtraction(first_term, second_term))
@@ -56,4 +47,4 @@ elif operator.find("pluss") != -1:
 elif operator.find("multiplicerat") != -1:
     print(multiplication(first_term, second_term))
 else:
-    exit("Dunno WHAT u want!")
+    print("Dunno WHAT u want!")
