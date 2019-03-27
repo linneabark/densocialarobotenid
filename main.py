@@ -2,7 +2,6 @@
 
 import kivy
 from kivy.app import App
-import time
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty, ReferenceListProperty, \
@@ -13,7 +12,7 @@ from kivy.animation import Animation
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
 from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
-
+import time
 
 class MainScreen(Screen):
     def play(self):
@@ -23,27 +22,43 @@ class MainScreen(Screen):
     pass
 
 
-class SchemaScreen(Screen):
+class ScheduleScreen(Screen):
     def showSchema(self,*args):
-        wb = WebManager()
-        wb.findSchema()
+        #wb = WebManager()
+        #wb.findSchema()
         self.children[0].children[1].background_normal = 'test.png'
 
 
     pass
 
+class SleepScreen(Screen):
+    pass
+
 
 class Manager(ScreenManager):
+    t = time.time()
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
         self.transition = SlideTransition()
         self.transition.duration = 1
         self.transition.direction = 'up'
+        Clock.schedule_interval(self.callback, 2)
 
     def initialize(self):
         self.add_widget(MainScreen(name="main"))
-        self.add_widget(SchemaScreen(name="schema"))
+        self.add_widget(ScheduleScreen(name="schedule"))
+        self.add_widget(SleepScreen(name='sleep'))
+
+    def on_touch_down(self,touch):
+        self.current_screen.on_touch_down(touch)
+        self.t = time.time()
+
+    def callback(self,sec):
+        end = time.time()
+        if ((end - self.t) > 20):
+            self.current = 'sleep'
+            self.t = time.time()
 
 
 class guiApp(App):

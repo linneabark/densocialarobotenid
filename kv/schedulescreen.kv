@@ -1,0 +1,16 @@
+<ScheduleScreen>:
+    canvas:
+        Rectangle:
+            source: 'faceimages/mouth.png'
+    BoxLayout:
+        id:'layout'
+        Button:
+            id: "btn"
+            text: "Show Schema"
+            on_press: root.showSchema()
+            background_normal: 'faceimages/mouth.png'
+        Button:
+            text: "Back to main menu"
+            on_press:
+                app.root.transition = SlideTransition(direction = 'up')
+                root.manager.current =  "sleep"
