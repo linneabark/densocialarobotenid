@@ -1,40 +1,14 @@
 #:kivy 1.10.1
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:include kv/mainscreen.kv
+#:include kv/schedulescreen.kv
+#:include kv/sleepscreen.kv
 
 <Manager>:
     MainScreen:
-    SchemaScreen:
-
-<MainScreen>:
-    canvas:
-        Rectangle:
-            pos:self.pos
-            size:self.size
-            source: 'faceimages/eyes.png'
-    FloatLayout:
-        #size: 50, 50
-        Button:
-            size_hint: 0.1, 0.1
-            pos: root.center_x-50, 200
-            #on_press: root.play()
-            background_normal: 'schedule.jpg'
-            on_touch_move: root.manager.current = "schema"
+    ScheduleScreen:
+    SleepScreen:
 
 
-
-
-
-<SchemaScreen>:
-    canvas:
-        Rectangle:
-            source: 'faceimages/mouth.png'
-    BoxLayout:
-        id:'layout'
-        Button:
-            id: "btn"
-            text: "Show Schema"
-            on_press: root.showSchema()
-            background_normal: 'faceimages/mouth.png'
-        Button:
-            text: "Back to main menu"
-            on_press: root.manager.current =  "main"
 
