@@ -27,8 +27,6 @@ class ScheduleScreen(Screen):
         #wb = WebManager()
         #wb.findSchema()
         self.children[0].children[1].background_normal = 'test.png'
-
-
     pass
 
 class SleepScreen(Screen):
