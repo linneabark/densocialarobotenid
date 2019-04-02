@@ -2,6 +2,8 @@
 
 import kivy
 from kivy.app import App
+from kivy.config import Config
+from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.properties import NumericProperty, ReferenceListProperty, \
@@ -13,6 +15,13 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTr
 #from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
+
+#Config.set('kivy','log_level','debug')
+#Config.set('graphics', 'fullscreen', 'auto')
+Config.set('graphics', 'width', '2000')
+Config.set('graphics', 'height', '8000')
+Window.size=(586*1.3,325*1.3)
+Window.clearcolor = (1,1,1,1)
 
 class MainScreen(Screen):
     def play(self):
@@ -62,6 +71,8 @@ class Manager(ScreenManager):
 class guiApp(App):
     def build(self):
         return Manager()
+
+
 
 
 if __name__ == '__main__':

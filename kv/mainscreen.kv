@@ -1,9 +1,17 @@
 <MainScreen>:
-    canvas:
-        Rectangle:
-            pos:self.pos
-            size:self.size
-            source: 'faceimages/eyes.png'
+    FloatLayout:
+        Image:
+            allow_stretch: True
+            source: 'faceimages/face4.gif'
+            size: self.size
+            pos: (0,150)
+            keep_data: True
+            on_touch_down: source = 'test.png'
+        Image:
+            allow_stretch: True
+            source: 'faceimages/mouthgif.gif'
+            size: self.size
+            pos: (0,-280)
             on_touch_down: source = 'test.png'
     FloatLayout:
         #size: 50, 50
