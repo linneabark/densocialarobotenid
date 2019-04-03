@@ -1,18 +1,21 @@
 <MainScreen>:
     FloatLayout:
+
+        #Button:
+            #on_press: root.schema()
         Image:
             allow_stretch: True
             source: 'faceimages/eyesseveral.gif'
             size: self.size
             pos: (0,150)
             keep_data: True
-            on_touch_down: source = 'test.png'
+            #on_touch_down: root.schema()
         Image:
             allow_stretch: True
             source: 'faceimages/mouthgif.gif'
             size: self.size
             pos: (0,-280)
-            on_touch_down: source = 'test.png'
+                #on_touch_down: source = 'test.png'
     #FloatLayout:
         #size: 50, 50
        # Button:

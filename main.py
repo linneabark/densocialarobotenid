@@ -3,6 +3,9 @@
 import kivy
 from kivy.app import App
 from kivy.config import Config
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.image import Image
+
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -28,6 +31,14 @@ class MainScreen(Screen):
         anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
         anim.repeat = True
         anim.start(self.children[0].children[0])
+    pass
+
+    def schema(self):
+        ScheduleScreen.showSchema(self)
+    pass
+
+
+class ImageButton(ButtonBehavior, Image):
     pass
 
 
