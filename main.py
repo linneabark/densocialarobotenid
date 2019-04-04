@@ -55,6 +55,12 @@ class ScheduleScreen(Screen):
 class SleepScreen(Screen):
     pass
 
+class MathScreen(Screen):
+    pass
+
+class RPSScreen(Screen):
+    pass
+
 class Appview(Screen):
     #def showApps(self):
      #   self.children[0].background_normal = 'test.png'
@@ -75,6 +81,10 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreen(name="schedule"))
         self.add_widget(SleepScreen(name='sleep'))
         self.add_widget(Appview(name='appview'))
+        self.add_widget(MathScreen(name='math'))
+        self.add_widget(RPSScreen(name='rps'))
+
+
 
 
     def on_touch_down(self,touch):
