@@ -39,6 +39,9 @@ class MainScreen(Screen):
 
 
 class ImageButton(ButtonBehavior, Image):
+
+    def onTouch(self):
+        print("Hej")
     pass
 
 
