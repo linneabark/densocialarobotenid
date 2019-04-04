@@ -55,6 +55,10 @@ class ScheduleScreen(Screen):
 class SleepScreen(Screen):
     pass
 
+class Appview(Screen):
+    #def showApps(self):
+     #   self.children[0].background_normal = 'test.png'
+    pass
 
 class Manager(ScreenManager):
     t = time.time()
@@ -70,6 +74,8 @@ class Manager(ScreenManager):
         self.add_widget(MainScreen(name="main"))
         self.add_widget(ScheduleScreen(name="schedule"))
         self.add_widget(SleepScreen(name='sleep'))
+        self.add_widget(Appview(name='appview'))
+
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
