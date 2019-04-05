@@ -25,7 +25,7 @@ Builder.load_string("""
 <ScreenOne>:
     FloatLayout:
         Image:
-            source: "sten_sax.png"
+            source: "Ny_sten_sax.png"
         Button:
             text: "Spela sten, sax, påse!"
             size: 150,75
@@ -39,7 +39,7 @@ Builder.load_string("""
 <ScreenTwo>:
     FloatLayout:
         Image:
-            source: "Sten.PNG"
+            source: "ny_sten.PNG"
         Button:
             text: "Sten"
             size: 150,75
@@ -53,7 +53,7 @@ Builder.load_string("""
 <ScreenThree>:
     FloatLayout:
         Image:
-            source: "Sax.PNG"
+            source: "ny_sax.PNG"
         Button:
             text: "Sax"
             size: 150,75
@@ -67,7 +67,7 @@ Builder.load_string("""
 <ScreenFour>:
     FloatLayout:
         Image:
-            source: "Pase.PNG"
+            source: "ny_pase.PNG"
         Button:
             text: "Påse"
             size: 150,75
@@ -81,7 +81,7 @@ Builder.load_string("""
 <ScreenFive>:
     FloatLayout:
         Image:
-            source: "Pase.PNG"
+            source: "ny_pase.PNG"
         Button:
             text: "Spela igen"
             size: 150,75
@@ -95,7 +95,7 @@ Builder.load_string("""
 <ScreenSix>:
     FloatLayout:
         Image:
-            source: "Sten.PNG"
+            source: "ny_sten.PNG"
         Button:
             text: "Spela igen"
             size: 150,75
@@ -109,7 +109,7 @@ Builder.load_string("""
 <ScreenSeven>:
     FloatLayout:
         Image:
-            source: "Sax.PNG"
+            source: "ny_sax.PNG"
         Button:
             text: "Spela igen"
             size: 150,75
