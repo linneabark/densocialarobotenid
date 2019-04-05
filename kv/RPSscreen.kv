@@ -1,0 +1,10 @@
+<RPSScreen>
+    Image:
+        allow_stretch: True
+        source: 'sten_sax.png'
+        size: self.size
+        Button:
+            background_color: 0,0,0,0
+            on_touch_down:
+                app.root.transition = FadeTransition()
+                root.manager.current = "main"
