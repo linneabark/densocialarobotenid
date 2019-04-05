@@ -1,14 +1,14 @@
 <Appview>
-    BoxLayout:
+    GridLayout:
         spacing: 100
-
+        cols: 4
+        padding: 180,250
         Button:
-            center: self.parent.center
+            #center: self.parent.center
             font_size: 28
-            height: 28
-            size: 300, 300
             size_hint: None, None
-            center_x:
+            size: 300, 300
+            #pos_hint: {'center_x': 5.0, 'center_y': 5.0}
             background_normal: ''
             background_color: (224, 0, 224, 1)
             text: "Schema"
@@ -17,11 +17,11 @@
                 root.manager.current =  "schedule"
 
         Button:
-            center: self.parent.center
+            #center: self.parent.center
             font_size: 28
-            height: 28
-            size: 300, 300
             size_hint: None, None
+            size: 300, 300
+            #pos_hint: {'center_x': 10.0, 'center_y': 10.0}
             background_normal: ''
             background_color: (1.0, 0.0, 0.0, 1.0)
             text: "Räkna"
@@ -30,14 +30,22 @@
                 root.manager.current =  "math"
 
         Button:
-            center: self.parent.center
+            #center: self.parent.center
             font_size: 28
-            height: 28
-            size: 300, 300
             size_hint: None, None
-            background_normal: ''
-            background_color: (1, .3, .4, .85)
+            size: 300, 300
+            #pos: (10,100)
+            background_normal: 'sten_sax.png'
+            #background_color: (1, .3, .4, .85)
             text: "Sten, sax, påse"
             on_press:
                 app.root.transition = SlideTransition(direction = 'up')
                 root.manager.current =  "rps"
+
+        Button:
+            id: myButton
+            Image:
+                source: "./sten_sax.png"
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                on_touch_down: print("hej")
