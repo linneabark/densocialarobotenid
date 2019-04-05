@@ -55,13 +55,6 @@ class RPSScreen(Screen):
     pass
 
 class Appview(Screen):
-
-    def changeBackgroundColor(self):
-        print("Appview")
-        Window.clearcolor = (1, .3, .4, .85)
-
-    #def showApps(self):
-     #   self.children[0].background_normal = 'test.png'
     pass
 
 class Manager(ScreenManager):
