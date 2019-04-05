@@ -57,6 +57,9 @@ class RPSScreen(Screen):
 class Appview(Screen):
     pass
 
+class ScheduleSScreen(Screen):
+    pass
+
 class Manager(ScreenManager):
     t = time.time()
     def __init__(self, **kwargs):
@@ -74,6 +77,8 @@ class Manager(ScreenManager):
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
+        self.add_widget(ScheduleSScreen(name='schedule2'))
+
 
 
 
