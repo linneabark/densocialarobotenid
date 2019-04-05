@@ -7,23 +7,21 @@
     size_hint: 0.7, 0.8
 
 
-<FloatLayout>:
-    CustomButton:
-        text: "Nästa vecka"
-        pos_hint: {"right": 1, "top": 1}
-
-
-    CustomButton:
-        text: "Föregående vecka"
-        pos_hint: {"left": 0, "top": 1}
-
 <ScreenOne>:
     BoxLayout:
-        Label:
-        text: "Vecka 1"
+        Button:
+            text: "Go to week 2"
+            on_touch_move:
+                root.manager.transition.direction = "left"
+                root.manager.transition.duration = 1
+                root.manager.current = "screen_two"
+
+<ScreenTwo>:
     BoxLayout:
         Button:
-            text: "hejhej"
-            on_press:
-                root.manager.transition.direction = "left"
+            text: "Go to week 1"
+            on_touch_move:
+                root.manager.transition.direction = "right"
+                root.manager.transition.duration = 1
+                root.manager.current = "screen_one"
                 
