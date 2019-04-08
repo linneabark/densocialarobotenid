@@ -7,7 +7,7 @@
        #     size: self.size
         #    pos: self.pos
     Image:
-        source: 'title5.png'
+        source: 'Images/title5.png'
         pos: root.x, root.height/3
     GridLayout:
         spacing: 100
@@ -19,11 +19,11 @@
             size_hint: None, None
             size: 300, 300
             #pos: (10,100)
-            background_normal: 'schemaknapp.png'
+            background_normal: 'Images/schemaknapp.png'
             #background_color: (1, .3, .4, .85)
             on_press:
                 app.root.transition = SlideTransition(direction = 'up')
-                root.manager.current =  "schedule2"
+                root.manager.current =  "schedule"
 
         Button:
             #center: self.parent.center
@@ -31,7 +31,7 @@
             size_hint: None, None
             size: 300, 300
             #pos: (10,100)
-            background_normal: 'matteknapp.png'
+            background_normal: 'Images/matteknapp.png'
             #background_color: (1, .3, .4, .85)
             on_press:
                 app.root.transition = SlideTransition(direction = 'up')
@@ -43,7 +43,7 @@
             size_hint: None, None
             size: 300, 300
             #pos: (10,100)
-            background_normal: 'RPSps.png'
+            background_normal: 'Images/RPSknapp.png'
             #background_color: (1, .3, .4, .85)
             on_press:
                 app.root.transition = SlideTransition(direction = 'up')
