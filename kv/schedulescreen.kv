@@ -1,16 +1,10 @@
-<ScheduleScreen>:
-    canvas:
-        Rectangle:
-            source: 'faceimages/mouth.png'
-    BoxLayout:
-        id:'layout'
+<ScheduleScreen>
+    Image:
+        allow_stretch: True
+        source: 'schedule.jpg'
+        size: self.size
         Button:
-            id: "btn"
-            text: "Show Schema"
-            on_press: root.showSchema()
-            background_normal: 'faceimages/mouth.png'
-        Button:
-            text: "Back to main menu"
-            on_press:
-                app.root.transition = SlideTransition(direction = 'up')
-                root.manager.current =  "sleep"
+            background_color: 0,0,0,0
+            on_touch_down:
+                app.root.transition = SlideTransition(direction = 'left')
+                root.manager.current = "appview"

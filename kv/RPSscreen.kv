@@ -6,5 +6,5 @@
         Button:
             background_color: 0,0,0,0
             on_touch_down:
-                app.root.transition = FadeTransition()
-                root.manager.current = "main"
+                app.root.transition = SlideTransition(direction = 'down')
+                root.manager.current = "appview"
