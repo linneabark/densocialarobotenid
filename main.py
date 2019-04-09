@@ -24,26 +24,19 @@ import time
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size=(586*1.3,325*1.3)
-Window.clearcolor = (1,1,1,1)
+
 
 class MainScreen(Screen):
-    def play(self):
-        anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-        anim.repeat = True
-        anim.start(self.children[0].children[0])
-    pass
+    #def play(self):
+     #   anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
+      #  anim.repeat = True
+      #  anim.start(self.children[0].children[0])
+  #  pass
+    Window.clearcolor = (1, 1, 1, 1)
 
     def schema(self):
         ScheduleScreen.showSchema(self)
     pass
-
-
-class ImageButton(ButtonBehavior, Image):
-
-    def onTouch(self):
-        print("Hej")
-    pass
-
 
 class ScheduleScreen(Screen):
     def showSchema(self,*args):
@@ -62,8 +55,9 @@ class RPSScreen(Screen):
     pass
 
 class Appview(Screen):
-    #def showApps(self):
-     #   self.children[0].background_normal = 'test.png'
+    pass
+
+class ScheduleSScreen(Screen):
     pass
 
 class Manager(ScreenManager):
@@ -83,6 +77,7 @@ class Manager(ScreenManager):
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
+
 
 
 
