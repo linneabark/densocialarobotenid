@@ -77,6 +77,8 @@ class Manager(ScreenManager):
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
+        self.add_widget(ScheduleSScreen(name="sschedule"))
+
 
 
 
