@@ -1,10 +1,100 @@
-<RPSScreen>
-    Image:
-        allow_stretch: True
-        source: 'sten_sax.png'
-        size: self.size
+	#!/usr/bin/env python
+	#coding: utf-8
+	#: import choice random.choice
+<ScreenOne>
+	FloatLayout:
+		Image:
+			source: 'ny_sten_sax.png'
+			size: self.size
+			Button:
+				text: "Spela sten, sax, påse!"
+				size: 150,75
+				pos: 315,220
+				on_press:
+					root.manager.transition.direction = 'left'
+	                root.manager.transition.duration = 0.5
+	                root.manager.current = 'two'
+
+<ScreenTwo>
+    FloatLayout:
+        Image:
+            source: "ny_sten.PNG"
         Button:
-            background_color: 0,0,0,0
-            on_touch_down:
-                app.root.transition = SlideTransition(direction = 'down')
-                root.manager.current = "appview"
+            text: 'Sten'
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'three'
+
+<ScreenThree>
+    FloatLayout:
+        Image:
+            source: "ny_sax.PNG"
+        Button:
+            text: "Sax"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'four'
+
+<ScreenFour>
+    FloatLayout:
+        Image:
+            source: "ny_pase.PNG"
+        Button:
+            text: 'Påse'
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = choice(root.manager.screen_names[4:])
+
+<ScreenFive>
+    FloatLayout:
+        Image:
+            source: "Pase.PNG"
+        Button:
+            text: "Spela igen"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'one'
+
+<ScreenSix>
+    FloatLayout:
+        Image:
+            source: "Sten.PNG"
+        Button:
+            text: "Spela igen"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'one'
+
+<ScreenSeven>
+    FloatLayout:
+        Image:
+            source: "Sax.PNG"
+        Button:
+            text: "Spela igen"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'one'
