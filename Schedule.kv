@@ -3,30 +3,36 @@
     color: 0,0,0,1
     background_normal: ''
     background_color: 1, 0, 0, 1
-    size: 150,150
     text: "Previous week"
-    pos: 50,500
+    size: 150, 150
+    pos: 50, 500
+    #size_hint: (.4, .4)
+    #pos_hint: {'x': 0.5, 'y':0.5}
 
 <RightButton@Button>:
     font_size: 20
     color: 0,0,0,1
     background_normal: ''
     background_color: 1, 0, 0, 1
+    text: "Next week"
     size: 150, 150
     pos: 1400,500
-    text: "Next week"
+    #size_hint: (0.2, 0.2)
+    #pos_hint: {0, 0.5}
+
 
 <ScreenOne>:
     FloatLayout:
         Button:
             background_normal: "Images/schedule_pics/vecka1.jpeg"
             background_down: "Images/schedule_pics/vecka1.jpeg"
-
+            background_width: 800
             RightButton:
                 on_release:
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "screen_two"
+
 
 <ScreenTwo>:
     BoxLayout:
