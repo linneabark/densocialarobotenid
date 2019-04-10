@@ -1,28 +1,106 @@
-<CustomButton@Button>:
-    font_size: 32
+<LeftButton@Button>:
+    font_size: 20
     color: 0,0,0,1
-    size: 300,400
     background_normal: ''
-    background_color: 1, 1, 1, 1
-    size_hint: 0.7, 0.8
+    background_color: 1, 0, 0, 1
+    size: 150,150
+    text: "Previous week"
+    pos: 50,500
 
-
-<FloatLayout>:
-    CustomButton:
-        text: "Nästa vecka"
-        pos_hint: {"right": 1, "top": 1}
-
-
-    CustomButton:
-        text: "Föregående vecka"
-        pos_hint: {"left": 0, "top": 1}
+<RightButton@Button>:
+    font_size: 20
+    color: 0,0,0,1
+    background_normal: ''
+    background_color: 1, 0, 0, 1
+    size: 150, 150
+    pos: 1400,500
+    text: "Next week"
 
 <ScreenOne>:
-    BoxLayout:
-        Label:
-        text: "Vecka 1"
+    FloatLayout:
+        Button:
+            background_normal: "schedule_pics/vecka1.jpeg"
+            RightButton:
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_two"
+
+<ScreenTwo>:
     BoxLayout:
         Button:
-            text: "hejhej"
-            on_press:
-                root.manager.transition.direction = "left"
+            text: "Go to week 1"
+            on_touch_move:
+                root.manager.transition.direction = "right"
+                root.manager.transition.duration = 1
+                root.manager.current = "screen_one"
+            background_normal: "schedule_pics/vecka2.jpeg"
+            LeftButton:
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_one"
+
+            RightButton:
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_three"
+
+<ScreenThree>:
+    BoxLayout:
+        Button:
+            background_normal: "schedule_pics/vecka3.jpeg"
+            LeftButton:
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_two"
+
+            RightButton:
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_four"
+
+<ScreenFour>:
+    BoxLayout:
+        Button:
+            background_normal: "schedule_pics/vecka4.jpeg"
+            LeftButton:
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_three"
+
+            RightButton:
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_five"
+
+<ScreenFive>:
+    BoxLayout:
+        Button:
+            background_normal: "schedule_pics/vecka5.jpeg"
+            LeftButton:
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_four"
+
+            RightButton:
+                on_release:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_six"
+
+<ScreenSix>:
+    BoxLayout:
+        Button:
+            background_normal: "schedule_pics/vecka6.jpeg"
+            LeftButton:
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_five"
