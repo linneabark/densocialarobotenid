@@ -70,4 +70,5 @@ class RPSscreenApp(App):
     def build(self):
         return Manager()
 
-RPSscreenApp().run()
+if __name__ == "__main__":
+    RPSscreenApp().run()

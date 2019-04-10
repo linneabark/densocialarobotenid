@@ -18,6 +18,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTr
 #from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
+import subprocess
+import random
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -52,9 +54,47 @@ class MathScreen(Screen):
     pass
 
 class RPSScreen(Screen):
+    print('RPSScreen')
+
+class ScreenOne(Screen):
+    pass
+
+class ScreenTwo(Screen):
+    def on_enter(self, *args):
+        Clock.schedule_once(self.callbackfun, 0.7)
+
+    def callbackfun(self, dt):
+        self.manager.current = 'three'
+
+class ScreenThree(Screen):
+    def on_enter(self, *args):
+        Clock.schedule_once(self.callbackfun, 0.7)
+
+    def callbackfun(self, dt):
+        self.manager.current = 'four'
+
+class ScreenFour(Screen):
+    def on_enter(self, *args):
+        Clock.schedule_once(self.callbackfun, 0.7)
+
+    def callbackfun(self, dt):
+        list = ["five", "six", "seven"]
+        self.manager.current = random.choice(list)
+
+class ScreenFive(Screen):
+    pass
+
+class ScreenSix(Screen):
+    pass
+
+class ScreenSeven(Screen):
     pass
 
 class Appview(Screen):
+    def launchRPS(self):
+        print('Launch RPS')
+        #subprocess.Popen('python kv/RPS.py', shell=True)
+        #RPSscreenApp().run()
     pass
 
 class ScheduleSScreen(Screen):
@@ -77,9 +117,13 @@ class Manager(ScreenManager):
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
-
-
-
+        self.add_widget(ScreenOne(name='one'))
+        self.add_widget(ScreenTwo(name='two'))
+        self.add_widget(ScreenThree(name='three'))
+        self.add_widget(ScreenFour(name='four'))
+        self.add_widget(ScreenFive(name='five'))
+        self.add_widget(ScreenSix(name='six'))
+        self.add_widget(ScreenSeven(name='seven'))
 
 
     def on_touch_down(self,touch):
@@ -95,9 +139,8 @@ class Manager(ScreenManager):
 
 class guiApp(App):
     def build(self):
+        print('GuiApp')
         return Manager()
-
-
 
 
 if __name__ == '__main__':
