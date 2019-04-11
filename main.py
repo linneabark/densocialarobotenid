@@ -21,6 +21,7 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
+import schedule_app
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -29,7 +30,6 @@ import random
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size=(586*1.3,325*1.3)
-
 
 class MainScreen(Screen):
     #def play(self):
@@ -111,7 +111,7 @@ class Appview(Screen):
         #RPSscreenApp().run()
     pass
 
-class ScheduleSScreen(Screen):
+class ScreenThree(Screen):
     pass
 
 class Manager(ScreenManager):
@@ -138,6 +138,7 @@ class Manager(ScreenManager):
         self.add_widget(ScreenFive(name='five'))
         self.add_widget(ScreenSix(name='six'))
         self.add_widget(ScreenSeven(name='seven'))
+        self.add_widget(ScreenThree(name='s2'))
 
 
     def on_touch_down(self,touch):

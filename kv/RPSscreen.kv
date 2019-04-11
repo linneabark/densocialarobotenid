@@ -2,18 +2,18 @@
 	#coding: utf-8
 	#: import choice random.choice
 <ScreenOne>
-	FloatLayout:
-		Image:
-			source: 'Sten_sax_pase/sten_sax_pase.png'
-			size: self.size
-			Button:
-				text: "Spela!"
-				size: 150,75
-				pos: 315,220
-				on_press:
-					root.manager.transition.direction = 'left'
-	                root.manager.transition.duration = 0.5
-	                root.manager.current = 'two'
+    FloatLayout:
+        Image:
+            source: 'Sten_sax_pase/sten_sax_pase.png'
+            size: self.size
+            Button:
+                text: "Spela!"
+                size: 150,75
+                pos: 315,220
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.transition.duration = 0.5
+                    root.manager.current = 'two'
 
 <ScreenTwo>
     FloatLayout:
