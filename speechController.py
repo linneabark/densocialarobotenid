@@ -36,6 +36,10 @@ class SpeechController():
         mixer.music.play()
         print("hej")
 
+    def recognizedAudio(self,audio):
+        string = self.r.recognize_google(audio, language="sv-SV")
+        return string
+
     def tryListen(self,audio):
         try:
     # for testing purposes, we're just using the default API key
@@ -65,11 +69,11 @@ class SpeechController():
             
     def listenSpeech(self):
         with self.m as source:
-            print("Vad heter du?")
             #audio = r.record(source, duration = 5)
             audio = self.r.listen(source, phrase_time_limit=3)
             #self.r.snowboy_wait_for_hot_word()
-            self.tryListen(audio)
+            return audio
+            #self.tryListen(audio)
 
 
 
