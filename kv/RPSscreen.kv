@@ -1,0 +1,97 @@
+	#!/usr/bin/env python
+	#coding: utf-8
+	#: import choice random.choice
+<ScreenOne>
+	FloatLayout:
+		Image:
+			source: 'Sten_sax_pase/sten_sax_pase.png'
+			size: self.size
+			Button:
+				text: "Spela!"
+				size: 150,75
+				pos: 315,220
+				on_press:
+					root.manager.transition.direction = 'left'
+	                root.manager.transition.duration = 0.5
+	                root.manager.current = 'two'
+
+<ScreenTwo>
+    FloatLayout:
+        Image:
+            source: "Sten_sax_pase/Sten.png"
+
+<ScreenThree>
+    FloatLayout:
+        Image:
+            source: "Sten_sax_pase/Sax.png"
+
+
+<ScreenFour>
+    FloatLayout:
+        Image:
+            source: "Sten_sax_pase/Pase.png"
+
+
+<ScreenFive>
+    FloatLayout:
+        Image:
+            source: "Sten_sax_pase/Pase.png"
+        Button:
+            text: "Spela igen"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'two'
+            Button:
+                text: "Tillbaka"
+                size: 150, 75
+                size_hint: None, None
+                pos: 400, 50
+                on_press:
+                    root.manager.current = 'main'
+
+<ScreenSix>
+    FloatLayout:
+        Image:
+            source: "Sten_sax_pase/Sten.png"
+        Button:
+            text: "Spela igen"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'two'
+            Button:
+                text: "Tillbaka"
+                size: 150, 75
+                size_hint: None, None
+                pos: 400, 50
+                on_press:
+                    root.manager.current = 'main'
+
+
+<ScreenSeven>
+    FloatLayout:
+        Image:
+            source: "Sten_sax_pase/Sax.png"
+        Button:
+            text: "Spela igen"
+            size: 150,75
+            size_hint: None, None
+            pos: 315,220
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.transition.duration = 0.5
+                root.manager.current = 'two'
+        Button:
+            text: "Tillbaka"
+            size: 150, 75
+            size_hint: None, None
+            pos: 400, 50
+            on_press:
+                root.manager.current = 'main'
