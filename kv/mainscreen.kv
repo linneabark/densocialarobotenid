@@ -1,21 +1,23 @@
 <MainScreen>:
-    FloatLayout:
-
-        #Button:
-            #on_press: root.schema()
+    GridLayout:
+        cols: 1
+        rows: 3
+        row_force_default: True
+        row_default_height: 200
         Image:
             allow_stretch: True
             source: 'faceimages/eyesseveral.gif'
             size: self.size
-            pos: (0,150)
+            #pos: (0,150)
             keep_data: True
             #on_touch_down: root.onTouch()
         Image:
             allow_stretch: True
             source: 'faceimages/mouthgif.gif'
             size: self.size
-            pos: (0,-280)
+            #pos: (0,-280)
                 #on_touch_down: source = 'test.png'
+
 
         Button:
             background_color: 0,0,0,0

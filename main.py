@@ -5,7 +5,8 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
-
+from threading import Thread
+import threading
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -38,7 +39,18 @@ class MainScreen(Screen):
 
     def schema(self):
         ScheduleScreen.showSchema(self)
+        
+    def doSpeech(self):
+        sc = SpeechController()
+        sc.listenSpeech()
+
+    def listenToSpeech(self):
+        thread1 = Thread(target=self.doSpeech)
+        thread1.start()
+        print(threading.enumerate())
+        
     pass
+
 
 class ScheduleScreen(Screen):
     def showSchema(self,*args):
