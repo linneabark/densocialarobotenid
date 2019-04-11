@@ -24,6 +24,8 @@ import random
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
+#from speechController import SpeechController
+
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size=(586*1.3,325*1.3)
@@ -40,14 +42,14 @@ class MainScreen(Screen):
     def schema(self):
         ScheduleScreen.showSchema(self)
         
-    def doSpeech(self):
-        sc = SpeechController()
-        sc.listenSpeech()
+   # def doSpeech(self):
+    #    sc = SpeechController()
+     #   sc.listenSpeech()
 
-    def listenToSpeech(self):
-        thread1 = Thread(target=self.doSpeech)
-        thread1.start()
-        print(threading.enumerate())
+    #def listenToSpeech(self):
+     #   thread1 = Thread(target=self.doSpeech)
+      #  thread1.start()
+       # print(threading.enumerate())
         
     pass
 
