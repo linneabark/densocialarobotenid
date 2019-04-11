@@ -104,6 +104,24 @@ class ScreenSix(Screen):
 class ScreenSeven(Screen):
     pass
 
+class Screen1(Screen):
+    pass
+
+class Screen2(Screen):
+    pass
+
+class Screen3(Screen):
+    pass
+
+class Screen4(Screen):
+    pass
+
+class Screen5(Screen):
+    pass
+
+class Screen6(Screen):
+    pass
+
 class Appview(Screen):
     def launchRPS(self):
         print('Launch RPS')
@@ -138,7 +156,6 @@ class Manager(ScreenManager):
         self.add_widget(ScreenFive(name='five'))
         self.add_widget(ScreenSix(name='six'))
         self.add_widget(ScreenSeven(name='seven'))
-        self.add_widget(ScreenThree(name='s2'))
 
 
     def on_touch_down(self,touch):

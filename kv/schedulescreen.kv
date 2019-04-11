@@ -1,17 +1,17 @@
 <ScheduleScreen>
     Image:
         allow_stretch: True
-        source: 'schedule_pics/vecka1.jpeg'
+        source: 'Images/schedule_pics/vecka1.jpeg'
         size: self.size
-        #Button:
-        #    background_color: 0,0,0,0
-        #    on_touch_down:
-         #       app.root.transition = SlideTransition(direction = 'left')
-         #       root.manager.current = "appview"
-    Button:
-        background_normal: "schedule_pics/vecka1.jpeg"
-        RightButton:
-            on_release:
-                root.manager.transition.direction = "left"
-                root.manager.transition.duration = 1
-                root.manager.current = "s2"
+        Button:
+            background_color: 0,0,0,0
+            on_touch_down:
+                app.root.transition = SlideTransition(direction = 'left')
+                root.manager.current = "appview"
+    #Button:
+        #background_normal: "Images/schedulebuttons/schemaknapp4.png"
+       # RightButton:
+         #   on_release:
+          #      root.manager.transition.direction = "left"
+          #      root.manager.transition.duration = 1
+            #    root.manager.current = "appview"
