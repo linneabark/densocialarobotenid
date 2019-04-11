@@ -5,7 +5,8 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.image import Image
-
+from threading import Thread
+import threading
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -18,12 +19,12 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTr
 #from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
-
+from speechController import SpeechController
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
-Config.set('graphics', 'width', '2000')
-Config.set('graphics', 'height', '8000')
-Window.size=(586*1.3,325*1.3)
+#Config.set('graphics', 'width', '2000')
+#Config.set('graphics', 'height', '8000')
+#Window.size=(586*1.3,325*1.3)
 Window.clearcolor = (1,1,1,1)
 
 class MainScreen(Screen):
@@ -31,16 +32,24 @@ class MainScreen(Screen):
         anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
         anim.repeat = True
         anim.start(self.children[0].children[0])
-    pass
 
     def schema(self):
         ScheduleScreen.showSchema(self)
+        
+    def doSpeech(self):
+        sc = SpeechController()
+        sc.listenSpeech()
+
+    def listenToSpeech(self):
+        thread1 = Thread(target=self.doSpeech)
+        thread1.start()
+        print(threading.enumerate())
+        
     pass
 
 
 class ImageButton(ButtonBehavior, Image):
     pass
-
 
 class ScheduleScreen(Screen):
     def showSchema(self,*args):
