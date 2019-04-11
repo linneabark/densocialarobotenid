@@ -18,13 +18,13 @@ from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTr
 #from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
+import schedule_app
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size=(586*1.3,325*1.3)
-
 
 class MainScreen(Screen):
     #def play(self):
@@ -57,7 +57,7 @@ class RPSScreen(Screen):
 class Appview(Screen):
     pass
 
-class ScheduleSScreen(Screen):
+class ScreenThree(Screen):
     pass
 
 class Manager(ScreenManager):
@@ -77,11 +77,7 @@ class Manager(ScreenManager):
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
-        self.add_widget(ScheduleSScreen(name="sschedule"))
-
-
-
-
+        self.add_widget(ScreenThree(name='s2'))
 
 
     def on_touch_down(self,touch):
