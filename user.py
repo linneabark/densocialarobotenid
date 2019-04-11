@@ -5,8 +5,9 @@
 # Implementera och plocka ut namn och ålder som input till klassen
 class User():
 
-    def __init__(self, name, age):
+    def __init__(self, name, age, no_win):
         self.name = name
         self.age = age
+        self.no_win = no_win
 
         
