@@ -68,26 +68,28 @@ class MathScreen(Screen):
 class RPSScreen(Screen):
     print('RPSScreen')
 
+# Lägg till en skärm som räknar ner tills spelet startar
+
 class ScreenOne(Screen):
     pass
 
 class ScreenTwo(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.7)
+        Clock.schedule_once(self.callbackfun, 0.35)
 
     def callbackfun(self, dt):
-        self.manager.current = 'three'
+        self.manager.current = 'four'
 
 class ScreenThree(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.7)
+        Clock.schedule_once(self.callbackfun, 0.35)
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
 
 class ScreenFour(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.7)
+        Clock.schedule_once(self.callbackfun, 0.35)
 
     def callbackfun(self, dt):
         list = ["five", "six", "seven"]
