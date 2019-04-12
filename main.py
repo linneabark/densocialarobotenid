@@ -217,6 +217,9 @@ class guiApp(App):
     def build(self):
         print('GuiApp')
         return Manager()
+    def quit(self):
+        self.stop()
+
 
 
 if __name__ == '__main__':
