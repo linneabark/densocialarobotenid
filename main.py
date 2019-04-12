@@ -208,7 +208,7 @@ class Manager(ScreenManager):
 
     def callback(self, sec):
         end = time.time()
-        if ((end - self.t) > 20):
+        if ((end - self.t) > 1000):
             self.current = 'sleep'
             self.t = time.time()
 
