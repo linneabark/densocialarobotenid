@@ -1,15 +1,8 @@
-<ScheduleScreen>
+<ScheduleScreenThree>
     Image:
         allow_stretch: True
-        source: 'Images/schedule_pics/vecka1.jpeg'
+        source: 'Images/schedule_pics/vecka3.jpeg'
         size: self.size
-    #Button:
-        #background_normal: "Images/schedulebuttons/schemaknapp4.png"
-       # RightButton:
-         #   on_release:
-          #      root.manager.transition.direction = "left"
-          #      root.manager.transition.duration = 1
-            #    root.manager.current = "appview"
         #Button:
         #    background_color: 0,0,0,0
         #    on_touch_down:
@@ -32,5 +25,14 @@
             pos: (1400,350)
             on_press:
                 root.manager.transition.direction = "left"
+                root.manager.transition.duration = 1
+                root.manager.current = "s4"
+
+        Button:
+            background_normal: 'Images/leftarrowbutton.png'
+            background_down: 'Images/leftarrowbutton.png'
+            pos: (0,350)
+            on_press:
+                root.manager.transition.direction = "right"
                 root.manager.transition.duration = 1
                 root.manager.current = "s2"
