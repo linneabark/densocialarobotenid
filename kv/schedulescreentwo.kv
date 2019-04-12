@@ -1,7 +1,7 @@
-<ScheduleScreen>
+<ScheduleScreenTwo>
     Image:
         allow_stretch: True
-        source: 'schedule_pics/vecka1.jpeg'
+        source: 'schedule_pics/vecka2.jpeg'
         size: self.size
         #Button:
         #    background_color: 0,0,0,0
@@ -26,4 +26,13 @@
             on_press:
                 root.manager.transition.direction = "left"
                 root.manager.transition.duration = 1
-                root.manager.current = "s2"
+                root.manager.current = "s3"
+
+        Button:
+            background_normal: 'Images/leftarrowbutton.png'
+            background_down: 'Images/leftarrowbutton.png'
+            pos: (0,350)
+            on_press:
+                root.manager.transition.direction = "right"
+                root.manager.transition.duration = 1
+                root.manager.current = "schedule"

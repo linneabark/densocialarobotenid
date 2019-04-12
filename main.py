@@ -48,6 +48,22 @@ class ScheduleScreen(Screen):
 class SleepScreen(Screen):
     pass
 
+
+class ScheduleScreenTwo(Screen):
+    pass
+
+class ScheduleScreenThree(Screen):
+    pass
+
+class ScheduleScreenFour(Screen):
+    pass
+
+class ScheduleScreenFive(Screen):
+    pass
+
+class ScheduleScreenSix(Screen):
+    pass
+
 class MathScreen(Screen):
     pass
 
@@ -77,8 +93,11 @@ class Manager(ScreenManager):
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
-        self.add_widget(ScreenThree(name='s2'))
-
+        self.add_widget(ScheduleScreenTwo(name='s2'))
+        self.add_widget(ScheduleScreenThree(name='s3'))
+        self.add_widget(ScheduleScreenFour(name='s4'))
+        self.add_widget(ScheduleScreenFive(name='s5'))
+        self.add_widget(ScheduleScreenSix(name='s6'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
