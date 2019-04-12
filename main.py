@@ -96,16 +96,33 @@ class ScreenOne(Screen):
 
 
 class ScreenTwo(Screen):
+    def animate(self):
+        print('Animation')
+        if(self.children[0].children[0].pos == (80,10)):
+            self.children[0].children[0].pos = (0, 0)
+        anim = Animation(pos=(80, 10))
+        anim.repeat = True
+        anim.start(self.children[0].children[0])
+
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.35)
+        self.animate()
+        Clock.schedule_once(self.callbackfun, 5)
+
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
 
 
+    # def play(self):
+    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
+    #  anim.repeat = True
+    #  anim.start(self.children[0].children[0])
+    #  pass
+
+
 class ScreenThree(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.35)
+        Clock.schedule_once(self.callbackfun, 1)
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
@@ -113,7 +130,7 @@ class ScreenThree(Screen):
 
 class ScreenFour(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.35)
+        Clock.schedule_once(self.callbackfun, 1)
 
     def callbackfun(self, dt):
         list = ["five", "six", "seven"]
