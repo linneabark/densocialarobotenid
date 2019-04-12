@@ -139,6 +139,15 @@ class Appview(Screen):
 
     pass
 
+class Calculator(Screen):
+
+    def calculate(self, calculation):
+        if calculation:
+            try:
+                self.display.text = str(eval(calculation))
+            except Exception:
+                self.display.text = "Error"
+    pass
 
 class ScheduleSScreen(Screen):
     pass
@@ -174,7 +183,7 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenFour(name='s4'))
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
-
+        self.add_widget(Calculator(name='calculator'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)

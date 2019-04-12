@@ -8,3 +8,153 @@
             on_touch_down:
                 app.root.transition = SlideTransition(direction = 'right')
                 root.manager.current = "appview"
+
+<Calculator>
+    id: calculator
+    display: entry
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Image:
+        source: "guimathbg.jpg"
+        keep_ratio: False
+        allow_stretch: True
+
+    FloatLayout:
+
+        TextInput:
+            id: entry
+            font_size: 15
+            multiline: False
+            pos: 180, 200
+            size_hint: 0.4, 0.2
+
+
+        Button:
+            text: "Tillbaka"
+            size_hint: 0.1, 0.1
+            pos: 500, 50
+            on_press:
+                root.manager.current = 'main'
+
+
+
+        Button:
+            text: "+"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 300, 350
+
+        Button:
+            text: "-"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 200, 300
+
+        Button:
+            text: "*"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 300, 300
+
+        Button:
+            text: "/"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 400, 300
+
+
+
+
+        Button:
+            text: "Rensa"
+            on_press: entry.text = ""
+            size_hint: 0.1, 0.1
+            pos: 90, 200
+
+        Button:
+            text: "="
+            on_press: root.calculate(entry.text)
+            size_hint: 0.1, 0.1
+            pos: 500, 200
+
+
+
+
+        Button:
+            text: "0"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 300, 0
+
+
+
+
+
+        Button:
+            text: "1"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 200, 50
+
+        Button:
+            text: "2"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 300, 50
+
+
+        Button:
+            text: "3"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 400, 50
+
+
+
+
+
+
+        Button:
+            text: "4"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 200, 100
+
+        Button:
+            text: "5"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 300, 100
+
+        Button:
+            text: "6"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 400, 100
+
+
+
+
+
+
+        Button:
+            text: "7"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 200, 150
+
+        Button:
+            text: "8"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 300, 150
+
+        Button:
+            text: "9"
+            on_press: entry.text += self.text
+            size_hint: 0.1, 0.1
+            pos: 400, 150
+
+
