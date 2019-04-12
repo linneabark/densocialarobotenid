@@ -10,6 +10,10 @@ class SpeechController():
         self.r = sr.Recognizer()
         self.m = sr.Microphone()
 
+    def stringSplitter(self, string):
+        stringArray = string.split()
+        return stringArray
+
     def playVoice(string):
         switcher = {
             1: "",
@@ -37,8 +41,17 @@ class SpeechController():
         print("hej")
 
     def recognizedAudio(self,audio):
-        string = self.r.recognize_google(audio, language="sv-SV")
-        return string
+        try:
+            string = self.r.recognize_google(audio, language="sv-SV")
+            return string
+        except sr.UnknownValueError:
+            print("Please try again")
+            self.mp3Exception()
+        except sr.RequestError as e:
+            print("no internet")
+            self.internetException()
+        except OSError as e:
+            print("oserror")
 
     def tryListen(self,audio):
         try:

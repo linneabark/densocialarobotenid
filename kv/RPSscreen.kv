@@ -12,7 +12,7 @@
 				pos: 315,200
 				on_press:
 					root.manager.transition.direction = 'left'
-	                root.manager.transition.duration = 0.5
+	                root.manager.transition.duration = 0.4
 	                root.manager.current = 'two'
 	        Button:
 	            text: "Tillbaka"
@@ -29,13 +29,13 @@
 <ScreenThree>
     FloatLayout:
         Image:
-            source: "Images/Sten_sax_pase/Sax.png"
+            source: "Images/Sten_sax_pase/Sten.png"
 
 
 <ScreenFour>
     FloatLayout:
         Image:
-            source: "Images/Sten_sax_pase/Pase.png"
+            source: "Images/Sten_sax_pase/Sten.png"
 
 
 <ScreenFive>
@@ -49,13 +49,13 @@
             pos: 315,220
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
+                root.manager.transition.duration = 0.4
                 root.manager.current = 'two'
             Button:
                 text: "Tillbaka"
                 size: 150, 75
                 size_hint: None, None
-                pos: 100, 500
+                pos: 0, 350
                 on_press:
                     root.manager.current = 'main'
 
@@ -70,13 +70,13 @@
             pos: 315,220
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
+                root.manager.transition.duration = 0.4
                 root.manager.current = 'two'
             Button:
                 text: "Tillbaka"
                 size: 150, 75
                 size_hint: None, None
-                pos: 400, 50
+                pos: 0, 350
                 on_press:
                     root.manager.current = 'main'
 
@@ -92,7 +92,7 @@
             pos: 315,220
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
+                root.manager.transition.duration = 0.4
                 root.manager.current = 'two'
         Button:
             text: "Tillbaka"
