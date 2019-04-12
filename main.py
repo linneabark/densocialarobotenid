@@ -127,6 +127,7 @@ class Appview(Screen):
     pass
 
 class Calculator(Screen):
+
     def calculate(self, calculation):
         if calculation:
             try:

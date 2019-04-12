@@ -10,6 +10,8 @@
                 root.manager.current = "appview"
 
 <Calculator>
+    id: calculator
+    display: entry
     canvas.before:
         Rectangle:
             pos: self.pos
@@ -66,14 +68,14 @@
 
 
         Button:
-            text: "AC"
+            text: "Rensa"
             on_press: entry.text = ""
             size_hint: 0.1, 0.1
             pos: 90, 200
 
         Button:
             text: "="
-            on_press: entry.text += self.text
+            on_press: root.calculate(entry.text)
             size_hint: 0.1, 0.1
             pos: 500, 200
 
