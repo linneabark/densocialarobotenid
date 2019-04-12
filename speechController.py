@@ -4,6 +4,8 @@ from gtts import gTTS
 from pygame import mixer
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
+import random
+
 
 class SpeechController():
     def __init__(self):
@@ -90,11 +92,25 @@ class SpeechController():
 
 
 
-
-
-
-
-
+    def start_RPSvoice(self):
+        while True:
+            mixer.init()
+            mixer.music.load("ready.mp3")                           # Skapa fil som säger "Är du redo?"
+            mixer.music.play()
+            are_you_ready_answer = self.listenSpeech()
+            if(self.recognizedAudio(are_you_ready_answer) == "ja"):
+                c = random.randint(1, 3)
+                print("char:", c)                                   # Skicka c till fysisk design för sten/sax/påse
+                # Eventuell delay/klartecken från fysisk design
+                mixer.init()
+                mixer.music.load("play_again.mp3")                  # Röstklipp "Vill du spela igen?
+                mixer.music.play()
+                play_again_answer = self.listenSpeech()
+                if (self.recognizedAudio(play_again_answer) == "nej"):
+                    mixer.init()
+                    mixer.music.load("play_another_time.mp3")       # Röstklipp "Okej, vi kan spela mer en annan gång"
+                    mixer.music.play()
+                    break
 
 
 
