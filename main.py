@@ -21,7 +21,10 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
+import schedule_app
 
+#Config.set('kivy','log_level','debug')
+#Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
 #from speechController import SpeechController
@@ -29,7 +32,6 @@ import random
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size = (586 * 1.3, 325 * 1.3)
-
 
 class MainScreen(Screen):
     # def play(self):
@@ -42,16 +44,14 @@ class MainScreen(Screen):
     def schema(self):
         ScheduleScreen.showSchema(self)
 
-    def doSpeech(self):
-        #sc = SpeechController()
-        #sc.listenSpeech()
-        pass
+   # def doSpeech(self):
+    #    sc = SpeechController()
+     #   sc.listenSpeech()
 
-    def listenToSpeech(self):
-        thread1 = Thread(target=self.doSpeech)
-        thread1.start()
-        print(threading.enumerate())
-
+    #def listenToSpeech(self):
+     #   thread1 = Thread(target=self.doSpeech)
+      #  thread1.start()
+       # print(threading.enumerate())
     pass
 
 
@@ -67,6 +67,20 @@ class ScheduleScreen(Screen):
 class SleepScreen(Screen):
     pass
 
+class ScheduleScreenTwo(Screen):
+    pass
+
+class ScheduleScreenThree(Screen):
+    pass
+
+class ScheduleScreenFour(Screen):
+    pass
+
+class ScheduleScreenFive(Screen):
+    pass
+
+class ScheduleScreenSix(Screen):
+    pass
 
 class MathScreen(Screen):
     pass
@@ -117,7 +131,6 @@ class ScreenSix(Screen):
 class ScreenSeven(Screen):
     pass
 
-
 class Appview(Screen):
     def launchRPS(self):
         print('Launch RPS')
@@ -165,6 +178,11 @@ class Manager(ScreenManager):
         self.add_widget(ScreenFive(name='five'))
         self.add_widget(ScreenSix(name='six'))
         self.add_widget(ScreenSeven(name='seven'))
+        self.add_widget(ScheduleScreenTwo(name='s2'))
+        self.add_widget(ScheduleScreenThree(name='s3'))
+        self.add_widget(ScheduleScreenFour(name='s4'))
+        self.add_widget(ScheduleScreenFive(name='s5'))
+        self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
 
     def on_touch_down(self,touch):
