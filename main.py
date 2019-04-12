@@ -16,62 +16,70 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.animation import Animation
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
-#from WebTest import WebManager
+# from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
 
-#Config.set('kivy','log_level','debug')
-#Config.set('graphics', 'fullscreen', 'auto')
+# Config.set('kivy','log_level','debug')
+# Config.set('graphics', 'fullscreen', 'auto')
+#from speechController import SpeechController
+
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
-Window.size=(586*1.3,325*1.3)
+Window.size = (586 * 1.3, 325 * 1.3)
 
 
 class MainScreen(Screen):
-    #def play(self):
-     #   anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-      #  anim.repeat = True
-      #  anim.start(self.children[0].children[0])
-  #  pass
+    # def play(self):
+    #   anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
+    #  anim.repeat = True
+    #  anim.start(self.children[0].children[0])
+    #  pass
     Window.clearcolor = (1, 1, 1, 1)
 
     def schema(self):
         ScheduleScreen.showSchema(self)
-        
+
     def doSpeech(self):
-        sc = SpeechController()
-        sc.listenSpeech()
+        #sc = SpeechController()
+        #sc.listenSpeech()
+        pass
 
     def listenToSpeech(self):
         thread1 = Thread(target=self.doSpeech)
         thread1.start()
         print(threading.enumerate())
-        
+
     pass
 
 
 class ScheduleScreen(Screen):
-    def showSchema(self,*args):
-        #wb = WebManager()
-        #wb.findSchema()
+    def showSchema(self, *args):
+        # wb = WebManager()
+        # wb.findSchema()
         self.children[0].children[1].background_normal = 'test.png'
+
     pass
+
 
 class SleepScreen(Screen):
     pass
 
+
 class MathScreen(Screen):
     pass
 
+
 class RPSScreen(Screen):
-    print('RPSScreen')
+    pass
 
 # Lägg till en skärm som räknar ner tills spelet startar
 
 class ScreenOne(Screen):
     pass
+
 
 class ScreenTwo(Screen):
     def on_enter(self, *args):
@@ -80,12 +88,14 @@ class ScreenTwo(Screen):
     def callbackfun(self, dt):
         self.manager.current = 'four'
 
+
 class ScreenThree(Screen):
     def on_enter(self, *args):
         Clock.schedule_once(self.callbackfun, 0.35)
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
+
 
 class ScreenFour(Screen):
     def on_enter(self, *args):
@@ -95,27 +105,35 @@ class ScreenFour(Screen):
         list = ["five", "six", "seven"]
         self.manager.current = random.choice(list)
 
+
 class ScreenFive(Screen):
     pass
+
 
 class ScreenSix(Screen):
     pass
 
+
 class ScreenSeven(Screen):
     pass
+
 
 class Appview(Screen):
     def launchRPS(self):
         print('Launch RPS')
-        #subprocess.Popen('python kv/RPS.py', shell=True)
-        #RPSscreenApp().run()
+        # subprocess.Popen('python kv/RPS.py', shell=True)
+        # RPSscreenApp().run()
+
     pass
+
 
 class ScheduleSScreen(Screen):
     pass
 
+
 class Manager(ScreenManager):
     t = time.time()
+
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
@@ -139,12 +157,11 @@ class Manager(ScreenManager):
         self.add_widget(ScreenSix(name='six'))
         self.add_widget(ScreenSeven(name='seven'))
 
-
-    def on_touch_down(self,touch):
+    def on_touch_down(self, touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
-    def callback(self,sec):
+    def callback(self, sec):
         end = time.time()
         if ((end - self.t) > 20):
             self.current = 'sleep'
