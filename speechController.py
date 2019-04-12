@@ -94,6 +94,8 @@ class SpeechController():
 
     def start_RPSvoice(self):
         while True:
+            tts = gTTS(text='Är du redo?', lang='sv')               # Ta bort efter första inspelning
+            tts.save("ready.mp3")
             mixer.init()
             mixer.music.load("ready.mp3")                           # Skapa fil som säger "Är du redo?"
             mixer.music.play()
@@ -102,13 +104,17 @@ class SpeechController():
                 c = random.randint(1, 3)
                 print("char:", c)                                   # Skicka c till fysisk design för sten/sax/påse
                 # Eventuell delay/klartecken från fysisk design
+                tts2 = gTTS(text='Vill du spela igen?', lang='sv')  # Ta bort efter första inspelning
+                tts2.save("playAgain.mp3")
                 mixer.init()
-                mixer.music.load("play_again.mp3")                  # Röstklipp "Vill du spela igen?
+                mixer.music.load("playAgain.mp3")                   # Röstklipp "Vill du spela igen?
                 mixer.music.play()
                 play_again_answer = self.listenSpeech()
                 if (self.recognizedAudio(play_again_answer) == "nej"):
+                    tts = gTTS(text='Okej, vi kan spela mer en annan gång', lang='sv') # Ta bort efter första inspelning
+                    tts.save("playAnotherTime.mp3")
                     mixer.init()
-                    mixer.music.load("play_another_time.mp3")       # Röstklipp "Okej, vi kan spela mer en annan gång"
+                    mixer.music.load("playAnotheTime.mp3")       # Röstklipp "Okej, vi kan spela mer en annan gång"
                     mixer.music.play()
                     break
 
