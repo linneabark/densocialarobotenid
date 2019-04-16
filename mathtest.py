@@ -10,6 +10,9 @@ def addition(first_term, second_term):
 def multiplication(first_term, second_term):
     return first_term * second_term
 
+def division(first_term, second_term):
+    return first_term / second_term
+
 
 def find_numbers(str_input):
     temporary = list()
@@ -49,9 +52,10 @@ def start_mathtest():
         operator_count = 0
         operator_input = str_input.lower()
         operators = {
-            'PLUS': ["pluss", "addera", "lägg til"],
+            'PLUS': ["plus", "addera", "lägg till"],
             'MINUS': ["minus"],
-            'MULTIPLICATION': ["multiplicerat"]
+            'MULTIPLICATION': ["multiplicerat"],
+            'DIVISION' : ["delat med", "delat på", "dividerat med", "dividerat på"]
         }
 
         actual_operator = None
@@ -76,6 +80,8 @@ def start_mathtest():
             print(addition(first_term, second_term))
         elif actual_operator == 'MULTIPLICATION':
             print(multiplication(first_term, second_term))
+        elif actual_operator == 'DIVISION':
+            print(division(first_term, second_term))
         else:
             print("Dunno WHAT u want!")
 

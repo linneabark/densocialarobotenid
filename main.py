@@ -23,6 +23,8 @@ import subprocess
 import random
 from kivy.properties import StringProperty
 
+#Config.set('kivy','log_level','debug')
+#Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
 #from speechController import SpeechController
@@ -30,7 +32,6 @@ from kivy.properties import StringProperty
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size = (586 * 1.3, 325 * 1.3)
-
 
 class MainScreen(Screen):
     # def play(self):
@@ -48,16 +49,14 @@ class MainScreen(Screen):
     def schema(self):
         ScheduleScreen.showSchema(self)
 
-    def doSpeech(self):
-        #sc = SpeechController()
-        #sc.listenSpeech()
-        pass
+   # def doSpeech(self):
+    #    sc = SpeechController()
+     #   sc.listenSpeech()
 
-    def listenToSpeech(self):
-        thread1 = Thread(target=self.doSpeech)
-        thread1.start()
-        print(threading.enumerate())
-
+    #def listenToSpeech(self):
+     #   thread1 = Thread(target=self.doSpeech)
+      #  thread1.start()
+       # print(threading.enumerate())
     pass
 
 
@@ -73,6 +72,20 @@ class ScheduleScreen(Screen):
 class SleepScreen(Screen):
     pass
 
+class ScheduleScreenTwo(Screen):
+    pass
+
+class ScheduleScreenThree(Screen):
+    pass
+
+class ScheduleScreenFour(Screen):
+    pass
+
+class ScheduleScreenFive(Screen):
+    pass
+
+class ScheduleScreenSix(Screen):
+    pass
 
 class MathScreen(Screen):
     pass
@@ -81,21 +94,40 @@ class MathScreen(Screen):
 class RPSScreen(Screen):
     pass
 
+# Lägg till en skärm som räknar ner tills spelet startar
+
 class ScreenOne(Screen):
     pass
 
 
 class ScreenTwo(Screen):
+    def animate(self):
+        print('Animation')
+        if(self.children[0].children[0].pos == (80,10)):
+            self.children[0].children[0].pos = (0, 0)
+        anim = Animation(pos=(80, 10))
+        anim.repeat = True
+        anim.start(self.children[0].children[0])
+
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.7)
+        self.animate()
+        Clock.schedule_once(self.callbackfun, 5)
+
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
 
 
+    # def play(self):
+    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
+    #  anim.repeat = True
+    #  anim.start(self.children[0].children[0])
+    #  pass
+
+
 class ScreenThree(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.7)
+        Clock.schedule_once(self.callbackfun, 1)
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
@@ -103,7 +135,7 @@ class ScreenThree(Screen):
 
 class ScreenFour(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.7)
+        Clock.schedule_once(self.callbackfun, 1)
 
     def callbackfun(self, dt):
         list = ["five", "six", "seven"]
@@ -121,7 +153,6 @@ class ScreenSix(Screen):
 class ScreenSeven(Screen):
     pass
 
-
 class Appview(Screen):
     def launchRPS(self):
         print('Launch RPS')
@@ -130,6 +161,15 @@ class Appview(Screen):
 
     pass
 
+class Calculator(Screen):
+
+    def calculate(self, calculation):
+        if calculation:
+            try:
+                self.display.text = str(eval(calculation))
+            except Exception:
+                self.display.text = "Error"
+    pass
 
 class ScheduleSScreen(Screen):
     pass
@@ -160,14 +200,20 @@ class Manager(ScreenManager):
         self.add_widget(ScreenFive(name='five'))
         self.add_widget(ScreenSix(name='six'))
         self.add_widget(ScreenSeven(name='seven'))
+        self.add_widget(ScheduleScreenTwo(name='s2'))
+        self.add_widget(ScheduleScreenThree(name='s3'))
+        self.add_widget(ScheduleScreenFour(name='s4'))
+        self.add_widget(ScheduleScreenFive(name='s5'))
+        self.add_widget(ScheduleScreenSix(name='s6'))
+        self.add_widget(Calculator(name='calculator'))
 
-    def on_touch_down(self, touch):
+    def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
     def callback(self, sec):
         end = time.time()
-        if ((end - self.t) > 20):
+        if ((end - self.t) > 1000):
             self.current = 'sleep'
             self.t = time.time()
 
@@ -176,6 +222,9 @@ class guiApp(App):
     def build(self):
         print('GuiApp')
         return Manager()
+    def quit(self):
+        self.stop()
+
 
 
 if __name__ == '__main__':

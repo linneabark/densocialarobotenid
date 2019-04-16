@@ -2,40 +2,42 @@
 	#coding: utf-8
 	#: import choice random.choice
 <ScreenOne>
-	FloatLayout:
-		Image:
-			source: 'Images/Sten_sax_pase/sten_sax_pase.png'
-			size: self.size
-			Button:
-				text: "Spela!"
-				size: 150,75
-				pos: 315,200
-				on_press:
-					root.manager.transition.direction = 'left'
-	                root.manager.transition.duration = 0.5
-	                root.manager.current = 'two'
-	        Button:
-	            text: "Tillbaka"
-	            size: 150, 75
-	            pos: 0, 350
-	            on_press:
-	                root.manager.current = 'main'
+    FloatLayout:
+        Image:
+            source: 'Images/Sten_sax_pase/sten_sax_pase.png'
+            size: self.size
+            Button:
+                text: "Spela!"
+                size: 150,75
+                pos: 315,220
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.transition.duration = 0.5
+                    root.manager.current = 'two'
+            Button:
+                text: "Tillbaka"
+                size: 150, 75
+                size_hint: None, None
+                pos: 0, 350
+                on_press:
+                    root.manager.current = 'appview'
 
 <ScreenTwo>
     FloatLayout:
         Image:
             source: "Images/Sten_sax_pase/Sten.png"
+            #anim_available: True
 
 <ScreenThree>
     FloatLayout:
         Image:
-            source: "Images/Sten_sax_pase/Sax.png"
+            source: "Images/Sten_sax_pase/Sten.png"
 
 
 <ScreenFour>
     FloatLayout:
         Image:
-            source: "Images/Sten_sax_pase/Pase.png"
+            source: "Images/Sten_sax_pase/Sten.png"
 
 
 <ScreenFive>
@@ -49,15 +51,15 @@
             pos: 315,220
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
+                root.manager.transition.duration = 0.4
                 root.manager.current = 'two'
             Button:
                 text: "Tillbaka"
                 size: 150, 75
                 size_hint: None, None
-                pos: 100, 500
+                pos: 0, 350
                 on_press:
-                    root.manager.current = 'main'
+                    root.manager.current = 'appview'
 
 <ScreenSix>
     FloatLayout:
@@ -70,15 +72,15 @@
             pos: 315,220
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
+                root.manager.transition.duration = 0.4
                 root.manager.current = 'two'
             Button:
                 text: "Tillbaka"
                 size: 150, 75
                 size_hint: None, None
-                pos: 400, 50
+                pos: 0, 350
                 on_press:
-                    root.manager.current = 'main'
+                    root.manager.current = 'appview'
 
 
 <ScreenSeven>
@@ -92,7 +94,7 @@
             pos: 315,220
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
+                root.manager.transition.duration = 0.4
                 root.manager.current = 'two'
         Button:
             text: "Tillbaka"
@@ -100,4 +102,4 @@
             size_hint: None, None
             pos: 0, 350
             on_press:
-                root.manager.current = 'main'
+                root.manager.current = 'appview'
