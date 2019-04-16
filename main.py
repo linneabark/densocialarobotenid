@@ -21,6 +21,7 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
+from kivy.properties import StringProperty
 
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
@@ -38,6 +39,11 @@ class MainScreen(Screen):
     #  anim.start(self.children[0].children[0])
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
+    if 1==1:
+        img_src = StringProperty('faceimages/mouthgif.gif')
+    else:
+        img_src = StringProperty('faceimages/mouth.png')
+
 
     def schema(self):
         ScheduleScreen.showSchema(self)
