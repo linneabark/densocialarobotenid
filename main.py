@@ -40,10 +40,12 @@ class MainScreen(Screen):
     #  anim.start(self.children[0].children[0])
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
+
+
     if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
-        img_src = StringProperty('faceimages/mouthgif.gif')
+        img_src = StringProperty('Images/Face/speaking.gif')
     else:
-        img_src = StringProperty('faceimages/mouth.png')
+        img_src = StringProperty('Images/Face/mouthClosed.png')
 
 
     def schema(self):
