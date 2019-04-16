@@ -4,7 +4,7 @@
 <ScreenOne>
     FloatLayout:
         Image:
-            source: 'Sten_sax_pase/sten_sax_pase.png'
+            source: 'Images/Sten_sax_pase/sten_sax_pase.png'
             size: self.size
             Button:
                 text: "Spela!"
@@ -14,11 +14,19 @@
                     root.manager.transition.direction = 'left'
                     root.manager.transition.duration = 0.5
                     root.manager.current = 'two'
+            Button:
+                text: "Tillbaka"
+                size: 150, 75
+                size_hint: None, None
+                pos: 0, 350
+                on_press:
+                    root.manager.current = 'appview'
 
 <ScreenTwo>
     FloatLayout:
         Image:
             source: "Images/Sten_sax_pase/Sten.png"
+            #anim_available: True
 
 <ScreenThree>
     FloatLayout:
@@ -51,7 +59,7 @@
                 size_hint: None, None
                 pos: 0, 350
                 on_press:
-                    root.manager.current = 'main'
+                    root.manager.current = 'appview'
 
 <ScreenSix>
     FloatLayout:
@@ -72,7 +80,7 @@
                 size_hint: None, None
                 pos: 0, 350
                 on_press:
-                    root.manager.current = 'main'
+                    root.manager.current = 'appview'
 
 
 <ScreenSeven>
@@ -94,4 +102,4 @@
             size_hint: None, None
             pos: 0, 350
             on_press:
-                root.manager.current = 'main'
+                root.manager.current = 'appview'
