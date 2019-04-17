@@ -23,6 +23,8 @@ import subprocess
 import random
 import schedule_app
 from pygame import mixer
+from kivy.properties import StringProperty
+
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -42,6 +44,13 @@ class MainScreen(Screen):
     #  anim.start(self.children[0].children[0])
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
+
+
+    if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
+        img_src = StringProperty('Images/Face/speaking.gif')
+    else:
+        img_src = StringProperty('Images/Face/mouthClosed.png')
+
 
     def schema(self):
         ScheduleScreen.showSchema(self)
@@ -89,16 +98,33 @@ class ScreenOne(Screen):
 
 
 class ScreenTwo(Screen):
+    def animate(self):
+        print('Animation')
+        if(self.children[0].children[0].pos == (80,10)):
+            self.children[0].children[0].pos = (0, 0)
+        anim = Animation(pos=(80, 10))
+        anim.repeat = True
+        anim.start(self.children[0].children[0])
+
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.35)
+        self.animate()
+        Clock.schedule_once(self.callbackfun, 5)
+
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
 
 
+    # def play(self):
+    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
+    #  anim.repeat = True
+    #  anim.start(self.children[0].children[0])
+    #  pass
+
+
 class ScreenThree(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.35)
+        Clock.schedule_once(self.callbackfun, 1)
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
@@ -106,7 +132,7 @@ class ScreenThree(Screen):
 
 class ScreenFour(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 0.35)
+        Clock.schedule_once(self.callbackfun, 1)
 
     def callbackfun(self, dt):
         list = ["five", "six", "seven"]
@@ -207,7 +233,7 @@ class Manager(ScreenManager):
 
     def callback(self, sec):
         end = time.time()
-        if ((end - self.t) > 20):
+        if ((end - self.t) > 1000):
             self.current = 'sleep'
             self.t = time.time()
 

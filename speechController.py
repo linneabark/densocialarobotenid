@@ -42,7 +42,8 @@ class SpeechController():
 
     def recognizedAudio(self,audio):
         try:
-            string = self.r.recognize_google(audio, language="sv-SV")
+            #string = self.r.recognize_google(audio, language="sv-SV")
+            string = self.recognize_azure(audio, 9528141d0163486b986c549ddc3f6a4e, language = "sv-SV")
             return string
         except sr.UnknownValueError:
             print("Please try again")
