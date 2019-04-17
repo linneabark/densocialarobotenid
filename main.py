@@ -22,7 +22,7 @@ import time
 import subprocess
 import random
 import schedule_app
-from pygame import mixer
+#from pygame import mixer
 from kivy.properties import StringProperty
 
 
@@ -30,7 +30,7 @@ from kivy.properties import StringProperty
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-from speechController import SpeechController
+#from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
@@ -50,6 +50,21 @@ class MainScreen(Screen):
         img_src = StringProperty('Images/Face/speaking.gif')
     else:
         img_src = StringProperty('Images/Face/mouthClosed.png')
+
+    img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+
+    def blink(self):
+        if 1==1: #Starta klocka och tråd?
+            img_blinking = StringProperty('Images/Face/blinking.gif')
+            print('Gif started')
+        else:
+            img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+
+    threadEyes = threading.Thread(target=blink)
+    threadEyes.start()
+    print('Started eye thread')
+    print('Total number of threads: ', threading.activeCount())
+    print('List of threads: ', threading.enumerate())
 
 
     def schema(self):
@@ -156,13 +171,13 @@ class Appview(Screen):
         # subprocess.Popen('python kv/RPS.py', shell=True)
         # RPSscreenApp().run()
         
-    def doSpeech(self):
+    '''def doSpeech(self):
         print("speech")
         sc = SpeechController()
         screen = sc.listenSpeech()
         string = sc.recognizedAudio(screen)
         if(string == "matematik"):
-            self.manager.current = "calculator"
+            self.manager.current = "calculator"'''
 
     def listen(self):
         thread_listen = Thread(target=self.doSpeech)
@@ -223,7 +238,7 @@ class Manager(ScreenManager):
         self.t = time.time()
 
     def startTim(self):
-        string = SpeechController().listenForTim()
+        string = "hej"
         if string == "schema":
             self.current = "schedule"
 
