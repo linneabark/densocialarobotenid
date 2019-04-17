@@ -228,8 +228,10 @@ class Manager(ScreenManager):
             self.current = "schedule"
 
     def startTimThread(self,sec):
+        print("threadstart")
         thread_startTim = Thread(target=self.startTim)
         thread_startTim.start()
+
 
     def callback(self, sec):
         end = time.time()

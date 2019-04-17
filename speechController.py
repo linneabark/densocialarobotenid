@@ -12,6 +12,10 @@ class SpeechController():
 
     def stringSplitter(self, string):
         stringArray = string.split()
+        i = 0
+        for x in stringArray:
+            stringArray[i] = stringArray[i].lower()
+            i = i+1
         return stringArray
 
     def playVoice(string):
@@ -42,8 +46,8 @@ class SpeechController():
 
     def recognizedAudio(self,audio):
         try:
-            #string = self.r.recognize_google(audio, language="sv-SV")
-            string = self.recognize_azure(audio, 9528141d0163486b986c549ddc3f6a4e, language = "sv-SV")
+            string = self.r.recognize_google(audio, language="sv-SV")
+            #string = self.r.recognize_google(audio, key = "9528141d0163486b986c549ddc3f6a4e", language = "sv-SV")
             return string
         except sr.UnknownValueError:
             print("Please try again")
@@ -84,6 +88,8 @@ class SpeechController():
     def listenSpeech(self):
         with self.m as source:
             #audio = r.record(source, duration = 5)
+            while(mixer.get_busy()):
+                print("hej")
             audio = self.r.listen(source, phrase_time_limit=5)
             #self.r.snowboy_wait_for_hot_word()
             return audio
@@ -98,7 +104,7 @@ class SpeechController():
         stringArray = self.stringSplitter(string)
         print(stringArray)
         for tim in stringArray:
-            if(tim == "Tim"):
+            if(tim == "hej"):
                 print(tim)
                 return "schema"
                 break
