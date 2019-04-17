@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # Requires PyAudio and PySpeech.
+import random
+
 from gtts import gTTS
 from pygame import mixer
 import speech_recognition as sr
@@ -47,7 +49,7 @@ class SpeechController():
     def recognizedAudio(self,audio):
         try:
             string = self.r.recognize_google(audio, language="sv-SV")
-            #string = self.r.recognize_google(audio, key = "9528141d0163486b986c549ddc3f6a4e", language = "sv-SV")
+            #string = self.recognize_azure(audio, key = "9528141d0163486b986c549ddc3f6a4e", language = "sv-SV")
             return string
         except sr.UnknownValueError:
             print("Please try again")
@@ -109,6 +111,33 @@ class SpeechController():
                 return "schema"
                 break
                 
+
+    def start_RPSvoice(self):
+        while True:
+            tts = gTTS(text='Är du redo?', lang='sv')               # Ta bort efter första inspelning
+            tts.save("ready.mp3")
+            mixer.init()
+            mixer.music.load("ready.mp3")                           # Skapa fil som säger "Är du redo?"
+            mixer.music.play()
+            are_you_ready_answer = self.listenSpeech()
+            if(self.recognizedAudio(are_you_ready_answer) == "ja"):
+                c = random.randint(1, 3)
+                print("char:", c)                                   # Skicka c till fysisk design för sten/sax/påse
+                # Eventuell delay/klartecken från fysisk design
+                tts2 = gTTS(text='Vill du spela igen?', lang='sv')  # Ta bort efter första inspelning
+                tts2.save("playAgain.mp3")
+                mixer.init()
+                mixer.music.load("playAgain.mp3")                   # Röstklipp "Vill du spela igen?
+                mixer.music.play()
+                play_again_answer = self.listenSpeech()
+                if (self.recognizedAudio(play_again_answer) == "nej"):
+                    tts = gTTS(text='Okej, vi kan spela mer en annan gång', lang='sv') # Ta bort efter första inspelning
+                    tts.save("playAnotherTime.mp3")
+                    mixer.init()
+                    mixer.music.load("playAnotheTime.mp3")       # Röstklipp "Okej, vi kan spela mer en annan gång"
+                    mixer.music.play()
+                    break
+
 
 
 
