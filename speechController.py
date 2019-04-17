@@ -83,10 +83,25 @@ class SpeechController():
     def listenSpeech(self):
         with self.m as source:
             #audio = r.record(source, duration = 5)
-            audio = self.r.listen(source, phrase_time_limit=3)
+            audio = self.r.listen(source, phrase_time_limit=5)
             #self.r.snowboy_wait_for_hot_word()
             return audio
             #self.tryListen(audio)
+
+
+    def listenForTim(self):
+        audio = self.listenSpeech()
+        string = self.recognizedAudio(audio)
+        if(string == None):
+            return
+        stringArray = self.stringSplitter(string)
+        print(stringArray)
+        for tim in stringArray:
+            if(tim == "Tim"):
+                print(tim)
+                return "schema"
+                break
+                
 
 
 

@@ -1,5 +1,5 @@
 #:kivy 1.10.1
-
+import sys
 import kivy
 from kivy.app import App
 from kivy.config import Config
@@ -22,18 +22,20 @@ import time
 import subprocess
 import random
 import schedule_app
+from pygame import mixer
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-#from speechController import SpeechController
+from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
-Window.size = (586 * 1.3, 325 * 1.3)
+#Window.size = (586 * 1.3, 325 * 1.3)
 
 class MainScreen(Screen):
+
     # def play(self):
     #   anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
     #  anim.repeat = True
@@ -43,15 +45,6 @@ class MainScreen(Screen):
 
     def schema(self):
         ScheduleScreen.showSchema(self)
-
-   # def doSpeech(self):
-    #    sc = SpeechController()
-     #   sc.listenSpeech()
-
-    #def listenToSpeech(self):
-     #   thread1 = Thread(target=self.doSpeech)
-      #  thread1.start()
-       # print(threading.enumerate())
     pass
 
 
@@ -136,6 +129,18 @@ class Appview(Screen):
         print('Launch RPS')
         # subprocess.Popen('python kv/RPS.py', shell=True)
         # RPSscreenApp().run()
+        
+    def doSpeech(self):
+        print("speech")
+        sc = SpeechController()
+        screen = sc.listenSpeech()
+        string = sc.recognizedAudio(screen)
+        if(string == "matematik"):
+            self.manager.current = "calculator"
+
+    def listen(self):
+        thread_listen = Thread(target=self.doSpeech)
+        thread_listen.start()
 
     pass
 
@@ -162,7 +167,9 @@ class Manager(ScreenManager):
         self.transition = SlideTransition()
         self.transition.duration = 1
         self.transition.direction = 'up'
-        Clock.schedule_interval(self.callback, 2)
+        #Clock.schedule_interval(self.callback, 2)
+        Clock.schedule_interval(self.startTimThread, 8)
+        
 
     def initialize(self):
         self.add_widget(MainScreen(name="main"))
@@ -189,6 +196,15 @@ class Manager(ScreenManager):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+    def startTim(self):
+        string = SpeechController().listenForTim()
+        if string == "schema":
+            self.current = "schedule"
+
+    def startTimThread(self,sec):
+        thread_startTim = Thread(target=self.startTim)
+        thread_startTim.start()
+
     def callback(self, sec):
         end = time.time()
         if ((end - self.t) > 20):
@@ -196,12 +212,13 @@ class Manager(ScreenManager):
             self.t = time.time()
 
 
+
 class guiApp(App):
     def build(self):
         print('GuiApp')
         return Manager()
     def quit(self):
-        self.stop()
+        sys.exit("Shutting down")
 
 
 
