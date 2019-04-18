@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # Requires PyAudio and PySpeech.
+import random
+
 from gtts import gTTS
 from pygame import mixer
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
-import random
-
 
 class SpeechController():
     def __init__(self):
@@ -44,7 +44,8 @@ class SpeechController():
 
     def recognizedAudio(self,audio):
         try:
-            string = self.r.recognize_google(audio, language="sv-SV")
+            #string = self.r.recognize_google(audio, language="sv-SV")
+            string = self.recognize_azure(audio, key = "9528141d0163486b986c549ddc3f6a4e", language = "sv-SV")
             return string
         except sr.UnknownValueError:
             print("Please try again")
@@ -85,12 +86,25 @@ class SpeechController():
     def listenSpeech(self):
         with self.m as source:
             #audio = r.record(source, duration = 5)
-            audio = self.r.listen(source, phrase_time_limit=3)
+            audio = self.r.listen(source, phrase_time_limit=5)
             #self.r.snowboy_wait_for_hot_word()
             return audio
             #self.tryListen(audio)
 
 
+    def listenForTim(self):
+        audio = self.listenSpeech()
+        string = self.recognizedAudio(audio)
+        if(string == None):
+            return
+        stringArray = self.stringSplitter(string)
+        print(stringArray)
+        for tim in stringArray:
+            if(tim == "Tim"):
+                print(tim)
+                return "schema"
+                break
+                
 
     def start_RPSvoice(self):
         while True:
@@ -117,6 +131,15 @@ class SpeechController():
                     mixer.music.load("playAnotheTime.mp3")       # Röstklipp "Okej, vi kan spela mer en annan gång"
                     mixer.music.play()
                     break
+
+
+
+
+
+
+
+
+
 
 
 

@@ -25,7 +25,8 @@
                 size_hint: .3, .2
                 on_press:
                     app.root.transition = SlideTransition(direction = 'down')
-                    root.manager.current =  "main"
+                    #root.manager.current =  "main"
+                    root.listen()
             Button:
                 size_hint: .3, .2
                 id:btnExit

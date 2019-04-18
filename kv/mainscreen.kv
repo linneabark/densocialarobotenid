@@ -1,4 +1,10 @@
 <MainScreen>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
     GridLayout:
         cols: 1
         rows: 3
@@ -6,16 +12,20 @@
         row_default_height: 200
         Image:
             allow_stretch: True
-            source: 'faceimages/eyesseveral.gif'
-            size: self.size
+            source: 'Images/Face/blinking3.gif'
+            #source: root.img_blinking
+            size_hint: None, None
+            size: 750, 250
+            pos: 0, 200
             #pos: (0,150)
             keep_data: True
             #on_touch_down: root.onTouch()
         Image:
             allow_stretch: True
             source: root.img_src
-            size: self.size
-            
+            size_hint: None, None
+            size: 710, 200
+            pos: 0, 0
 
         Button:
             background_color: 0,0,0,0
