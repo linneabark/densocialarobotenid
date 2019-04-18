@@ -4,13 +4,17 @@ import random
 
 from gtts import gTTS
 from pygame import mixer
+import pygame.mixer
+from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
+
 
 class SpeechController():
     def __init__(self):
         self.r = sr.Recognizer()
         self.m = sr.Microphone()
+        
 
     def stringSplitter(self, string):
         stringArray = string.split()
@@ -20,11 +24,8 @@ class SpeechController():
             i = i+1
         return stringArray
 
-    def playVoice(string):
-        switcher = {
-            1: "",
-            2: ""
-            }
+        
+    
     def mp3Exception(self):
         tts = gTTS(text= 'Jag kunde inte forsta vad du sa, kan du saga en gang till?', lang='sv')
         tts.save("repeatName.mp3")
@@ -37,15 +38,14 @@ class SpeechController():
         #sound.play()
 
     def internetException(self):
-        #sound = SoundLoader.load("internetException.mp3")
-        #if sound:
-        #    sound.play()
-        #sound.play()
+        tts = gTTS(text= 'Inget internet', lang='sv')
+        tts.save("internetException.mp3")
         mixer.init()
         mixer.music.load("internetException.mp3")
         mixer.music.play()
         print("hej")
 
+    
     def recognizedAudio(self,audio):
         try:
             string = self.r.recognize_google(audio, language="sv-SV")
@@ -87,30 +87,73 @@ class SpeechController():
         #audiolisten()
         #print("Google Speech Recognition could not understand audio")
             
-    def listenSpeech(self):
+    def listenSpeech(self, time):
         with self.m as source:
             #audio = r.record(source, duration = 5)
+            mixer.init()
             while(mixer.get_busy()):
                 print("hej")
-            audio = self.r.listen(source, phrase_time_limit=5)
+            if(mixer.Channel(1).get_busy()):
+                print("Channel 1 busy")
+            audio = self.r.listen(source, phrase_time_limit=time)
             #self.r.snowboy_wait_for_hot_word()
             return audio
             #self.tryListen(audio)
+        
 
+    def containsHiMyAndName(self, stringArray):
+        if any(("hej" in s for s in stringArray) and ("karin" in s for s in stringArray) and ("heter" in s for s in stringArray)):
+               return True
+        return False
 
-    def listenForTim(self):
-        audio = self.listenSpeech()
+    def detectName(self, stringArray):
+        namePos = stringArray.index("heter") + 1
+        name = stringArray[namePos]
+        return name
+
+   
+    def listenForTim(self, manager):
+        audio = self.listenSpeech(5)
         string = self.recognizedAudio(audio)
         if(string == None):
             return
         stringArray = self.stringSplitter(string)
         print(stringArray)
-        for tim in stringArray:
-            if(tim == "hej"):
-                print(tim)
-                return "schema"
+        if(self.containsHiMyAndName(stringArray)):
+                manager.user.name = self.detectName(stringArray)
+                print('Familiar user')
+                return "familiarUser"
+        for x in stringArray:
+            if(x == "hej"):
+                print('Hej')
+                return x
                 break
-                
+
+   
+
+                   
+    def playHelloName(self, name):
+        if(name == None):
+            name = ""
+        tts = gTTS(text= 'Hej' + name + 'vad vill du göra?', lang='sv')
+        tts.save("helloWhatToDo.mp3")
+        
+        mixer.init()
+        mixer.music.load("helloWhatToDo.mp3")
+        mixer.music.play()
+
+
+    def playHello(self):
+        tts = gTTS(text= 'Hej! Jag heter My, vad heter du?', lang='sv')
+        tts.save("helloWhatsYourName.mp3")
+
+        mixer.init()
+        mixer.music.load("helloWhatsYourName.mp3")
+        mixer.music.play()
+
+        audio = self.listenSpeech(7)
+        self.playHelloName(self.recognizedAudio(audio))
+        
 
     def start_RPSvoice(self):
         while True:
@@ -119,7 +162,7 @@ class SpeechController():
             mixer.init()
             mixer.music.load("ready.mp3")                           # Skapa fil som säger "Är du redo?"
             mixer.music.play()
-            are_you_ready_answer = self.listenSpeech()
+            are_you_ready_answer = self.listenSpeech(3)
             if(self.recognizedAudio(are_you_ready_answer) == "ja"):
                 c = random.randint(1, 3)
                 print("char:", c)                                   # Skicka c till fysisk design för sten/sax/påse
@@ -129,7 +172,7 @@ class SpeechController():
                 mixer.init()
                 mixer.music.load("playAgain.mp3")                   # Röstklipp "Vill du spela igen?
                 mixer.music.play()
-                play_again_answer = self.listenSpeech()
+                play_again_answer = self.listenSpeech(3)
                 if (self.recognizedAudio(play_again_answer) == "nej"):
                     tts = gTTS(text='Okej, vi kan spela mer en annan gång', lang='sv') # Ta bort efter första inspelning
                     tts.save("playAnotherTime.mp3")
@@ -137,19 +180,6 @@ class SpeechController():
                     mixer.music.load("playAnotheTime.mp3")       # Röstklipp "Okej, vi kan spela mer en annan gång"
                     mixer.music.play()
                     break
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
