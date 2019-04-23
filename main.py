@@ -21,7 +21,6 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-import schedule_app
 #from pygame import mixer
 from kivy.properties import StringProperty
 from user import User
@@ -132,7 +131,10 @@ class ScreenTwo(Screen):
     #  pass
 class TestScreen(Screen):
     def send(self,text):
-        print(text)
+        file = open("familiarNames.txt","a")
+        file.write("\n")
+        file.write(text)
+        file.close()
     pass
 
 class ScreenThree(Screen):
@@ -193,7 +195,7 @@ class Calculator(Screen):
                 self.display.text = "Error"
     pass
 
-class ScheduleSScreen(Screen):
+class ScheduleScreen(Screen):
     pass
 
 
@@ -201,7 +203,6 @@ class Manager(ScreenManager):
     t = time.time()
     user = User(None,None,None)
     isVoiceActive = False
-    
 
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
