@@ -31,7 +31,7 @@ from user import User
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-from speechController import SpeechController
+#from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
@@ -136,7 +136,10 @@ class ScreenTwo(Screen):
     #  anim.repeat = True
     #  anim.start(self.children[0].children[0])
     #  pass
-
+class TestScreen(Screen):
+    def send(self,text):
+        print(text)
+    pass
 
 class ScreenThree(Screen):
     def on_enter(self, *args):
@@ -237,6 +240,7 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
+        self.add_widget(TestScreen(name='test'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
@@ -244,6 +248,10 @@ class Manager(ScreenManager):
 
 
     def startTim(self):
+        '''
+
+        :return:
+
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
@@ -252,6 +260,8 @@ class Manager(ScreenManager):
             self.isVoiceActive = True
             SpeechController().playHello()            
             #self.current.moveMouth()
+
+        '''
         
         #SpeechController.detectKeywords()
 

@@ -21,12 +21,12 @@
                 text: ""
 
             Button:
-                text: "Voice"
+                text: "Test"
                 size_hint: .3, .2
                 on_press:
-                    app.root.transition = SlideTransition(direction = 'down')
+                    root.manager.current = 'test'
                     #root.manager.current =  "main"
-                    root.listen()
+                    #root.listen()
             Button:
                 size_hint: .3, .2
                 id:btnExit
