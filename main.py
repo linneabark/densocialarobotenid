@@ -3,29 +3,18 @@ import sys
 import kivy
 from kivy.app import App
 from kivy.config import Config
-from kivy.uix.behaviors import ButtonBehavior
-from kivy.uix.image import Image
 from threading import Thread
-import threading
-from kivy.core.window import Window
-from kivy.lang import Builder
-from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty, ReferenceListProperty, \
-    ObjectProperty
 from kivy.clock import Clock
 from kivy.core.window import Window
-from kivy.animation import Animation
 from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
 # from WebTest import WebManager
-from kivy.uix.screenmanager import FadeTransition
 import time
-import subprocess
-import random
-import schedule_app
-#from pygame import mixer
 from kivy.properties import StringProperty
 from user import User
-
+from TestScreen import TestScreen
+from rpsScreens import RPSScreen,ScreenFive,ScreenFour,ScreenOne,ScreenSeven,ScreenSix,ScreenThree,ScreenTwo
+from scheduleScreens import ScheduleScreen, ScheduleScreenFive, ScheduleScreenFour, \
+    ScheduleScreenSix, ScheduleScreenThree, ScheduleScreenTwo
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -68,105 +57,12 @@ class MainScreen(Screen):
     #print('List of threads: ', threading.enumerate())
 
 
-    def schema(self):
-        ScheduleScreen.showSchema(self)
-    pass
 
-
-class ScheduleScreen(Screen):
-    def showSchema(self, *args):
-        # wb = WebManager()
-        # wb.findSchema()
-        self.children[0].children[1].background_normal = 'test.png'
-
-    pass
-
-
-class SleepScreen(Screen):
-    pass
-
-class ScheduleScreenTwo(Screen):
-    pass
-
-class ScheduleScreenThree(Screen):
-    pass
-
-class ScheduleScreenFour(Screen):
-    pass
-
-class ScheduleScreenFive(Screen):
-    pass
-
-class ScheduleScreenSix(Screen):
-    pass
 
 class MathScreen(Screen):
     pass
 
-
-class RPSScreen(Screen):
-    pass
-
-# Lägg till en skärm som räknar ner tills spelet startar
-
-class ScreenOne(Screen):
-    pass
-
-
-class ScreenTwo(Screen):
-    def animate(self):
-        print('Animation')
-        if(self.children[0].children[0].pos == (80,10)):
-            self.children[0].children[0].pos = (0, 0)
-        anim = Animation(pos=(80, 10))
-        anim.repeat = True
-        anim.start(self.children[0].children[0])
-
-    def on_enter(self, *args):
-        self.animate()
-        Clock.schedule_once(self.callbackfun, 5)
-
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-    # def play(self):
-    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-    #  anim.repeat = True
-    #  anim.start(self.children[0].children[0])
-    #  pass
-class TestScreen(Screen):
-    def send(self,text):
-        print(text)
-    pass
-
-class ScreenThree(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-class ScreenFour(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        list = ["five", "six", "seven"]
-        self.manager.current = random.choice(list)
-
-
-class ScreenFive(Screen):
-    pass
-
-
-class ScreenSix(Screen):
-    pass
-
-
-class ScreenSeven(Screen):
+class SleepScreen(Screen):
     pass
 
 class Appview(Screen):
@@ -199,7 +95,7 @@ class Calculator(Screen):
                 self.display.text = "Error"
     pass
 
-class ScheduleSScreen(Screen):
+class ScheduleScreen(Screen):
     pass
 
 
