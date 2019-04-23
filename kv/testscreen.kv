@@ -1,0 +1,19 @@
+<TestScreen>
+    FloatLayout:
+        TextInput:
+            id: entry
+            font_size: 50
+            multiline: False
+            anchor_x: 'center'
+            anchor_y: 'center'
+            size_hint: .2, .2
+            pos: 0, 300
+
+        Button:
+            on_press: root.send(entry.text)
+            size_hint: 0.3, 0.3
+            #pos_hint: None, None
+            pos: 300,300
+            anchor_x: 'center'
+            anchor_y: 'center'
+            background_normal: 'Images/mathbuttons/eqbutton.png'
