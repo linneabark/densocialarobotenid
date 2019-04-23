@@ -24,6 +24,7 @@ import random
 import schedule_app
 #from pygame import mixer
 from kivy.properties import StringProperty
+from user import User
 
 
 #Config.set('kivy','log_level','debug')
@@ -45,26 +46,26 @@ class MainScreen(Screen):
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
 
-
+    
     if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
         img_src = StringProperty('Images/Face/speaking.gif')
     else:
         img_src = StringProperty('Images/Face/mouthClosed.png')
 
-    img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+        img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
 
-    def blink(self):
+    '''def blink(self):
         if 1==1: #Starta klocka och tråd?
             img_blinking = StringProperty('Images/Face/blinking.gif')
             print('Gif started')
         else:
-            img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+            img_blinking = StringProperty('Images/Face/eyesOpen.jpg')'''
 
-    threadEyes = threading.Thread(target=blink)
-    threadEyes.start()
-    print('Started eye thread')
-    print('Total number of threads: ', threading.activeCount())
-    print('List of threads: ', threading.enumerate())
+    #threadEyes = threading.Thread(target=blink)
+    #threadEyes.start()
+    #print('Started eye thread')
+    #print('Total number of threads: ', threading.activeCount())
+    #print('List of threads: ', threading.enumerate())
 
 
     def schema(self):
@@ -135,7 +136,10 @@ class ScreenTwo(Screen):
     #  anim.repeat = True
     #  anim.start(self.children[0].children[0])
     #  pass
-
+class TestScreen(Screen):
+    def send(self,text):
+        print(text)
+    pass
 
 class ScreenThree(Screen):
     def on_enter(self, *args):
@@ -201,7 +205,9 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-
+    user = User(None,None,None)
+    isVoiceActive = False
+    
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
@@ -210,6 +216,7 @@ class Manager(ScreenManager):
         self.transition.direction = 'up'
         #Clock.schedule_interval(self.callback, 2)
         Clock.schedule_interval(self.startTimThread, 8)
+        #Clock.schedule_interval(self.startKeywordThread, 8)
         
 
     def initialize(self):
@@ -232,19 +239,43 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
+        self.add_widget(TestScreen(name='test'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+
     def startTim(self):
-        string = "hej"
-        if string == "schema":
-            self.current = "schedule"
+        '''
+
+        :return:
+
+        string = SpeechController().listenForTim(self)
+        if string == "familiarUser":
+            self.isVoiceActive = True
+            SpeechController().playHelloName(self.user.name)
+        if string == "hej":
+            self.isVoiceActive = True
+            SpeechController().playHello()            
+            #self.current.moveMouth()
+
+        '''
+        
+        #SpeechController.detectKeywords()
+
+                
 
     def startTimThread(self,sec):
-        thread_startTim = Thread(target=self.startTim)
-        thread_startTim.start()
+        if not(self.isVoiceActive):
+            print("threadstart")
+            thread_startTim = Thread(target=self.startTim)
+            thread_startTim.start()
+
+    '''def startKeywordThread(self, sec):
+        thread_listenKeywords = Thread(taget = self.listenKeywords)
+        thread_listenKeywords.start()'''
+
 
     def callback(self, sec):
         end = time.time()
