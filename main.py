@@ -207,7 +207,7 @@ class Manager(ScreenManager):
     t = time.time()
     user = User(None,None,None)
     isVoiceActive = False
-    
+
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
