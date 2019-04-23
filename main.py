@@ -21,7 +21,6 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-import schedule_app
 #from pygame import mixer
 from kivy.properties import StringProperty
 from user import User
@@ -202,7 +201,7 @@ class Calculator(Screen):
                 self.display.text = "Error"
     pass
 
-class ScheduleSScreen(Screen):
+class ScheduleScreen(Screen):
     pass
 
 
