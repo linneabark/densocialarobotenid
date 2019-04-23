@@ -24,7 +24,7 @@
                 text: "Voice"
                 #size_hint: .1, .1
                 background_normal: 'voiceknapp4.png'
-                background_down: 'Images/schedulebuttons/schemaknapp4.png'
+                background_down: 'voiceknapp4.png'
                 on_press:
                     app.root.transition = SlideTransition(direction = 'down')
                     #root.manager.current =  "main"
@@ -47,8 +47,8 @@
             Button:
                 #center: self.parent.center
                 #pos: (10,100)
-                background_normal: 'Images/schedulebuttons/schemaknapp4.png'
-                background_down: 'Images/schedulebuttons/schemaknapp4.png'
+                background_normal: 'Images/schedulebuttons/schemaknapp61.png'
+                background_down: 'Images/schedulebuttons/schemaknapp61.png'
                 #background_color: (1, .3, .4, .85)
                 on_press:
                     app.root.transition = SlideTransition(direction = 'right')
@@ -62,7 +62,7 @@
                 #pos: (10,100)
                 #background_color: (1, .3, .4, .85)
                 on_press:
-                    #app.root.transition = SlideTransition(direction = 'up')
+                    app.root.transition = SlideTransition(direction = 'up')
                     root.manager.current =  "one"
                     #root.launchRPS()
 
