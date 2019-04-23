@@ -31,7 +31,7 @@ from user import User
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-#from speechController import SpeechController
+from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
@@ -175,13 +175,13 @@ class Appview(Screen):
         # subprocess.Popen('python kv/RPS.py', shell=True)
         # RPSscreenApp().run()
         
-    '''def doSpeech(self):
+    def doSpeech(self):
         print("speech")
         sc = SpeechController()
         screen = sc.listenSpeech()
         string = sc.recognizedAudio(screen)
         if(string == "matematik"):
-            self.manager.current = "calculator"'''
+            self.manager.current = "calculator"
 
     def listen(self):
         thread_listen = Thread(target=self.doSpeech)
@@ -247,10 +247,6 @@ class Manager(ScreenManager):
 
 
     def startTim(self):
-        '''
-
-        :return:
-
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
@@ -260,7 +256,7 @@ class Manager(ScreenManager):
             SpeechController().playHello()            
             #self.current.moveMouth()
 
-        '''
+       
         
         #SpeechController.detectKeywords()
 
