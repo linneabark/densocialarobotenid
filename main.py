@@ -138,7 +138,10 @@ class ScreenTwo(Screen):
     #  pass
 class TestScreen(Screen):
     def send(self,text):
-        print(text)
+        file = open("familiarNames.txt","a")
+        file.write("\n")
+        file.write(text)
+        file.close()
     pass
 
 class ScreenThree(Screen):
