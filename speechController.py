@@ -163,8 +163,7 @@ class SpeechController():
         self.playHelloName(self.recognizedAudio(audio))
 
 
-    def start_schedule(self, manager):
-        pass
+
     def whatToDo(self):
         tts = gTTS(text='Vill du se schema, räkna matte, spela sten, sax påse eller prata?', lang='sv')
         tts.save("whatToDo.mp3")
@@ -183,8 +182,8 @@ class SpeechController():
     def handleKeyword(self, message):
         keywords = self.stringSplitter(message)
 
-        if any("schema" in s for s in keywords):
-            x=1 #skicka till schemametod
+        if any("schema" or "kalender" in s for s in keywords):
+            self.start_Schedule()
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
             x=1 #skicka till mattemetod
         elif any(("sten" in s for s in keywords) or ("sax" in s for s in keywords) or ("påse" in s for s in keywords) or ("spela" in s for s in keywords)):
@@ -338,6 +337,45 @@ class SpeechController():
 
                     self.playSound("playAnotherTime.mp3")
                     break
+
+    def start_Schedule(self, manager):
+        # Switch from face screen to schedule screen
+        manager.current = 'schedule'
+
+        tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
+        tts.save('schedule_instruction.mp3')
+        self.playSound('schedule_instruction.mp3')
+
+        demand = self.listenSpeech(4)
+        words = self.stringSplitter(demand)
+
+        if "nästa" in words:
+            x = manager.current
+            def next_week(x):
+                list = {
+                    "schedule": 's2',
+                    's2': 's3',
+                    's3': 's4',
+                    's4': 's5',
+                    's5': 's6'
+                }
+                next_screen = list.get(x)
+                return next_screen
+            return(next_week(x))
+
+        elif "förra" in words:
+            x = manager.current
+            def previous_week(x):
+                list = {
+                    "s2": 'schedule',
+                    's3': 's2',
+                    's4': 's3',
+                    's5': 's4',
+                    's6': 's5'
+                }
+                next_screen = list.get(x)
+                return next_screen
+            return(previous_week(x))
 
 
 

@@ -21,7 +21,7 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-#from pygame import mixer
+from pygame import mixer
 from kivy.properties import StringProperty
 from user import User
 
@@ -30,7 +30,7 @@ from user import User
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-#from speechController import SpeechController
+from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
@@ -241,8 +241,10 @@ class Manager(ScreenManager):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+
     def startSchedule(self):
         SpeechController.start_schedule(self)
+        self.current = next_screen
 
     def startTim(self):
         '''
