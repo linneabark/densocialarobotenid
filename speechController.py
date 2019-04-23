@@ -21,7 +21,7 @@ class SpeechController():
         i = 0
         for x in stringArray:
             stringArray[i] = stringArray[i].lower()
-            i = i+1
+            i += 1
         return stringArray
 
         
@@ -153,7 +153,10 @@ class SpeechController():
 
         audio = self.listenSpeech(7)
         self.playHelloName(self.recognizedAudio(audio))
+
+    def start_schedule(self, manager):
         
+        manager.current = "schedule"
 
     def start_RPSvoice(self):
         while True:

@@ -73,16 +73,10 @@ class MainScreen(Screen):
     pass
 
 
-class ScheduleScreen(Screen):
-    def showSchema(self, *args):
-        # wb = WebManager()
-        # wb.findSchema()
-        self.children[0].children[1].background_normal = 'test.png'
-
+class SleepScreen(Screen):
     pass
 
-
-class SleepScreen(Screen):
+class ScheduleScreen(Screen):
     pass
 
 class ScheduleScreenTwo(Screen):
@@ -246,6 +240,8 @@ class Manager(ScreenManager):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+    def startSchedule(self):
+        SpeechController.start_schedule(self)
 
     def startTim(self):
         '''
