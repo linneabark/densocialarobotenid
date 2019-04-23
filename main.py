@@ -201,7 +201,6 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
