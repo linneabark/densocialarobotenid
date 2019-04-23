@@ -54,7 +54,7 @@ def start_mathtest():
         operators = {
             'PLUS': ["plus", "addera", "lägg till"],
             'MINUS': ["minus"],
-            'MULTIPLICATION': ["multiplicerat"],
+            'MULTIPLICATION': ["multiplicerat", "gånger"],
             'DIVISION' : ["delat med", "delat på", "dividerat med", "dividerat på"]
         }
 
