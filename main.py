@@ -24,8 +24,6 @@ import random
 #import schedule_app
 from pygame import mixer
 from kivy.properties import StringProperty
-#from pygame import mixer
-from kivy.properties import StringProperty
 from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
 from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
     ScheduleScreenFive, ScheduleScreenSix
@@ -51,14 +49,20 @@ class MainScreen(Screen):
     #  anim.start(self.children[0].children[0])
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
+    speaking = False
 
-    
     if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
         img_src = StringProperty('Images/Face/speaking.gif')
     else:
         img_src = StringProperty('Images/Face/mouthClosed.png')
 
-        img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+    '''def moveMouth(self):
+        while(SpeechController.speaking):
+            self.img_src = 'Images/Face/speaking.gif'
+        self.img_src = 'Images/Face/mouthClosed.jpg'''''
+
+
+        #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
 
     '''def blink(self):
         if 1==1: #Starta klocka och tråd?
@@ -170,9 +174,10 @@ class Manager(ScreenManager):
         self.t = time.time()
 
 
+    
     def startSchedule(self):
         SpeechController.start_Schedule(self, Manager)
-        #self.current = next_screen
+        self.current = next_screen
 
     def startTim(self):
         print('Start Tim')
@@ -186,7 +191,7 @@ class Manager(ScreenManager):
             #self.current.moveMouth()
 
        
-        
+
         #SpeechController.detectKeywords()
 
                 

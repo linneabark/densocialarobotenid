@@ -8,14 +8,15 @@ import pygame.mixer
 from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
-
-
+from densocialarobotenid.main import Manager, MainScreen
+from densocialarobotenid.FileController import FileHandler
 
 class SpeechController():
     def __init__(self):
         self.r = sr.Recognizer()
         self.m = sr.Microphone()
         self.funcName = ""
+        self.speaking = False
 
 
     def stringSplitter(self, string):
@@ -29,9 +30,12 @@ class SpeechController():
         return stringArray
 
     def playSound(self, fileName):
+        self.speaking = True
+        MainScreen.moveMouth()
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
+        self.speaking = False
     
     def mp3Exception(self):
         tts = gTTS(text= 'Kan du prata tydligare?', lang='sv')
@@ -162,6 +166,7 @@ class SpeechController():
         print(stringArray)
         if(self.containsHiMyAndName(stringArray)):
                 manager.name = self.detectName(stringArray)
+                FileHandler.create(manager.name)
                 print('Familiar user')
                 return "familiarUser"
         elif any("hej" in s for s in stringArray):
@@ -208,6 +213,7 @@ class SpeechController():
 
         if any(("schema" in s for s in keywords) or ("kalender" in s for s in keywords)):
             #self.start_Schedule()
+            #Manager.startSchedule() 
             x=1
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
             x=1 #skicka till mattemetod
@@ -420,7 +426,7 @@ class SpeechController():
     '''
     def start_Schedule(self, manager):
         # Switch from face screen to schedule screen
-        manager.current = 'schedule'
+        Manager.current = 'schedule'
 
         tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
         tts.save('schedule_instruction.mp3')
@@ -430,7 +436,7 @@ class SpeechController():
         words = self.stringSplitter(demand)
 
         if "nästa" in words:
-            x = manager.current
+            x = Manager.current
             def next_week(x):
                 list = {
                     "schedule": 's2',
@@ -441,10 +447,10 @@ class SpeechController():
                 }
                 next_screen = list.get(x)
                 return next_screen
-            return(next_week(x))
+            return next_week(x)
 
         elif "förra" in words:
-            x = manager.current
+            x = Manager.current
             def previous_week(x):
                 list = {
                     "s2": 'schedule',
@@ -456,6 +462,7 @@ class SpeechController():
                 next_screen = list.get(x)
                 return next_screen
             return(previous_week(x))'''
+
 
 
 
