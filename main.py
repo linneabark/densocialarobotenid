@@ -21,7 +21,7 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-import schedule_app
+#import schedule_app
 #from pygame import mixer
 from kivy.properties import StringProperty
 
