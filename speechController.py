@@ -381,6 +381,12 @@ class SpeechController():
             self.playSound("Ljudfiler/playAnotherTime.mp3")
             time.sleep(1)
             self.whatToDo()
+        elif(self.recognizedAudio(play_again_answer) == "upprepa"):
+            tts = gTTS(text='Okej, vi tar det igen', lang='sv') # Ta bort efter första inspelning
+            tts.save("Ljudfiler/takeItAgain.mp3")
+            self.playSound("Ljudfiler/takeItAgain.mp3")
+            time.sleep(1)
+            self.playAgain()
         else:
             tts = gTTS(text='Kan du upprepa', lang='sv')               # Ta bort efter första inspelning
             tts.save("Ljudfiler/canYouRepeat.mp3")
