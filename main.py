@@ -23,7 +23,6 @@ import subprocess
 import random
 from pygame import mixer
 from kivy.properties import StringProperty
-from user import User
 
 
 #Config.set('kivy','log_level','debug')
@@ -243,8 +242,8 @@ class Manager(ScreenManager):
 
 
     def startSchedule(self):
-        SpeechController.start_schedule(self)
-        self.current = next_screen
+        SpeechController.start_Schedule(self, Manager)
+        #self.current = next_screen
 
     def startTim(self):
         '''
