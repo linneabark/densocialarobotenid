@@ -21,15 +21,24 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
+
 #import schedule_app
+
+
+from pygame import mixer
+from kivy.properties import StringProperty
+
+
+
 #from pygame import mixer
 from kivy.properties import StringProperty
 
 from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
 from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
     ScheduleScreenFive, ScheduleScreenSix
-from user import User
+#from user import User
 from TestScreen import TestScreen
+
 
 
 #Config.set('kivy','log_level','debug')
@@ -82,6 +91,12 @@ class MainScreen(Screen):
 class SleepScreen(Screen):
     pass
 
+class ScheduleScreen(Screen):
+    pass
+
+class SleepScreen(Screen):
+    pass
+
 
 class MathScreen(Screen):
     pass
@@ -120,7 +135,7 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-    user = User(None,None,None)
+    #user = User(None,None,None)
     isVoiceActive = False
 
     def __init__(self, **kwargs):
@@ -160,11 +175,16 @@ class Manager(ScreenManager):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+
+    def startSchedule(self):
+        SpeechController.start_Schedule(self, Manager)
+        #self.current = next_screen
+
     def startTim(self):
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
-            SpeechController().playHelloName(self.user.name)
+            SpeechController().playHelloName("hej")
         if string == "hej":
             self.isVoiceActive = True
             SpeechController().playHello()            

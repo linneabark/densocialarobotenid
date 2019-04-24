@@ -23,7 +23,7 @@ class SpeechController():
         i = 0
         for x in stringArray:
             stringArray[i] = stringArray[i].lower()
-            i = i+1
+            i += 1
         return stringArray
 
     def playSound(self, fileName):
@@ -185,6 +185,8 @@ class SpeechController():
         audio = self.listenSpeech(7)
         self.playHelloName(self.recognizedAudio(audio))
 
+
+
     def whatToDo(self):
         self.funcName = "whatToDo"
         time.sleep(1)
@@ -202,8 +204,8 @@ class SpeechController():
         keywords = self.stringSplitter(message)
         print("keywords: ", keywords)
 
-        if any("schema" in s for s in keywords):
-            x=1 #skicka till schemametod
+        if any("schema" or "kalender" in s for s in keywords):
+            self.start_Schedule()
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
             x=1 #skicka till mattemetod
         elif any(("sten" in s for s in keywords) or ("sax" in s for s in keywords) or ("påse" in s for s in keywords) or ("spela" in s for s in keywords)):
@@ -249,8 +251,9 @@ class SpeechController():
         tts = gTTS(text='Hur gammal är du?', lang='sv')
         tts.save("Ljudfiler/howOld.mp3")
 
+        self.playSound("howOld.mp3")
+
         self.playSound("Ljudfiler/howOld.mp3")
-        
 
     def joke(self):
         self.funcName = "joke"
@@ -298,11 +301,11 @@ class SpeechController():
             return False
 
     def startRPSVoice(self):
+        funcName = "startRPSVoice"
         self.funcName = "startRPSVoice"
         tts = gTTS(text='Nu spelar vi! Är du redo?', lang='sv')               # Ta bort efter första inspelning
         tts.save("Ljudfiler/ready.mp3")
-        self.playSound("Ljudfiler/ready.mp3")
-
+        self.playSound("Ljudfiler/ready.mp3")        
         audio = self.listenSpeech(5)
         answer = self.recognizedAudio(audio)
         if(answer == "ja"):
@@ -371,3 +374,48 @@ class SpeechController():
             tts.save("Ljudfiler/canYouRepeat.mp3")
             self.playSound("Ljudfiler/canYouRepeat.mp3")
             self.playAgain()
+        
+
+    def start_Schedule(self, manager):
+        # Switch from face screen to schedule screen
+        manager.current = 'schedule'
+
+        tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
+        tts.save('schedule_instruction.mp3')
+        self.playSound('schedule_instruction.mp3')
+
+        demand = self.listenSpeech(4)
+        words = self.stringSplitter(demand)
+
+        if "nästa" in words:
+            x = manager.current
+            def next_week(x):
+                list = {
+                    "schedule": 's2',
+                    's2': 's3',
+                    's3': 's4',
+                    's4': 's5',
+                    's5': 's6'
+                }
+                next_screen = list.get(x)
+                return next_screen
+            return(next_week(x))
+
+        elif "förra" in words:
+            x = manager.current
+            def previous_week(x):
+                list = {
+                    "s2": 'schedule',
+                    's3': 's2',
+                    's4': 's3',
+                    's5': 's4',
+                    's6': 's5'
+                }
+                next_screen = list.get(x)
+                return next_screen
+            return(previous_week(x))
+
+
+
+
+        
