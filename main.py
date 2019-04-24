@@ -25,7 +25,7 @@ import random
 #import schedule_app
 
 
-from pygame import mixer
+#from pygame import mixer
 from kivy.properties import StringProperty
 
 
@@ -33,11 +33,11 @@ from kivy.properties import StringProperty
 #from pygame import mixer
 from kivy.properties import StringProperty
 
-from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
-from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
+from densocialarobotenid.rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
+from densocialarobotenid.scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
-from TestScreen import TestScreen
+from densocialarobotenid.TestScreen import TestScreen
 
 
 
@@ -45,7 +45,7 @@ from TestScreen import TestScreen
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-from speechController import SpeechController
+#from densocialarobotenid.speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
@@ -59,14 +59,20 @@ class MainScreen(Screen):
     #  anim.start(self.children[0].children[0])
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
+    speaking = False
 
-    
     if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
         img_src = StringProperty('Images/Face/speaking.gif')
     else:
         img_src = StringProperty('Images/Face/mouthClosed.png')
 
-        img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+    '''def moveMouth(self):
+        while(SpeechController.speaking):
+            self.img_src = 'Images/Face/speaking.gif'
+        self.img_src = 'Images/Face/mouthClosed.jpg'''''
+
+
+        #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
 
     '''def blink(self):
         if 1==1: #Starta klocka och tråd?
@@ -173,9 +179,10 @@ class Manager(ScreenManager):
         self.t = time.time()
 
 
+    
     def startSchedule(self):
         SpeechController.start_Schedule(self, Manager)
-        #self.current = next_screen
+        self.current = next_screen
 
     def startTim(self):
         string = SpeechController().listenForTim(self)
@@ -188,7 +195,7 @@ class Manager(ScreenManager):
             #self.current.moveMouth()
 
        
-        
+
         #SpeechController.detectKeywords()
 
                 

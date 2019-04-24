@@ -8,14 +8,15 @@ import pygame.mixer
 from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
-
-
+from densocialarobotenid.main import Manager, MainScreen
+from densocialarobotenid.FileController import FileHandler
 
 class SpeechController():
     def __init__(self):
         self.r = sr.Recognizer()
         self.m = sr.Microphone()
         self.funcName = ""
+        self.speaking = False
 
 
     def stringSplitter(self, string):
@@ -27,9 +28,12 @@ class SpeechController():
         return stringArray
 
     def playSound(self, fileName):
+        self.speaking = True
+        MainScreen.moveMouth()
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
+        self.speaking = False
     
     def mp3Exception(self):
         tts = gTTS(text= 'Kan du prata tydligare?', lang='sv')
@@ -158,6 +162,7 @@ class SpeechController():
         print(stringArray)
         if(self.containsHiMyAndName(stringArray)):
                 manager.name = self.detectName(stringArray)
+                FileHandler.create(manager.name)
                 print('Familiar user')
                 return "familiarUser"
         for x in stringArray:
@@ -205,7 +210,7 @@ class SpeechController():
         print("keywords: ", keywords)
 
         if any("schema" or "kalender" in s for s in keywords):
-            self.start_Schedule()
+            Manager.startSchedule()
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
             x=1 #skicka till mattemetod
         elif any(("sten" in s for s in keywords) or ("sax" in s for s in keywords) or ("påse" in s for s in keywords) or ("spela" in s for s in keywords)):
@@ -424,7 +429,7 @@ class SpeechController():
                 }
                 next_screen = list.get(x)
                 return next_screen
-            return(next_week(x))
+            return next_week(x)
 
         elif "förra" in words:
             x = manager.current
@@ -438,7 +443,7 @@ class SpeechController():
                 }
                 next_screen = list.get(x)
                 return next_screen
-            return(previous_week(x))
+            return previous_week(x)
 
 
 
