@@ -2,26 +2,46 @@
 	#coding: utf-8
 	#: import choice random.choice
 <ScreenOne>
-    FloatLayout:
-        Image:
-            source: 'Images/Sten_sax_pase/sten_sax_pase.png'
+    #id: rps
+    #display: entry
+    canvas.before:
+        Rectangle:
+            pos: self.pos
             size: self.size
+    Image:
+        source: "guimathbg.jpg"
+        keep_ratio: False
+        allow_stretch: True
+
+    BoxLayout:
+        orientation: "vertical"
+        AnchorLayout:
             Button:
-                text: "Spela!"
-                size: 150,75
-                pos: 315,220
-                on_press:
-                    root.manager.transition.direction = 'left'
-                    root.manager.transition.duration = 0.5
-                    root.manager.current = 'two'
-            Button:
-                text: "Tillbaka"
-                size: 150, 75
+                size: 200, 200
                 size_hint: None, None
-                pos: 0, 350
+                anchor_x: 'left'
+                anchor_y: 'top'
+                background_normal: 'Images/arrowup.png'
+                background_down: 'Images/arrowup.png'
                 on_press:
                     root.manager.transition.direction = 'down'
                     root.manager.current = 'appview'
+
+        AnchorLayout:
+            Image:
+                source: 'Images/Sten_sax_pase/rps.png'
+                size: self.size
+                anchor_x: 'center'
+                anchor_y: 'center'
+                Button:
+                    text: "Spela!"
+                    size: 150,75
+                    #pos: 315,220
+                    on_press:
+                        root.manager.transition.direction = 'left'
+                        root.manager.transition.duration = 0.5
+                        root.manager.current = 'two'
+
 
 <ScreenTwo>
     FloatLayout:

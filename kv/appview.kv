@@ -10,15 +10,22 @@
     BoxLayout:
         orientation: 'vertical'
         padding: 40
-        spacing: 100
+        spacing: 20
         GridLayout:
-            cols: 4
+            cols: 8
             rows: 1
-            size_hint: 1, .4
+            size_hint: 1, .2
             spacing: 10
 
             Label:
                 text: ""
+
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
 
             Button:
                 text: "Voice"
@@ -38,11 +45,18 @@
             Label:
                 text: ""
 
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
+
 
         GridLayout:
-            cols: 4
-            spacing: 20
-            padding: 20
+            cols: 3
+            spacing: 50
+            #padding: 20
 
             Button:
                 #center: self.parent.center
@@ -56,7 +70,7 @@
 
             Button:
                 #center: self.parent.center
-                font_size: 28
+                #font_size: 28
                 background_normal: 'Images/RPSbuttons/RPS5.png'
                 background_down: 'Images/RPSbuttons/RPS5.png'
                 #pos: (10,100)
@@ -68,7 +82,7 @@
 
             Button:
                 #center: self.parent.center
-                font_size: 28
+                #font_size: 28
                 #pos: (10,100)
                 background_normal: 'Images/mathbuttons/mattknapp5.png'
                 background_down: 'Images/mathbuttons/mattknapp5.png'

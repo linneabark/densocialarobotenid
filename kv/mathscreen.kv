@@ -1,13 +1,13 @@
-<MathScreen>
-    Image:
-        allow_stretch: True
-        source: 'Images/matte.jpg'
-        size: self.size
-        Button:
-            background_color: 0,0,0,0
-            on_touch_down:
-                app.root.transition = SlideTransition(direction = 'right')
-                root.manager.current = "appview"
+#<MathScreen>
+ #   Image:
+  #      allow_stretch: True
+   #     source: 'Images/matte.jpg'
+    #    size: self.size
+     #   Button:
+      #      background_color: 0,0,0,0
+       #     on_touch_down:
+        #        app.root.transition = SlideTransition(direction = 'right')
+         #       root.manager.current = "appview"
 
 <Calculator>
     id: calculator
@@ -28,8 +28,9 @@
             size_hint: 0.1, 0.2
             Button:
                 #text: "Tillbaka"
-                background_normal: 'Images/appviewbutton.png'
-                background_down: 'Images/appviewbutton.png'
+                size: 180, 180
+                background_normal: 'Images/arrowleft.png'
+                background_down: 'Images/arrowleft.png'
                 on_press:
                     root.manager.current = 'appview'
                     root.manager.transition.direction = 'right'
