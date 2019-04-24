@@ -1,11 +1,12 @@
 <Appview>
-   #Change backgroundcolor
-    #canvas:
-       # Color:
-          #  rgba:
-       # Rectangle:
+    #canvas.before:
+     #   Rectangle:
+      #      pos: self.pos
        #     size: self.size
-        #    pos: self.pos
+    #Image:
+     #   source: "Images/redbackground.png"
+      #  keep_ratio: False
+       # allow_stretch: True
 
     BoxLayout:
         orientation: 'vertical'
