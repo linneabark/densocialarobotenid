@@ -24,7 +24,12 @@ import random
 import schedule_app
 #from pygame import mixer
 from kivy.properties import StringProperty
+
+from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
+from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
+    ScheduleScreenFive, ScheduleScreenSix
 from user import User
+from TestScreen import TestScreen
 
 
 #Config.set('kivy','log_level','debug')
@@ -73,101 +78,15 @@ class MainScreen(Screen):
     pass
 
 
-class ScheduleScreen(Screen):
-    def showSchema(self, *args):
-        # wb = WebManager()
-        # wb.findSchema()
-        self.children[0].children[1].background_normal = 'test.png'
-
-    pass
-
 
 class SleepScreen(Screen):
     pass
 
-class ScheduleScreenTwo(Screen):
-    pass
-
-class ScheduleScreenThree(Screen):
-    pass
-
-class ScheduleScreenFour(Screen):
-    pass
-
-class ScheduleScreenFive(Screen):
-    pass
-
-class ScheduleScreenSix(Screen):
-    pass
 
 class MathScreen(Screen):
     pass
 
 
-class RPSScreen(Screen):
-    pass
-
-# Lägg till en skärm som räknar ner tills spelet startar
-
-class ScreenOne(Screen):
-    pass
-
-
-class ScreenTwo(Screen):
-    def animate(self):
-        print('Animation')
-        if(self.children[0].children[0].pos == (80,10)):
-            self.children[0].children[0].pos = (0, 0)
-        anim = Animation(pos=(80, 10))
-        anim.repeat = True
-        anim.start(self.children[0].children[0])
-
-    def on_enter(self, *args):
-        self.animate()
-        Clock.schedule_once(self.callbackfun, 5)
-
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-    # def play(self):
-    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-    #  anim.repeat = True
-    #  anim.start(self.children[0].children[0])
-    #  pass
-class TestScreen(Screen):
-    def send(self,text):
-        print(text)
-    pass
-
-class ScreenThree(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-class ScreenFour(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        list = ["five", "six", "seven"]
-        self.manager.current = random.choice(list)
-
-
-class ScreenFive(Screen):
-    pass
-
-
-class ScreenSix(Screen):
-    pass
-
-
-class ScreenSeven(Screen):
-    pass
 
 class Appview(Screen):
     def launchRPS(self):
@@ -177,11 +96,7 @@ class Appview(Screen):
         
     def doSpeech(self):
         print("speech")
-        sc = SpeechController()
-        screen = sc.listenSpeech()
-        string = sc.recognizedAudio(screen)
-        if(string == "matematik"):
-            self.manager.current = "calculator"
+
 
     def listen(self):
         thread_listen = Thread(target=self.doSpeech)
@@ -244,7 +159,6 @@ class Manager(ScreenManager):
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
-
 
     def startTim(self):
         string = SpeechController().listenForTim(self)
