@@ -406,9 +406,9 @@ class SpeechController():
 
         
 
-    def start_Schedule(self, manager):
+    def start_Schedule(self, Manager):
         # Switch from face screen to schedule screen
-        manager.current = 'schedule'
+        Manager.current = 'schedule'
 
         tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
         tts.save('schedule_instruction.mp3')
@@ -418,7 +418,7 @@ class SpeechController():
         words = self.stringSplitter(demand)
 
         if "nästa" in words:
-            x = manager.current
+            x = Manager.current
             def next_week(x):
                 list = {
                     "schedule": 's2',
@@ -432,7 +432,7 @@ class SpeechController():
             return next_week(x)
 
         elif "förra" in words:
-            x = manager.current
+            x = Manager.current
             def previous_week(x):
                 list = {
                     "s2": 'schedule',
