@@ -21,8 +21,20 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
+
 from pygame import mixer
 from kivy.properties import StringProperty
+
+import schedule_app
+#from pygame import mixer
+from kivy.properties import StringProperty
+
+from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
+from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
+    ScheduleScreenFive, ScheduleScreenSix
+from user import User
+from TestScreen import TestScreen
+
 
 
 #Config.set('kivy','log_level','debug')
@@ -71,98 +83,21 @@ class MainScreen(Screen):
     pass
 
 
+
 class SleepScreen(Screen):
     pass
 
 class ScheduleScreen(Screen):
+
+
+class SleepScreen(Screen):
     pass
 
-class ScheduleScreenTwo(Screen):
-    pass
-
-class ScheduleScreenThree(Screen):
-    pass
-
-class ScheduleScreenFour(Screen):
-    pass
-
-class ScheduleScreenFive(Screen):
-    pass
-
-class ScheduleScreenSix(Screen):
-    pass
 
 class MathScreen(Screen):
     pass
 
 
-class RPSScreen(Screen):
-    pass
-
-# Lägg till en skärm som räknar ner tills spelet startar
-
-class ScreenOne(Screen):
-    pass
-
-
-class ScreenTwo(Screen):
-    def animate(self):
-        print('Animation')
-        if(self.children[0].children[0].pos == (80,10)):
-            self.children[0].children[0].pos = (0, 0)
-        anim = Animation(pos=(80, 10))
-        anim.repeat = True
-        anim.start(self.children[0].children[0])
-
-    def on_enter(self, *args):
-        self.animate()
-        Clock.schedule_once(self.callbackfun, 5)
-
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-    # def play(self):
-    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-    #  anim.repeat = True
-    #  anim.start(self.children[0].children[0])
-    #  pass
-class TestScreen(Screen):
-    def send(self,text):
-        file = open("familiarNames.txt","a")
-        file.write("\n")
-        file.write(text)
-        file.close()
-    pass
-
-class ScreenThree(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-class ScreenFour(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        list = ["five", "six", "seven"]
-        self.manager.current = random.choice(list)
-
-
-class ScreenFive(Screen):
-    pass
-
-
-class ScreenSix(Screen):
-    pass
-
-
-class ScreenSeven(Screen):
-    pass
 
 class Appview(Screen):
     def launchRPS(self):
@@ -170,13 +105,9 @@ class Appview(Screen):
         # subprocess.Popen('python kv/RPS.py', shell=True)
         # RPSscreenApp().run()
         
-    '''def doSpeech(self):
+    def doSpeech(self):
         print("speech")
-        sc = SpeechController()
-        screen = sc.listenSpeech()
-        string = sc.recognizedAudio(screen)
-        if(string == "matematik"):
-            self.manager.current = "calculator"'''
+
 
     def listen(self):
         thread_listen = Thread(target=self.doSpeech)
@@ -194,7 +125,7 @@ class Calculator(Screen):
                 self.display.text = "Error"
     pass
 
-class ScheduleScreen(Screen):
+class ScheduleSScreen(Screen):
     pass
 
 
@@ -246,10 +177,6 @@ class Manager(ScreenManager):
         #self.current = next_screen
 
     def startTim(self):
-        '''
-
-        :return:
-
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
@@ -259,7 +186,7 @@ class Manager(ScreenManager):
             SpeechController().playHello()            
             #self.current.moveMouth()
 
-        '''
+       
         
         #SpeechController.detectKeywords()
 
