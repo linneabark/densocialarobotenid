@@ -33,8 +33,8 @@ class SpeechController():
     
     def mp3Exception(self):
         tts = gTTS(text= 'Jag kunde inte förstå vad du sa, kan du prata tydligare?', lang='sv')
-        tts.save("speakClear.mp3")
-        self.playSound("speakClear.mp3")
+        tts.save("Ljudfiler/speakClear.mp3")
+        self.playSound("Ljudfiler/speakClear.mp3")
         print("Function name: ", funcName)
         if(funcName == "listenForTim"):
             self.listenForTim()
@@ -49,9 +49,9 @@ class SpeechController():
 
     def internetException(self):
         tts = gTTS(text= 'Inget internet', lang='sv')
-        tts.save("internetException.mp3")
+        tts.save("Ljudfiler/internetException.mp3")
 
-        self.playSound("internetException.mp3")
+        self.playSound("Ljudfiler/internetException.mp3")
 
         '''mixer.init()
         mixer.music.load("internetException.mp3")
@@ -81,8 +81,8 @@ class SpeechController():
             print("You said: " + self.r.recognize_google(audio, language = "sv-SV"))
             string = self.r.recognize_google(audio, language = "sv-SV")
             tts = gTTS(text='Hej ' +string + ' hur mar du?', lang='sv')
-            tts.save("helloName.mp3")
-            self.playSound("helloName.mp3")
+            tts.save("Ljudfiler/helloName.mp3")
+            self.playSound("Ljudfiler/helloName.mp3")
         except sr.UnknownValueError:
             print("Please try again")
             self.mp3Exception()
@@ -140,16 +140,16 @@ class SpeechController():
         if(name == None):
             name = ""
         tts = gTTS(text= 'Hej' + name + 'vad vill du göra?', lang='sv')
-        tts.save("helloWhatToDo.mp3")
-        self.playSound("helloWhatToDo.mp3")
+        tts.save("Ljudfiler/helloWhatToDo.mp3")
+        self.playSound("Ljudfiler/helloWhatToDo.mp3")
         self.whatToDo()
 
 
     def playHello(self):
         funcName = "playHello"
         tts = gTTS(text= 'Hej! Jag heter Kim, vad heter du?', lang='sv')
-        tts.save("helloWhatsYourName.mp3")
-        self.playSound("helloWhatsYourName.mp3")
+        tts.save("Ljudfiler/helloWhatsYourName.mp3")
+        self.playSound("Ljudfiler/helloWhatsYourName.mp3")
 
         time.sleep(4)
         audio = self.listenSpeech(7)
@@ -159,8 +159,8 @@ class SpeechController():
         funcName = "whatToDo"
         time.sleep(1)
         tts = gTTS(text='Vill du se schema, räkna matte, spela sten, sax, påse eller prata?', lang='sv')
-        tts.save("whatToDo.mp3")
-        self.playSound("whatToDo.mp3")
+        tts.save("Ljudfiler/whatToDo.mp3")
+        self.playSound("Ljudfiler/whatToDo.mp3")
 
         time.sleep(6)
         audio = self.listenSpeech(7)
@@ -186,8 +186,8 @@ class SpeechController():
             x=1 #Skicka till infometod
         else:
             tts = gTTS(text='Kan du upprepa?', lang='sv')
-            tts.save("didntUnderstand.mp3")
-            self.playSound("didntUnderstand.mp3")
+            tts.save("Ljudfiler/didntUnderstand.mp3")
+            self.playSound("Ljudfiler/didntUnderstand.mp3")
 
             audio = self.listenSpeech(7)
             self.handleKeyword(self.recognizedAudio(audio))
@@ -195,8 +195,8 @@ class SpeechController():
     def startTalking(self):
         funcName = "startTalking"
         tts = gTTS(text='Kul att du vill prata! Vill du höra ett skämt eller småprata?', lang='sv')
-        tts.save("whatToTalkAbout.mp3")
-        self.playSound("whatToTalkAbout.mp3")
+        tts.save("Ljudfiler/whatToTalkAbout.mp3")
+        self.playSound("Ljudfiler/whatToTalkAbout.mp3")
 
         time.sleep(5)
         audio = self.listenSpeech(7)
@@ -210,16 +210,16 @@ class SpeechController():
         elif any(("småprata" in s for s in keywords) or ("prata" in s for s in keywords)):
             self.smallTalk() #Gå till småpratmetod
         else:
-            self.playSound("didntUnderstand.mp3")
+            self.playSound("Ljudfiler/didntUnderstand.mp3")
 
             audio = self.listenSpeech(7)
             self.handleTalkKeyword(self.recognizedAudio(audio))
 
     def smallTalk(self):
         tts = gTTS(text='Hur gammal är du?', lang='sv')
-        tts.save("howOld.mp3")
+        tts.save("Ljudfiler/howOld.mp3")
 
-        self.playSound("howOld.mp3")
+        self.playSound("Ljudfiler/howOld.mp3")
         
 
     def joke(self):
@@ -229,15 +229,15 @@ class SpeechController():
                         'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
                         'Då gick norsken in och efter två minuter kom han ut, grön i ansiktet och stönade: Grisen fes!'
                         'Sedan var det Bellmans tur att gå in i svinstian. Efter tio minuter kom grisen ut och stönade: Bellman fes!', lang='sv')
-        tts.save("Bellman.mp3")
-        self.playSound("Bellman.mp3")
+        tts.save("Ljudfiler/Bellman.mp3")
+        self.playSound("Ljudfiler/Bellman.mp3")
 
         time.sleep(38)
         self.playSound("Ljudfiler/drumroll.mp3")   #Dab?
 
         tts = gTTS(text='Vill du höra ett till skämt, prata eller göra något annat?', lang='sv')
-        tts.save("SomethingElse.mp3")
-        self.playSound("SomethingElse.mp3")
+        tts.save("Ljudfiler/SomethingElse.mp3")
+        self.playSound("Ljudfiler/SomethingElse.mp3")
 
         time.sleep(5)
         audio = self.listenSpeech(7)
@@ -254,8 +254,8 @@ class SpeechController():
             self.whatToDo()
         else:
             tts = gTTS(text='Jag förstod inte, kan du säga igen?', lang='sv')
-            tts.save("didntUnderstand.mp3")
-            self.playSound("didntUnderstand.mp3")
+            tts.save("Ljudfiler/didntUnderstand.mp3")
+            self.playSound("Ljudfiler/didntUnderstand.mp3")
 
             audio = self.listenSpeech(7)
             self.PostJoke(self.recognizedAudio(audio))
@@ -271,33 +271,33 @@ class SpeechController():
             are_you_ready_answer = self.listenSpeech(5)
             if(self.recognizedAudio(are_you_ready_answer) == "ja"):
                 tts = gTTS(text='Sten, sax, påse!', lang='sv')               # Ta bort efter första inspelning
-                tts.save("stenSaxPase.mp3")
-                self.playSound("stenSaxPase.mp3")
+                tts.save("Ljudfiler/stenSaxPase.mp3")
+                self.playSound("Ljudfiler/stenSaxPase.mp3")
                 time.sleep(3)
                 sign = random.randint(1, 3)
                 if(sign == 1):
                     tts = gTTS(text='Jag valde sten!', lang='sv')               # Ta bort efter första inspelning
-                    tts.save("iChoseStone.mp3")
-                    self.playSound("iChoseStone.mp3")
+                    tts.save("Ljudfiler/iChoseStone.mp3")
+                    self.playSound("Ljudfiler/iChoseStone.mp3")
                 elif(sign == 2):
                     tts = gTTS(text='Jag valde sax!', lang='sv')               # Ta bort efter första inspelning
-                    tts.save("iChoseScissors.mp3")
-                    self.playSound("iChoseScissors.mp3")
+                    tts.save("Ljudfiler/iChoseScissors.mp3")
+                    self.playSound("Ljudfiler/iChoseScissors.mp3")
                 elif(sign == 3):
                     tts = gTTS(text='Jag valde påse!', lang='sv')               # Ta bort efter första inspelning
-                    tts.save("iChosePaper.mp3")
-                    self.playSound("iChosePaper.mp3")
+                    tts.save("Ljudfiler/iChosePaper.mp3")
+                    self.playSound("Ljudfiler/iChosePaper.mp3")
                 print("char:", sign)                                   # Skicka c till fysisk design för sten/sax/påse
                 # Eventuell delay/klartecken från fysisk design
                 tts2 = gTTS(text='Vill du spela igen?', lang='sv')  # Ta bort efter första inspelning
-                tts2.save("playAgain.mp3")
-                self.playSound("playAgain.mp3")
+                tts2.save("Ljudfiler/playAgain.mp3")
+                self.playSound("Ljudfiler/playAgain.mp3")
 
                 play_again_answer = self.listenSpeech(3)
                 if (self.recognizedAudio(play_again_answer) == "nej"):
                     tts = gTTS(text='Okej, vi kan spela mer en annan gång', lang='sv') # Ta bort efter första inspelning
-                    tts.save("playAnotherTime.mp3")
-                    self.playSound("playAnotherTime.mp3")
+                    tts.save("Ljudfiler/playAnotherTime.mp3")
+                    self.playSound("Ljudfiler/playAnotherTime.mp3")
                     self.whatToDo()
                     break
             elif(self.recognizedAudio(are_you_ready_answer) == "nej"):
@@ -305,8 +305,8 @@ class SpeechController():
                 startRPSVoice()
             else:
                 tts2 = gTTS(text='Fattar ej, vi testar igen!', lang='sv')  # Ta bort efter första inspelning
-                tts2.save("tryAgain.mp3")
-                self.playSound("tryAgain.mp3")
+                tts2.save("Ljudfiler/tryAgain.mp3")
+                self.playSound("Ljudfiler/tryAgain.mp3")
 
 
 
