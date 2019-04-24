@@ -135,7 +135,7 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-    #user = User(None,None,None)
+    name = ""
     isVoiceActive = False
 
     def __init__(self, **kwargs):
@@ -184,7 +184,7 @@ class Manager(ScreenManager):
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
-            SpeechController().playHelloName("hej")
+            SpeechController().playHelloName(self.name)
         if string == "hej":
             self.isVoiceActive = True
             SpeechController().playHello()            

@@ -157,7 +157,7 @@ class SpeechController():
         stringArray = self.stringSplitter(string)
         print(stringArray)
         if(self.containsHiMyAndName(stringArray)):
-                manager.user.name = self.detectName(stringArray)
+                manager.name = self.detectName(stringArray)
                 print('Familiar user')
                 return "familiarUser"
         for x in stringArray:
