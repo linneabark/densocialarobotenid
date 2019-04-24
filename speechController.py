@@ -240,7 +240,7 @@ class SpeechController():
         tts.save("howOld.mp3")
 
         self.playSound("howOld.mp3")
-        
+
 
     def joke(self):
         #Slumpa olika skämt
