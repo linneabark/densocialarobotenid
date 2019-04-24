@@ -111,7 +111,7 @@ class SpeechController():
             return audio
             #self.tryListen(audio)
 
-    def goodbye(self):
+    def goodbye(self):  # Lägg till personliga fraser
         tts = gTTS(text='Vill du verkligen säga hejdå?', lang='sv')
         tts.save("Ljudfiler/goodbye.mp3")
         self.playSound("Ljudfiler/goodbye.mp3")
@@ -298,9 +298,9 @@ class SpeechController():
             return False
 
     def startRPSVoice(self):
-        funcName = "startRPSVoice"
         self.funcName = "startRPSVoice"
-        tts = gTTS(text='Nu spelar vi! Är du redo?', lang='sv')               # Ta bort efter första inspelning
+        self.playRPSPhrases()
+        tts = gTTS(text='Är du redo?', lang='sv')               # Ta bort efter första inspelning
         tts.save("Ljudfiler/ready.mp3")
         self.playSound("Ljudfiler/ready.mp3")        
         audio = self.listenSpeech(5)
@@ -371,6 +371,34 @@ class SpeechController():
             tts.save("Ljudfiler/canYouRepeat.mp3")
             self.playSound("Ljudfiler/canYouRepeat.mp3")
             self.playAgain()
+
+    def playRPSPhrases(self):
+        nr = random.randint(1, 10)
+        if(nr == 1):
+            tts = gTTS(text='Passa dig, jag känner mig vass idag!', lang='sv')  # Ta bort efter första inspelning
+            tts.save("Ljudfiler/feelingSharp.mp3")
+            self.playSound("Ljudfiler/feelingSharp.mp3")
+        if(nr == 2):
+            tts = gTTS(text='Jag märker om du fuskar!', lang='sv')  # Ta bort efter första inspelning
+            tts.save("Ljudfiler/iKnowIfYouCheat.mp3")
+            self.playSound("Ljudfiler/iKnowIfYouCheat.mp3")
+        if(nr == 3):
+            tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')  # Ta bort efter första inspelning
+            tts.save("Ljudfiler/osChampion.mp3")
+            self.playSound("Ljudfiler/osChampion.mp3")
+        if(nr == 4):
+            tts = gTTS(text='Hoppas du har dina turstrumpor på dig idag!', lang='sv')  # Ta bort efter första inspelning
+            tts.save("Ljudfiler/luckySocks.mp3")
+            self.playSound("Ljudfiler/luckySocks.mp3")
+        if(nr == 5):
+            tts = gTTS(text='Tvinga mig inte att krossa dig', lang='sv')  # Ta bort efter första inspelning
+            tts.save("Ljudfiler/crushYou.mp3")
+            self.playSound("Ljudfiler/crushYou.mp3")
+        else:
+            tts = gTTS(text='Nu spelar vi!', lang='sv')  # Ta bort efter första inspelning
+            tts.save("Ljudfiler/letsPlay.mp3")
+            self.playSound("Ljudfiler/letsPlay.mp3")
+
         
 
     def start_Schedule(self, manager):
