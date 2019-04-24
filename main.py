@@ -94,9 +94,6 @@ class SleepScreen(Screen):
 class ScheduleScreen(Screen):
     pass
 
-class SleepScreen(Screen):
-    pass
-
 
 class MathScreen(Screen):
     pass
