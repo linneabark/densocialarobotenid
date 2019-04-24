@@ -4,29 +4,30 @@ import json
 
 class FileHandler:
 
-     def create(self):
-          pass
-
-     def read(self):
-          pass
-     def append(self):
-          pass
-
-     
-d = {"Name":"Rasmus",
-     "age":23
-     }
-json.dump(d,open("Rasmus.txt","w"), indent=2)
+     def create(self,name):
+          d = {"name": name,
+               "age":"",
+               "interests":"",
+               "color":""
+          }
+          json.dump(d,open(name+".json","w"),indent=2)
 
 
-file2 = open("Rasmus.txt","r")
+     def read(self,name,string):
+          user = json.load(open(name+".json","r"))
+          return user.get(string)
+          
 
-#print(file.get("age"))
-string = "Rasmus"
-d3 = json.load(open(string+".txt","r"))
-print(d3.get("Name"))
+     '''
+     Detta är copy paste, kanske måste källhänvisa
+     https://stackoverflow.com/questions/21035762/python-read-json-file-and-modify
+     '''
+     def append(self,name,category,info):
+          with open(name+".json", "r+") as f:
+              data = json.load(f)
+              data[category] = info
+              f.seek(0)
+              json.dump(data,f,indent=4)
+              f.truncate()
 
-    #print(line.get("Name"))
-#d3 = json.load("text.txt")
-#print(d3.get("Name"))
 
