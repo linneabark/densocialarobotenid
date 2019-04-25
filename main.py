@@ -134,7 +134,6 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-    name = ""
     isVoiceActive = False
 
     def __init__(self, **kwargs):
