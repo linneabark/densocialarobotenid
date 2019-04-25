@@ -33,11 +33,11 @@ from kivy.properties import StringProperty
 #from pygame import mixer
 from kivy.properties import StringProperty
 
-from densocialarobotenid.rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
-from densocialarobotenid.scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
+from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
+from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
-from densocialarobotenid.TestScreen import TestScreen
+from TestScreen import TestScreen
 
 
 
@@ -45,7 +45,7 @@ from densocialarobotenid.TestScreen import TestScreen
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-#from densocialarobotenid.speechController import SpeechController
+from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
@@ -60,16 +60,17 @@ class MainScreen(Screen):
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
     speaking = False
+    img_src = StringProperty('Images/Face/mouthClosed.jpg')
 
-    if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
-        img_src = StringProperty('Images/Face/speaking.gif')
-    else:
-        img_src = StringProperty('Images/Face/mouthClosed.png')
+    #if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
+    #    img_src = StringProperty('Images/Face/speaking.gif')
+    #else:
+    #    img_src = StringProperty('Images/Face/mouthClosed.png')
 
-    '''def moveMouth(self):
-        while(SpeechController.speaking):
+    def moveMouth(self):
+        while(1):
             self.img_src = 'Images/Face/speaking.gif'
-        self.img_src = 'Images/Face/mouthClosed.jpg'''''
+        self.img_src = 'Images/Face/mouthClosed.jpg'
 
 
         #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')

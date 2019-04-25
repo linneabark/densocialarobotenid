@@ -8,8 +8,8 @@ import pygame.mixer
 from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
-from densocialarobotenid.main import Manager, MainScreen
-from densocialarobotenid.FileController import FileHandler
+#from main import Manager, MainScreen
+from FileController import FileHandler
 
 class SpeechController():
     def __init__(self):
@@ -29,7 +29,7 @@ class SpeechController():
 
     def playSound(self, fileName):
         self.speaking = True
-        MainScreen.moveMouth()
+        #MainScreen.moveMouth()
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
@@ -162,7 +162,7 @@ class SpeechController():
         print(stringArray)
         if(self.containsHiMyAndName(stringArray)):
                 manager.name = self.detectName(stringArray)
-                FileHandler.create(manager.name)
+                FileHandler().create(manager.name)
                 print('Familiar user')
                 return "familiarUser"
         for x in stringArray:
@@ -174,6 +174,7 @@ class SpeechController():
     def playHelloName(self, name):
         if(name == None):
             name = ""
+        FileHandler().create(name)
         tts = gTTS(text= 'Hej' + name + 'vad vill du göra?', lang='sv')
         tts.save("Ljudfiler/helloWhatToDo.mp3")
         self.playSound("Ljudfiler/helloWhatToDo.mp3")
