@@ -29,6 +29,7 @@
             Button:
                 text: "Tillbaka"
                 on_press:
+                    app.root.transition = SlideTransition(direction='right')
                     root.manager.current = 'appview'
                 size_hint: 0.4, 0.4
                 anchor_x: 'center'

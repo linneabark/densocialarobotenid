@@ -21,24 +21,14 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-
 #import schedule_app
-
-
 from pygame import mixer
 from kivy.properties import StringProperty
-
-
-
-#from pygame import mixer
-from kivy.properties import StringProperty
-
 from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
 from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
 from TestScreen import TestScreen
-
 
 
 #Config.set('kivy','log_level','debug')
@@ -59,14 +49,20 @@ class MainScreen(Screen):
     #  anim.start(self.children[0].children[0])
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
+    speaking = False
 
-    
     if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
         img_src = StringProperty('Images/Face/speaking.gif')
     else:
         img_src = StringProperty('Images/Face/mouthClosed.png')
 
-        img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
+    '''def moveMouth(self):
+        while(SpeechController.speaking):
+            self.img_src = 'Images/Face/speaking.gif'
+        self.img_src = 'Images/Face/mouthClosed.jpg'''''
+
+
+        #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
 
     '''def blink(self):
         if 1==1: #Starta klocka och tråd?
@@ -81,6 +77,9 @@ class MainScreen(Screen):
     #print('Total number of threads: ', threading.activeCount())
     #print('List of threads: ', threading.enumerate())
 
+  
+    def on_enter(self, *args):
+        self.manager.startTimThread(5)
 
     def schema(self):
         ScheduleScreen.showSchema(self)
@@ -118,7 +117,7 @@ class Appview(Screen):
         thread_listen.start()
 
     pass
-
+        
 class Calculator(Screen):
 
     def calculate(self, calculation):
@@ -135,7 +134,6 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-    #user = User(None,None,None)
     isVoiceActive = False
 
     def __init__(self, **kwargs):
@@ -145,9 +143,8 @@ class Manager(ScreenManager):
         self.transition.duration = 1
         self.transition.direction = 'up'
         #Clock.schedule_interval(self.callback, 2)
-        Clock.schedule_interval(self.startTimThread, 8)
-        #Clock.schedule_interval(self.startKeywordThread, 8)
-        
+        #Clock.schedule_interval(self.startTimThread, 8)
+              
 
     def initialize(self):
         self.add_widget(MainScreen(name="main"))
@@ -176,22 +173,24 @@ class Manager(ScreenManager):
         self.t = time.time()
 
 
+    
     def startSchedule(self):
         SpeechController.start_Schedule(self, Manager)
-        #self.current = next_screen
+        self.current = next_screen
 
     def startTim(self):
+        print('Start Tim')
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
-            SpeechController().playHelloName("hej")
+            SpeechController().playHelloName(self.name)
         if string == "hej":
             self.isVoiceActive = True
             SpeechController().playHello()            
             #self.current.moveMouth()
 
        
-        
+
         #SpeechController.detectKeywords()
 
                 
