@@ -9,7 +9,7 @@ from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
 
-from main import Manager, MainScreen
+#from main import Manager, MainScreen
 from FileController import FileHandler
 
 class SpeechController():
@@ -40,8 +40,8 @@ class SpeechController():
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
-        while(mixer.music.get_busy():
-            print("lmao")
+        #while(mixer.music.get_busy():
+        #    print("lmao")
         self.speaking = False
         
     
@@ -186,6 +186,7 @@ class SpeechController():
         if(name == None):
             name = ""
         FileHandler().create(name)
+        self.name = name
         tts = gTTS(text= 'Hej' + name + 'vad vill du göra?', lang='sv')
         tts.save("Ljudfiler/helloWhatToDo.mp3")
         self.playSound("Ljudfiler/helloWhatToDo.mp3")
@@ -276,7 +277,8 @@ class SpeechController():
             time.sleep(3)
             audio = self.listenSpeech(4)
             string = self.recognizedAudio(audio)
-            FileHandler.append(self.name,"age",string)
+            print(string)
+            FileHandler().append(self.name,"age",string)
             
         elif question == 2:
             tts = gTTS(text='Vilken är din favoritfärg?', lang='sv')
@@ -286,7 +288,8 @@ class SpeechController():
             time.sleep(3)
             audio = self.listenSpeech(4)
             string = self.recognizedAudio(audio)
-            FileHandler.append(self.name, "color", string)
+            print(string)
+            FileHandler().append(self.name, "color", string)
 
         elif question == 3:
             tts = gTTS(text='Vilken är din favoritsport?', lang='sv')
@@ -296,7 +299,8 @@ class SpeechController():
             time.sleep(3)
             audio = self.listenSpeech(4)
             string = self.recognizedAudio(audio)
-            FileHandler.append(self.name, "sport", string)
+            print(string)
+            FileHandler().append(self.name, "sport", string)
 
 
     def joke(self):
