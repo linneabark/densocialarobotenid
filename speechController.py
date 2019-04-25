@@ -11,6 +11,9 @@ import speech_recognition as sr
 
 #from main import Manager, MainScreen
 from FileController import FileHandler
+from mathtest import MathVoice
+from main import Manager, MainScreen
+from FileController import FileHandler
 
 class SpeechController():
     def __init__(self):
@@ -226,7 +229,7 @@ class SpeechController():
             #Manager.startSchedule() 
             x=1
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
-            x=1 #skicka till mattemetod
+            self.startMath()
         elif any(("sten" in s for s in keywords) or ("sax" in s for s in keywords) or ("påse" in s for s in keywords) or ("spela" in s for s in keywords)):
             print('Startar RPS')
             self.startRPSVoice()
@@ -462,6 +465,10 @@ class SpeechController():
             tts.save("Ljudfiler/letsPlay.mp3")
             self.playSound("Ljudfiler/letsPlay.mp3")
             time.sleep(2)
+
+    def startMath(self):
+        self.funcName = "startMath"
+        MathVoice.start_mathtest()
 
         
     '''
