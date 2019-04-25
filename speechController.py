@@ -8,7 +8,8 @@ import pygame.mixer
 from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
-#from main import Manager, MainScreen
+
+from main import Manager, MainScreen
 from FileController import FileHandler
 
 class SpeechController():
@@ -17,6 +18,7 @@ class SpeechController():
         self.m = sr.Microphone()
         self.funcName = ""
         self.speaking = False
+        self.name = ""
 
 
     def stringSplitter(self, string):
@@ -158,8 +160,8 @@ class SpeechController():
 
     def detectName(self, stringArray):
         namePos = stringArray.index("heter") + 1
-        name = stringArray[namePos]
-        return name
+        self.name = stringArray[namePos]
+        return self.name
 
    
     def listenForTim(self, manager):
@@ -171,10 +173,10 @@ class SpeechController():
         stringArray = self.stringSplitter(string)
         print(stringArray)
         if(self.containsHiMyAndName(stringArray)):
-                manager.name = self.detectName(stringArray)
-                FileHandler().create(manager.name)
-                print('Familiar user')
-                return "familiarUser"
+            self.name = self.detectName(stringArray)
+            FileHandler.create(self.name)
+            print('Familiar user')
+            return "familiarUser"
         elif any("hej" in s for s in stringArray):
                 return "hej"
         elif any("spela" in s for s in stringArray):
@@ -265,9 +267,37 @@ class SpeechController():
             self.handleTalkKeyword(self.recognizedAudio(audio))
 
     def smallTalk(self):
-        tts = gTTS(text='Hur gammal är du?', lang='sv')
-        tts.save("Ljudfiler/howOld.mp3")
-        self.playSound("Ljudfiler/howOld.mp3")
+        question = random.randint(1,3)
+        if question == 1:
+            tts = gTTS(text='Hur gammal är du?', lang='sv')
+            tts.save("Ljudfiler/howOld.mp3")
+            self.playSound("Ljudfiler/howOld.mp3")
+
+            time.sleep(3)
+            audio = self.listenSpeech(4)
+            string = self.recognizedAudio(audio)
+            FileHandler.append(self.name,"age",string)
+            
+        elif question == 2:
+            tts = gTTS(text='Vilken är din favoritfärg?', lang='sv')
+            tts.save("Ljudfiler/favoriteColor.mp3")
+            self.playSound("Ljudfiler/favoriteColor.mp3")
+
+            time.sleep(3)
+            audio = self.listenSpeech(4)
+            string = self.recognizedAudio(audio)
+            FileHandler.append(self.name, "color", string)
+
+        elif question == 3:
+            tts = gTTS(text='Vilken är din favoritsport?', lang='sv')
+            tts.save("Ljudfiler/favoriteSport.mp3")
+            self.playSound("Ljudfiler/favoriteSport.mp3")
+
+            time.sleep(3)
+            audio = self.listenSpeech(4)
+            string = self.recognizedAudio(audio)
+            FileHandler.append(self.name, "sport", string)
+
 
     def joke(self):
         self.funcName = "joke"
