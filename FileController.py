@@ -6,14 +6,14 @@ class FileHandler:
      def create(self,name):
           d = {"name": name,
                "age":"",
-               "interests":"",
+               "sport":"",
                "color":""
           }
           json.dump(d,open("users/"+name+".json","w"),indent=2)
 
     #Hittar en person och läser infon som man vill ha
      def read(self,name,info):
-          user = json.load(open(name+".json","r"))
+          user = json.load(open("users/"+name+".json","r"))
           return user.get(info)
           
 
@@ -23,7 +23,7 @@ class FileHandler:
      '''
     # Lägger till info on en person
      def append(self,name,category,info):
-          with open(name+".json", "r+") as f:
+          with open("users/"+name+".json", "r+") as f:
               data = json.load(f)
               data[category] = info
               f.seek(0)
