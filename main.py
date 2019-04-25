@@ -172,8 +172,6 @@ class Manager(ScreenManager):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
-
-    
     def startSchedule(self):
         SpeechController.start_Schedule(self, Manager)
         self.current = next_screen
