@@ -6,7 +6,7 @@ class FileHandler:
      def create(self,name):
           d = {"name": name,
                "age":"",
-               "interests":"",
+               "sport":"",
                "color":""
           }
           json.dump(d,open("users/"+name+".json","w"),indent=2)
