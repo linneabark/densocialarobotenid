@@ -1,9 +1,10 @@
 import json
-
+# -*- coding: utf-8 -*-
 
 class FileHandler:
     #Skapar en ny användare och sparar denna i en jsonfil
      def create(self,name):
+          name = name.lower()
           d = {"name": name,
                "age":"",
                "sport":"",
