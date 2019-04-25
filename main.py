@@ -15,7 +15,7 @@ from kivy.properties import NumericProperty, ReferenceListProperty, \
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.animation import Animation
-from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
+from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition, TransitionBase
 # from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
@@ -50,15 +50,17 @@ class MainScreen(Screen):
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
     speaking = False
-    img_src = StringProperty('Images/Face/mouthClosed.jpg')
+    img_src = 'Images/Face/mouthClosed.jpg'
 
     def moveMouth(self,sc):
         if(sc.speaking):
             print("talking")
-            self.img_src = 'Images/Face/speaking.gif'
+            #self.img_src = 'Images/Face/speaking.gif'
+            print(self.children[0].children[1].source)
+            self.children[0].children[1].source = 'Images/Face/speaking.gif'
         else:
             print("not talking")
-            self.img_src = 'Images/Face/mouthClosed.jpg'
+            self.children[0].children[1].source= 'Images/Face/mouthClosed.jpg'
 
 
         #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
@@ -77,7 +79,7 @@ class MainScreen(Screen):
     #print('List of threads: ', threading.enumerate())
 
   
-    def on_enter(self, *args):
+    def on_touch_down(self, touch):
         self.manager.startTimThread(5)
 
     def schema(self):
@@ -87,6 +89,9 @@ class MainScreen(Screen):
 
 
 class SleepScreen(Screen):
+    pass
+
+class TalkingScreen(Screen):
     pass
 
 class ScheduleScreen(Screen):
@@ -144,7 +149,7 @@ class Manager(ScreenManager):
         self.transition.direction = 'up'
         #Clock.schedule_interval(self.callback, 2)
         #Clock.schedule_interval(self.startTimThread, 8)
-        Clock.schedule_interval(self.moveMouth,1)
+        Clock.schedule_interval(self.moveMouth,0.2)
               
 
     def initialize(self):
@@ -168,14 +173,18 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
+        self.add_widget(TalkingScreen(name="talking"))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
     def moveMouth(self,sec):
-        self.get_screen("main").moveMouth(self.sc)
-
+        self.transition = TransitionBase()
+        if(self.sc.speaking):
+            self.current = "talking"
+        else:
+            self.current = "main"
 
     
     def startSchedule(self):
