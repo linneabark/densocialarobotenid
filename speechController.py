@@ -32,7 +32,7 @@ class SpeechController():
         mixer.music.play()
     
     def mp3Exception(self):
-        tts = gTTS(text= 'Kan du prata tydligare?', lang='sv')
+        tts = gTTS(text= 'MP3, kan du prata tydligare?', lang='sv')
         tts.save("Ljudfiler/speakClear.mp3")
         self.playSound("Ljudfiler/speakClear.mp3")
         time.sleep(2)
@@ -217,12 +217,44 @@ class SpeechController():
         elif any("info" in s for s in keywords):
             x=1 #Skicka till infometod
         else:
-            tts = gTTS(text='Kan du upprepa?', lang='sv')
-            tts.save("Ljudfiler/didntUnderstand.mp3")
-            self.playSound("Ljudfiler/didntUnderstand.mp3")
-
+            self.didntUnderstand()
             audio = self.listenSpeech(7)
             self.handleKeyword(self.recognizedAudio(audio))
+
+    def overallKeyword(self, keyword):
+        if (self.containsGoodbye(keyword)):
+            self.goodbye()
+        elif (keyword == "info"):
+            x=1 # skicka till infometod
+        elif (keyword == "klocka"):
+            x=1 # skicka till klockmetod
+        else:
+            x=1 # break?
+
+    def didntUnderstand(self):
+        nr = random.randint(1, 10)
+        if(nr == 1):
+            tts = gTTS(text='Jag förstod inte, kan du säga igen!', lang='sv')
+            sec = 3
+        if(nr == 2):
+            tts = gTTS(text='Kan du upprepa det där?', lang='sv')
+            sec = 2
+        if(nr == 3):
+            tts = gTTS(text='Jag har persilja i öronen så jag uppfattade inte det där', lang='sv')
+            sec = 3
+        if(nr == 4):
+            tts = gTTS(text='Kan du prata tydligare', lang='sv')
+            sec = 2
+        if(nr == 5):
+            tts = gTTS(text='Kan du upprepa', lang='sv')
+            sec = 3
+
+        tts.save("Ljudfiler/didntUnderstand1.mp3")
+        self.playSound("Ljudfiler/didntUnderstand1.mp3")
+        time.sleep(sec)
+
+
+
 
     def startTalking(self):
         self.funcName = "startTalking"
@@ -328,27 +360,20 @@ class SpeechController():
         elif(self.containsGoodbye(answer)):
             self.goodbye()
         else:
-            tts2 = gTTS(text='Fattar ej, vi testar igen!', lang='sv')  # Ta bort efter första inspelning
+            tts2 = gTTS(text='Jag förstod inte, vi testar igen!', lang='sv')  # Ta bort efter första inspelning
             tts2.save("Ljudfiler/tryAgain.mp3")
             self.playSound("Ljudfiler/tryAgain.mp3")
 
         
     def rockPaperScissors(self, sign):
         if(sign == 1):
-            print('Jag valde sten')
-            tts = gTTS(text='Jag valde sten!', lang='sv')               # Ta bort efter första inspelning
-            tts.save("Ljudfiler/iChoseStone.mp3")
-            self.playSound("Ljudfiler/iChoseStone.mp3")
+            tts = gTTS(text='Jag valde sten!', lang='sv')
         elif(sign == 2):
-            print('Jag valde sax')
-            tts = gTTS(text='Jag valde sax!', lang='sv')               # Ta bort efter första inspelning
-            tts.save("Ljudfiler/iChoseScissors.mp3")
-            self.playSound("Ljudfiler/iChoseScissors.mp3")
+            tts = gTTS(text='Jag valde sax!', lang='sv')
         elif(sign == 3):
-            print('Jag valde påse')
-            tts = gTTS(text='Jag valde påse!', lang='sv')               # Ta bort efter första inspelning
-            tts.save("Ljudfiler/iChosePaper.mp3")
-            self.playSound("Ljudfiler/iChosePaper.mp3")
+            tts = gTTS(text='Jag valde påse!', lang='sv')
+        tts.save("Ljudfiler/iChoseX.mp3")
+        self.playSound("Ljudfiler/iChoseX.mp3")
 
     def playAgain(self):
         tts = gTTS(text='Vill du spela igen?', lang='sv')  # Ta bort efter första inspelning
@@ -367,37 +392,25 @@ class SpeechController():
             self.playSound("Ljudfiler/playAnotherTime.mp3")
             self.whatToDo()
         else:
-            tts = gTTS(text='Kan du upprepa', lang='sv')               # Ta bort efter första inspelning
-            tts.save("Ljudfiler/canYouRepeat.mp3")
-            self.playSound("Ljudfiler/canYouRepeat.mp3")
+            self.didntUnderstand()
             self.playAgain()
 
     def playRPSPhrases(self):
         nr = random.randint(1, 10)
         if(nr == 1):
-            tts = gTTS(text='Passa dig, jag känner mig vass idag!', lang='sv')  # Ta bort efter första inspelning
-            tts.save("Ljudfiler/feelingSharp.mp3")
-            self.playSound("Ljudfiler/feelingSharp.mp3")
+            tts = gTTS(text='Passa dig, jag känner mig vass idag!', lang='sv')
         if(nr == 2):
-            tts = gTTS(text='Jag märker om du fuskar!', lang='sv')  # Ta bort efter första inspelning
-            tts.save("Ljudfiler/iKnowIfYouCheat.mp3")
-            self.playSound("Ljudfiler/iKnowIfYouCheat.mp3")
+            tts = gTTS(text='Jag märker om du fuskar!', lang='sv')
         if(nr == 3):
-            tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')  # Ta bort efter första inspelning
-            tts.save("Ljudfiler/osChampion.mp3")
-            self.playSound("Ljudfiler/osChampion.mp3")
+            tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')
         if(nr == 4):
-            tts = gTTS(text='Hoppas du har dina turstrumpor på dig idag!', lang='sv')  # Ta bort efter första inspelning
-            tts.save("Ljudfiler/luckySocks.mp3")
-            self.playSound("Ljudfiler/luckySocks.mp3")
+            tts = gTTS(text='Hoppas du har dina turstrumpor på dig idag!', lang='sv')
         if(nr == 5):
-            tts = gTTS(text='Tvinga mig inte att krossa dig', lang='sv')  # Ta bort efter första inspelning
-            tts.save("Ljudfiler/crushYou.mp3")
-            self.playSound("Ljudfiler/crushYou.mp3")
+            tts = gTTS(text='Tvinga mig inte att krossa dig', lang='sv')
         else:
             tts = gTTS(text='Nu spelar vi!', lang='sv')  # Ta bort efter första inspelning
-            tts.save("Ljudfiler/letsPlay.mp3")
-            self.playSound("Ljudfiler/letsPlay.mp3")
+        tts.save("Ljudfiler/RPSPhrase.mp3")
+        self.playSound("Ljudfiler/RPSPhrase.mp3")
 
         
 
