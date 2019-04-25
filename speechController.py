@@ -267,7 +267,6 @@ class SpeechController():
             tts = gTTS(text='Hur gammal är du?', lang='sv')
             tts.save("Ljudfiler/howOld.mp3")
             self.playSound("Ljudfiler/howOld.mp3")
-
             time.sleep(3)
             audio = self.listenSpeech(4)
             string = self.recognizedAudio(audio)
@@ -277,7 +276,6 @@ class SpeechController():
             tts = gTTS(text='Vilken är din favoritfärg?', lang='sv')
             tts.save("Ljudfiler/favoriteColor.mp3")
             self.playSound("Ljudfiler/favoriteColor.mp3")
-
             time.sleep(3)
             audio = self.listenSpeech(4)
             string = self.recognizedAudio(audio)
@@ -287,11 +285,28 @@ class SpeechController():
             tts = gTTS(text='Vilken är din favoritsport?', lang='sv')
             tts.save("Ljudfiler/favoriteSport.mp3")
             self.playSound("Ljudfiler/favoriteSport.mp3")
-
             time.sleep(3)
             audio = self.listenSpeech(4)
             string = self.recognizedAudio(audio)
             FileHandler.append(self.name, "sport", string)
+
+        tts = gTTS(text='Vill du fortsätta prata eller göra något annat?', lang='sv')
+        tts.save("Ljudfiler/continueTalking.mp3")
+        self.playSound("Ljudfiler/continueTalking.mp3")
+
+        time.sleep(5)
+        audio = self.listenSpeech(5)
+        words = self.stringSplitter(audio)
+        if any("prata" in s for s in words):
+            self.smallTalk()
+        elif any("annat" in s for s in words):
+            self.whatToDo()
+        elif self.containsGoodbye(words):
+            self.goodbye()
+        else:
+            tts = gTTS(text='Ursäkta, jag förstod inte. Vad sa du?', lang='sv')
+            tts.save("Ljudfiler/whatError.mp3")
+            self.playSound("Ljudfiler/whatError.mp3")
 
 
     def joke(self):
@@ -330,7 +345,7 @@ class SpeechController():
             self.playSound("Ljudfiler/didntUnderstand.mp3")
 
             audio = self.listenSpeech(7)
-            self.PostJoke(self.recognizedAudio(audio))
+            self.postJoke(self.recognizedAudio(audio))
 
     def containsGoodbye(self, message):
         answer = self.stringSplitter(message)
