@@ -29,13 +29,19 @@ class SpeechController():
             i += 1
         return stringArray
 
+    def speakingFalse(self):
+        self.speaking = False
+        
     def playSound(self, fileName):
         self.speaking = True
         #MainScreen.moveMouth()
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
+        while(mixer.music.get_busy():
+            print("lmao")
         self.speaking = False
+        
     
     def mp3Exception(self):
         tts = gTTS(text= 'Kan du prata tydligare?', lang='sv')

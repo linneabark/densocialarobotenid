@@ -52,15 +52,13 @@ class MainScreen(Screen):
     speaking = False
     img_src = StringProperty('Images/Face/mouthClosed.jpg')
 
-    #if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
-    #    img_src = StringProperty('Images/Face/speaking.gif')
-    #else:
-    #    img_src = StringProperty('Images/Face/mouthClosed.png')
-
-    def moveMouth(self):
-        while(1):
+    def moveMouth(self,sc):
+        if(sc.speaking):
+            print("talking")
             self.img_src = 'Images/Face/speaking.gif'
-        self.img_src = 'Images/Face/mouthClosed.jpg'
+        else:
+            print("not talking")
+            self.img_src = 'Images/Face/mouthClosed.jpg'
 
 
         #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
@@ -137,6 +135,7 @@ class Manager(ScreenManager):
     t = time.time()
     name = ""
     isVoiceActive = False
+    sc = SpeechController()
 
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
@@ -146,6 +145,7 @@ class Manager(ScreenManager):
         self.transition.direction = 'up'
         #Clock.schedule_interval(self.callback, 2)
         #Clock.schedule_interval(self.startTimThread, 8)
+        Clock.schedule_interval(self.moveMouth,1)
               
 
     def initialize(self):
@@ -174,21 +174,24 @@ class Manager(ScreenManager):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+    def moveMouth(self,sec):
+        self.get_screen("main").moveMouth(self.sc)
+
 
     
     def startSchedule(self):
-        SpeechController.start_Schedule(self, Manager)
+        self.sc.start_Schedule(self, Manager)
         self.current = next_screen
 
     def startTim(self):
         print('Start Tim')
-        string = SpeechController().listenForTim(self)
+        string = self.sc.listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
-            SpeechController().playHelloName(self.name)
+            self.sc.playHelloName(self.name)
         if string == "hej":
             self.isVoiceActive = True
-            SpeechController().playHello()            
+            self.sc.playHello()            
             #self.current.moveMouth()
 
        
