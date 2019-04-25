@@ -218,7 +218,7 @@ class SpeechController():
             #Manager.startSchedule() 
             x=1
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
-            x=1 #skicka till mattemetod
+            self.startMath()
         elif any(("sten" in s for s in keywords) or ("sax" in s for s in keywords) or ("påse" in s for s in keywords) or ("spela" in s for s in keywords)):
             print('Startar RPS')
             self.startRPSVoice()
