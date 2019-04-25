@@ -10,6 +10,8 @@ import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
 from densocialarobotenid.main import Manager, MainScreen
 from densocialarobotenid.FileController import FileHandler
+from mathtest import MathVoice
+
 
 class SpeechController():
     def __init__(self):
@@ -421,6 +423,10 @@ class SpeechController():
             tts.save("Ljudfiler/letsPlay.mp3")
             self.playSound("Ljudfiler/letsPlay.mp3")
             time.sleep(2)
+
+    def startMath(self):
+        self.funcName = "startMath"
+        MathVoice.start_mathtest()
 
         
     '''
