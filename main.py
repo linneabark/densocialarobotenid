@@ -186,7 +186,6 @@ class Manager(ScreenManager):
         else:
             self.current = "main"
 
-    
     def startSchedule(self):
         self.sc.start_Schedule(self, Manager)
         self.current = next_screen
