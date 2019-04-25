@@ -15,7 +15,7 @@ from kivy.properties import NumericProperty, ReferenceListProperty, \
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.animation import Animation
-from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
+from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition, TransitionBase
 # from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
@@ -24,12 +24,12 @@ import random
 #import schedule_app
 from pygame import mixer
 from kivy.properties import StringProperty
+
 from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
 from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
 from TestScreen import TestScreen
-
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -50,16 +50,17 @@ class MainScreen(Screen):
     #  pass
     Window.clearcolor = (1, 1, 1, 1)
     speaking = False
+    img_src = 'Images/Face/mouthClosed.jpg'
 
-    if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
-        img_src = StringProperty('Images/Face/speaking.gif')
-    else:
-        img_src = StringProperty('Images/Face/mouthClosed.png')
-
-    '''def moveMouth(self):
-        while(SpeechController.speaking):
-            self.img_src = 'Images/Face/speaking.gif'
-        self.img_src = 'Images/Face/mouthClosed.jpg'''''
+    def moveMouth(self,sc):
+        if(sc.speaking):
+            print("talking")
+            #self.img_src = 'Images/Face/speaking.gif'
+            print(self.children[0].children[1].source)
+            self.children[0].children[1].source = 'Images/Face/speaking.gif'
+        else:
+            print("not talking")
+            self.children[0].children[1].source= 'Images/Face/mouthClosed.jpg'
 
 
         #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
@@ -78,7 +79,7 @@ class MainScreen(Screen):
     #print('List of threads: ', threading.enumerate())
 
   
-    def on_enter(self, *args):
+    def on_touch_down(self, touch):
         self.manager.startTimThread(5)
 
     def schema(self):
@@ -88,6 +89,9 @@ class MainScreen(Screen):
 
 
 class SleepScreen(Screen):
+    pass
+
+class TalkingScreen(Screen):
     pass
 
 class ScheduleScreen(Screen):
@@ -135,6 +139,7 @@ class ScheduleSScreen(Screen):
 class Manager(ScreenManager):
     t = time.time()
     isVoiceActive = False
+    sc = SpeechController()
 
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
@@ -144,6 +149,7 @@ class Manager(ScreenManager):
         self.transition.direction = 'up'
         #Clock.schedule_interval(self.callback, 2)
         #Clock.schedule_interval(self.startTimThread, 8)
+        Clock.schedule_interval(self.moveMouth,0.2)
               
 
     def initialize(self):
@@ -167,26 +173,32 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
+        self.add_widget(TalkingScreen(name="talking"))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+    def moveMouth(self,sec):
+        self.transition = TransitionBase()
+        if(self.sc.speaking):
+            self.current = "talking"
+        else:
+            self.current = "main"
 
-    
     def startSchedule(self):
-        SpeechController.start_Schedule(self, Manager)
+        self.sc.start_Schedule(self, Manager)
         self.current = next_screen
 
     def startTim(self):
         print('Start Tim')
-        string = SpeechController().listenForTim(self)
+        string = self.sc.listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
-            SpeechController().playHelloName(self.name)
+            self.sc.playHelloName(self.name)
         if string == "hej":
             self.isVoiceActive = True
-            SpeechController().playHello()            
+            self.sc.playHello()            
             #self.current.moveMouth()
 
        
