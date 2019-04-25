@@ -24,7 +24,7 @@
                 text: "Test"
                 size_hint: .3, .2
                 on_press:
-                    root.manager.current = 'test'
+                    root.manager.current = "main"
                     #root.manager.current =  "main"
                     #root.listen()
             Button:
@@ -61,7 +61,7 @@
                 #pos: (10,100)
                 #background_color: (1, .3, .4, .85)
                 on_press:
-                    #app.root.transition = SlideTransition(direction = 'up')
+                    app.root.transition = SlideTransition(direction = 'up')
                     root.manager.current =  "one"
                     #root.launchRPS()
 

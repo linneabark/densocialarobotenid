@@ -21,16 +21,8 @@ from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-
 #import schedule_app
-
-
-#from pygame import mixer
-from kivy.properties import StringProperty
-
-
-
-#from pygame import mixer
+from pygame import mixer
 from kivy.properties import StringProperty
 
 from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
@@ -38,8 +30,6 @@ from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThr
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
 from TestScreen import TestScreen
-
-
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -88,6 +78,9 @@ class MainScreen(Screen):
     #print('Total number of threads: ', threading.activeCount())
     #print('List of threads: ', threading.enumerate())
 
+  
+    def on_enter(self, *args):
+        self.manager.startTimThread(5)
 
     def schema(self):
         ScheduleScreen.showSchema(self)
@@ -99,6 +92,9 @@ class SleepScreen(Screen):
     pass
 
 class ScheduleScreen(Screen):
+    pass
+
+class SleepScreen(Screen):
     pass
 
 
@@ -122,7 +118,7 @@ class Appview(Screen):
         thread_listen.start()
 
     pass
-
+        
 class Calculator(Screen):
 
     def calculate(self, calculation):
@@ -149,9 +145,8 @@ class Manager(ScreenManager):
         self.transition.duration = 1
         self.transition.direction = 'up'
         #Clock.schedule_interval(self.callback, 2)
-        Clock.schedule_interval(self.startTimThread, 8)
-        #Clock.schedule_interval(self.startKeywordThread, 8)
-        
+        #Clock.schedule_interval(self.startTimThread, 8)
+              
 
     def initialize(self):
         self.add_widget(MainScreen(name="main"))
@@ -186,6 +181,7 @@ class Manager(ScreenManager):
         self.current = next_screen
 
     def startTim(self):
+        print('Start Tim')
         string = SpeechController().listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
