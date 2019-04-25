@@ -8,8 +8,6 @@ import pygame.mixer
 from pygame.mixer import Sound
 import speech_recognition as sr
 #from kivy.core.audio import SoundLoader
-from main import Manager, MainScreen
-from FileController import FileHandler
 from mathtest import MathVoice
 from main import Manager, MainScreen
 from FileController import FileHandler
