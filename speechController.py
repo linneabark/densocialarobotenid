@@ -25,6 +25,7 @@ class SpeechController():
         self.funcName = ""
         self.speaking = False
         self.name = ""
+        self.manager = ""
 
 
     def stringSplitter(self, string):
@@ -175,6 +176,7 @@ class SpeechController():
         self.funcName = "listenForTim"
         audio = self.listenSpeech(5)
         string = self.recognizedAudio(audio)
+        self.manager = manager
         if(string == None):
             return
         stringArray = self.stringSplitter(string)
@@ -229,7 +231,7 @@ class SpeechController():
         print("keywords: ", keywords)
 
         if any(("schema" in s for s in keywords) or ("kalender" in s for s in keywords)):
-            Manager.startSchedule()
+            self.start_Schedule()
             x=1
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
             self.startMath()
@@ -488,16 +490,18 @@ class SpeechController():
         self.start_mathtest()
 
 
-    def start_Schedule(self, manager):
+    def start_Schedule(self):
         # Switch from face screen to schedule screen
-        Manager.current = 'schedule'
+
+        #self.manager.current = 'schedule'
 
         tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
         tts.save('Ljudfiler/schedule_instruction.mp3')
         self.playSound('Ljudfiler/schedule_instruction.mp3')
         time.sleep(7)
-        demand = self.listenSpeech(4)
-        words = self.stringSplitter(demand)
+        audio = self.listenSpeech(4)
+        string = self.recognizedAudio(audio)
+        words = self.stringSplitter(string)
 
         if any("nästa" in s for s in words):
             x = Manager.current
@@ -526,9 +530,9 @@ class SpeechController():
                 next_screen = list.get(x)
                 return next_screen
 
-            return(previous_week(x))'''
+            return(previous_week(x))
 
-
+    
     def subtraction(self, first_term, second_term):
         return first_term - second_term
 
@@ -565,7 +569,7 @@ class SpeechController():
     def start_mathtest(self):
         while True:
             print("mathtest start")
-            ttsMath1 = gTTS(text='Vad vill du räkna ut? Ge mig två siffror och en operator.', lang='sv')
+            ttsMath1 = gTTS(text='Vad vill du räkna ut? Ge mig två siffror och ett räknesätt.', lang='sv')
             ttsMath1.save("Ljudfiler/newCount.mp3")
             self.playSound("Ljudfiler/newCount.mp3")
             audio = self.listenSpeech(7)

@@ -181,14 +181,18 @@ class Manager(ScreenManager):
 
     def moveMouth(self,sec):
         self.transition = TransitionBase()
+        #if(self.current == "schedule"):
+        #    return
         if(self.sc.speaking):
             self.current = "talking"
         else:
             self.current = "main"
 
     def startSchedule(self):
-        self.sc.start_Schedule(self, Manager)
-        self.current = next_screen
+        #if(self.sc.screen = "schedule")
+        #self.sc.start_Schedule(self, Manager)
+        #self.current = next_screen
+        pass
 
     def startTim(self):
         print('Start Tim')
