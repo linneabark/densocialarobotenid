@@ -42,12 +42,6 @@ Config.set('graphics', 'height', '8000')
 #Window.size = (586 * 1.3, 325 * 1.3)
 
 class MainScreen(Screen):
-
-    # def play(self):
-    #   anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-    #  anim.repeat = True
-    #  anim.start(self.children[0].children[0])
-    #  pass
     Window.clearcolor = (1, 1, 1, 1)
     speaking = False
     img_src = 'Images/Face/mouthClosed.jpg'
@@ -55,29 +49,11 @@ class MainScreen(Screen):
     def moveMouth(self,sc):
         if(sc.speaking):
             print("talking")
-            #self.img_src = 'Images/Face/speaking.gif'
             print(self.children[0].children[1].source)
             self.children[0].children[1].source = 'Images/Face/speaking.gif'
         else:
             print("not talking")
             self.children[0].children[1].source= 'Images/Face/mouthClosed.jpg'
-
-
-        #img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
-
-    '''def blink(self):
-        if 1==1: #Starta klocka och tråd?
-            img_blinking = StringProperty('Images/Face/blinking.gif')
-            print('Gif started')
-        else:
-            img_blinking = StringProperty('Images/Face/eyesOpen.jpg')'''
-
-    #threadEyes = threading.Thread(target=blink)
-    #threadEyes.start()
-    #print('Started eye thread')
-    #print('Total number of threads: ', threading.activeCount())
-    #print('List of threads: ', threading.enumerate())
-
   
     def on_touch_down(self, touch):
         self.manager.startTimThread(5)
@@ -109,8 +85,6 @@ class MathScreen(Screen):
 class Appview(Screen):
     def launchRPS(self):
         print('Launch RPS')
-        # subprocess.Popen('python kv/RPS.py', shell=True)
-        # RPSscreenApp().run()
         
     def doSpeech(self):
         print("speech")
@@ -147,8 +121,6 @@ class Manager(ScreenManager):
         self.transition = SlideTransition()
         self.transition.duration = 1
         self.transition.direction = 'up'
-        #Clock.schedule_interval(self.callback, 2)
-        #Clock.schedule_interval(self.startTimThread, 8)
         Clock.schedule_interval(self.moveMouth,0.2)
               
 
@@ -199,28 +171,16 @@ class Manager(ScreenManager):
         string = self.sc.listenForTim(self)
         if string == "familiarUser":
             self.isVoiceActive = True
-            self.sc.playHelloName(self.name)
+            self.sc.playHelloName(self.sc.name)
         if string == "hej":
             self.isVoiceActive = True
-            self.sc.playHello()            
-            #self.current.moveMouth()
-
-       
-
-        #SpeechController.detectKeywords()
-
-                
+            self.sc.playHello()                           
 
     def startTimThread(self,sec):
         if not(self.isVoiceActive):
             print("threadstart")
             thread_startTim = Thread(target=self.startTim)
             thread_startTim.start()
-
-    '''def startKeywordThread(self, sec):
-        thread_listenKeywords = Thread(taget = self.listenKeywords)
-        thread_listenKeywords.start()'''
-
 
     def callback(self, sec):
         end = time.time()
