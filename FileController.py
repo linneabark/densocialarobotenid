@@ -8,14 +8,19 @@ class FileHandler:
           d = {"name": name,
                "age":"",
                "sport":"",
-               "color":""
+               "color":"",
+               "wins": "",
+               "screen":""
           }
           json.dump(d,open("users/"+name+".json","w"),indent=2)
 
     #Hittar en person och läser infon som man vill ha
      def read(self,name,info):
-          user = json.load(open("users/"+name+".json","r"))
-          return user.get(info)
+          try:
+               user = json.load(open("users/"+name+".json","r"))
+               return user.get(info)
+          except FileNotFoundError:
+               return False
           
 
      '''
