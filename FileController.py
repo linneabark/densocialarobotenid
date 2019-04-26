@@ -10,6 +10,7 @@ class FileHandler:
                "sport":"",
                "color":"",
                "wins": "",
+               "losses": "",
                "screen":""
           }
           json.dump(d,open("users/"+name+".json","w"),indent=2)
