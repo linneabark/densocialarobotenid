@@ -30,6 +30,7 @@ from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThr
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
 from TestScreen import TestScreen
+from FileController import FileHandler
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -153,14 +154,18 @@ class Manager(ScreenManager):
 
     def moveMouth(self,sec):
         self.transition = TransitionBase()
-        if(self.sc.speaking):
+        if(FileHandler().read(self.sc.name,"screen") == "schedule" and self.sc.name != ""):
+            self.current = "schedule"
+        elif(self.sc.speaking):
             self.current = "talking"
         else:
             self.current = "main"
 
     def startSchedule(self):
-        self.sc.start_Schedule(self, Manager)
-        self.current = next_screen
+        #if(self.sc.screen = "schedule")
+        #self.sc.start_Schedule(self, Manager)
+        #self.current = next_screen
+        pass
 
     def startTim(self):
         print('Start Tim')
