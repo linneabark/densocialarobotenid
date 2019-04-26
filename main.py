@@ -66,6 +66,11 @@ class ScheduleScreen(Screen):
 class MathScreen(Screen):
     pass
 
+class MathFaceScreen(Screen):
+    pass
+
+class RPSFaceScreen(Screen):
+    pass
 
 
 class Appview(Screen):
@@ -133,6 +138,8 @@ class Manager(ScreenManager):
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
         self.add_widget(TalkingScreen(name="talking"))
+        self.add_widget(MathFaceScreen(name="mathface"))
+        self.add_widget(RPSFaceScreen(name="rpsface"))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
