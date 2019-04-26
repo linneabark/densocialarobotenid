@@ -187,7 +187,7 @@ class SpeechController():
             print('Familiar user')
             return "familiarUser"
         elif any("hej" in s for s in stringArray):
-                return "hej"
+            return "hej"
         elif any("spela" in s for s in stringArray):
             self.startRPSVoice()
         elif any("prata" in s for s in stringArray):
@@ -427,14 +427,12 @@ class SpeechController():
             tts2 = gTTS(text='Sten, sax, påse!', lang='sv')
             tts2.save("Ljudfiler/stenSaxPase.mp3")
             self.playSound("Ljudfiler/stenSaxPase.mp3")
-            #time.sleep(3)
             sign = random.randint(1, 3)
-            print("sign:", sign)  
-            self.rockPaperScissors(sign)
-            #time.sleep(4)
+            print("sign:", sign)
+            user = self.playerChoice()
+            self.rockPaperScissors(sign,user)
             self.playAgain()
         elif(answer == "nej"):
-            #time.sleep(2)
             self.startRPSVoice()
         elif(answer == "tillbaka"):
             tts3 = gTTS(text='Okej, vi går tillbaka', lang='sv')  # Ta bort efter första inspelning
@@ -451,14 +449,67 @@ class SpeechController():
             self.playSound("Ljudfiler/tryAgain.mp3")
             self.startRPSVoice()
 
+    def playerChoice(self):
+        tts1 = gTTS(text='Vad valde du?', lang='sv')
+        tts1.save("Ljudfiler/playerChoice.mp3")
+        self.playSound("Ljudfiler/playerChoice.mp3")
+        audio = self.listenSpeech(5)
+        answer = self.recognizedAudio(audio)
+        if (answer == "sten"):
+            return 1
+        elif (answer == "sax"):
+            return 2
+        elif (answer == "påse"):
+            return 3
+        else:
+            tts1 = gTTS(text='Jag förstod inte vad du sa, vi tar det igen.', lang='sv')
+            tts1.save("Ljudfiler/playerChoiceUnclear.mp3")
+            self.playSound("Ljudfiler/playerChoiceUnclear.mp3")
+            self.playerChoice()
         
-    def rockPaperScissors(self, sign):
-        if(sign == 1):
-            tts = gTTS(text='Jag valde sten!', lang='sv')
-        elif(sign == 2):
-            tts = gTTS(text='Jag valde sax!', lang='sv')
-        elif(sign == 3):
-            tts = gTTS(text='Jag valde påse!', lang='sv')
+    def rockPaperScissors(self, sign, user):
+        currentWins = FileHandler().read(self.name, "wins")
+        if (currentWins == ""):
+            currentWins = 0
+        else:
+            currentWins = int(currentWins)
+
+        currentLosses = FileHandler().read(self.name, "losses")
+        if (currentLosses == ""):
+            currentLosses = 0
+        else:
+            currentLosses = int(currentLosses)
+        
+        if(sign == 1 and user == 1):
+            tts = gTTS(text='Jag valde också sten, så det blev lika!', lang='sv')
+        elif(sign == 1 and user == 2):
+            tts = gTTS(text='Jag valde sten, så då vann jag!', lang='sv')
+            currentLosses += 1
+            FileHandler().append(self.name, "losses", str(currentLosses))
+        elif(sign == 1 and user == 3):
+            tts = gTTS(text='Jag valde sten, så du vann, grattis!', lang='sv')
+            currentWins += 1
+            FileHandler().append(self.name, "wins", str(currentWins))
+        elif(sign == 2 and user == 1):
+            tts = gTTS(text='Jag valde sax, så du vann, grattis!', lang='sv')
+            currentWins += 1
+            FileHandler().append(self.name, "wins", str(currentWins))
+        elif (sign == 2 and user == 2):
+            tts = gTTS(text='Jag valde också sax, så det blev lika!', lang='sv')
+        elif (sign == 2 and user == 3):
+            tts = gTTS(text='Jag valde sax, så då vann jag!', lang='sv')
+            currentLosses += 1
+            FileHandler().append(self.name, "losses", str(currentLosses))
+        elif (sign == 3 and user == 1):
+            tts = gTTS(text='Jag valde också påse, så då vann jag!', lang='sv')
+            currentLosses += 1
+            FileHandler().append(self.name, "losses", str(currentLosses))
+        elif(sign == 3 and user == 2):
+            tts = gTTS(text='Jag valde påse, så du vann, grattis!', lang='sv')
+            currentWins += 1
+            FileHandler().append(self.name, "wins", str(currentWins))
+        elif (sign == 3 and user == 3):
+            tts = gTTS(text='Jag valde också påse, så det blev lika!', lang='sv')
         tts.save("Ljudfiler/iChoseX.mp3")
         self.playSound("Ljudfiler/iChoseX.mp3")
 

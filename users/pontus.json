@@ -1,6 +1,9 @@
 {
-  "sport": "",
-  "age": "",
-  "color": "",
-  "name": "pontus"
+    "sport": "",
+    "name": "pontus",
+    "wins": "1",
+    "age": "",
+    "losses": "1",
+    "screen": "",
+    "color": ""
 }

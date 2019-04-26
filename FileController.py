@@ -9,12 +9,13 @@ class FileHandler:
           if (os.path.isfile("users/"+name+".json")):
                return
           d = {"name": name,
-                    "age":"",
-                    "sport":"",
-                    "color":"",
-                    "wins": "",
-                    "screen":""
-                    }
+               "age":"",
+               "sport":"",
+               "color":"",
+               "wins": "",
+               "losses": "",
+               "screen":""
+          }
           json.dump(d,open("users/"+name+".json","w"),indent=2)
 
     #Hittar en person och läser infon som man vill ha
