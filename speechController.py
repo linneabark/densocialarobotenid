@@ -218,13 +218,15 @@ class SpeechController():
 
     def whatToDo(self):
         self.funcName = "whatToDo"
-        #time.sleep(1)
         tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
-        #time.sleep(7)
         audio = self.listenSpeech(4)
-        self.handleKeyword(self.recognizedAudio(audio))
+        answer = self.recognizedAudio(audio)
+        if(answer == "upprepa"):
+            self.whatToDo()
+        else:
+            self.handleKeyword(answer)
 
 
     def handleKeyword(self, message):
@@ -298,9 +300,8 @@ class SpeechController():
         elif any(("småprata" in s for s in keywords) or ("prata" in s for s in keywords)):
             self.smallTalk() #Gå till småpratmetod
         else:
-            self.playSound("Ljudfiler/didntUnderstand.mp3")
-
-            audio = self.listenSpeech(7)
+            self.didntUnderstand()
+            audio = self.listenSpeech(4)
             self.handleTalkKeyword(self.recognizedAudio(audio))
 
     def whatColor(self,string):
@@ -398,12 +399,21 @@ class SpeechController():
         self.playSound("Ljudfiler/joke.mp3")
         self.playSound("Ljudfiler/drumroll.mp3")   #Dab?
 
+        self.postJoke()
+
+
+    def postJoke(self):
         tts = gTTS(text='Vill du höra ett till skämt, fortsätta prata eller göra något annat?', lang='sv')
         tts.save("Ljudfiler/somethingElse.mp3")
         self.playSound("Ljudfiler/somethingElse.mp3")
 
-        audio = self.listenSpeech(5)
-        self.postTalk(self.recognizedAudio(audio))
+        audio = self.listenSpeech(4)
+        answer = self.recognizedAudio(audio)
+
+        if (answer == "upprepa"):
+            self.postJoke()
+        else:
+            self.postTalk(answer)
 
     def postTalk(self, message):
         keywords = self.stringSplitter(message)
@@ -416,7 +426,7 @@ class SpeechController():
             self.whatToDo()
         else:
             self.didntUnderstand()
-            audio = self.listenSpeech(5)
+            audio = self.listenSpeech(4)
             self.postTalk(self.recognizedAudio(audio))
 
     def containsGoodbye(self, message):
@@ -566,7 +576,7 @@ class SpeechController():
         elif(nr == 3):
             tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')
         elif(nr == 4):
-            tts = gTTS(text='Hoppas du har dina turstrumpor på dig idag!', lang='sv')
+            tts = gTTS(text='Hoppas du har dina tur-strumpor på dig idag!', lang='sv')
         elif(nr == 5):
             tts = gTTS(text='Tvinga mig inte att krossa dig', lang='sv')
         else:
@@ -584,10 +594,12 @@ class SpeechController():
         tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
         tts.save('Ljudfiler/schedule_instruction.mp3')
         self.playSound('Ljudfiler/schedule_instruction.mp3')
-        time.sleep(5)
         audio = self.listenSpeech(4)
         string = self.recognizedAudio(audio)
         words = self.stringSplitter(string)
+
+        if any("upprepa" in s for s in words):
+            self.start_Schedule()
         
 
     
