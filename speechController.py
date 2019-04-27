@@ -198,11 +198,21 @@ class SpeechController():
             name = ""
         FileHandler().create(name)
         self.name = name
-        tts = gTTS(text= 'Hej' + name + ', vad vill du göra?', lang='sv')
-        tts.save("Ljudfiler/helloWhatToDo.mp3")
-        self.playSound("Ljudfiler/helloWhatToDo.mp3")
+        self.helloPhrases(self.name) # Skicka in bara "name"?
         self.whatToDo()
 
+    def helloPhrases(self, name):
+        nr = random.randint(1, 4)
+        if (nr == 1):
+            tts = gTTS(text='Hej' + name + ', vad vill du göra?', lang='sv')
+        if (nr == 2):
+            tts = gTTS(text = 'Tjena' + name + 'vad vill du hitta på idag?', lang ='sv')
+        if (nr == 3):
+            tts = gTTS(text='Vad kul att träffa dig ' + name + ', nu ska vi leka!', lang='sv')
+        if (nr == 4):
+            tts = gTTS(text=name + ', det var ett fint namn!', lang='sv')
+        tts.save("Ljudfiler/helloWhatToDo.mp3")
+        self.playSound("Ljudfiler/helloWhatToDo.mp3")
 
     def playHello(self):
         self.funcName = "playHello"
