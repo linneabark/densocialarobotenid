@@ -15,6 +15,7 @@ from mutagen.mp3 import MP3
 from FileController import FileHandler
 #from mathtest import MathVoice
 #from main import Manager, MainScreen
+from fractions import Fraction
 
 from FileController import FileHandler
 
@@ -25,6 +26,7 @@ class SpeechController():
         self.funcName = ""
         self.speaking = False
         self.name = ""
+        self.manager = ""
 
 
     def stringSplitter(self, string):
@@ -41,6 +43,7 @@ class SpeechController():
         self.speaking = False
         
     def playSound(self, fileName):
+        FileHandler().append(self.name,"screen","talkingscreen")
         self.speaking = True
         #MainScreen.moveMouth()
         audio = MP3(fileName)
@@ -48,8 +51,9 @@ class SpeechController():
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
-        time.sleep(length)
+        time.sleep(length-0.05*length)
         self.speaking = False
+        FileHandler().append(self.name, "screen", "main")
         
     
     def mp3Exception(self):
@@ -153,6 +157,7 @@ class SpeechController():
             self.goodbye()
         tts.save("Ljudfiler/goodbye.mp3")
         self.playSound("Ljudfiler/goodbye.mp3")
+        FileHandler().append(self.name,"screen","sleep")
 
            
 
@@ -171,6 +176,7 @@ class SpeechController():
         self.funcName = "listenForTim"
         audio = self.listenSpeech(5)
         string = self.recognizedAudio(audio)
+        self.manager = manager
         if(string == None):
             return
         stringArray = self.stringSplitter(string)
@@ -181,7 +187,7 @@ class SpeechController():
             print('Familiar user')
             return "familiarUser"
         elif any("hej" in s for s in stringArray):
-                return "hej"
+            return "hej"
         elif any("spela" in s for s in stringArray):
             self.startRPSVoice()
         elif any("prata" in s for s in stringArray):
@@ -192,7 +198,7 @@ class SpeechController():
             name = ""
         FileHandler().create(name)
         self.name = name
-        tts = gTTS(text= 'Hej' + name + 'vad vill du göra?', lang='sv')
+        tts = gTTS(text= 'Hej' + name + ', vad vill du göra?', lang='sv')
         tts.save("Ljudfiler/helloWhatToDo.mp3")
         self.playSound("Ljudfiler/helloWhatToDo.mp3")
         self.whatToDo()
@@ -227,7 +233,7 @@ class SpeechController():
         print("keywords: ", keywords)
 
         if any(("schema" in s for s in keywords) or ("kalender" in s for s in keywords)):
-            #Manager.startSchedule()
+            self.start_Schedule()
             x=1
         elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
             self.startMath()
@@ -252,6 +258,10 @@ class SpeechController():
             x=1 # skicka till infometod
         elif (keyword == "klocka"):
             x=1 # skicka till klockmetod
+        elif (keyword == "app"):
+            x=1 # Starta gui
+        elif (keyword == "paus"):
+            x=1 # Pausa interaktion
         else:
             x=1 # break?
 
@@ -417,14 +427,12 @@ class SpeechController():
             tts2 = gTTS(text='Sten, sax, påse!', lang='sv')
             tts2.save("Ljudfiler/stenSaxPase.mp3")
             self.playSound("Ljudfiler/stenSaxPase.mp3")
-            #time.sleep(3)
             sign = random.randint(1, 3)
-            print("sign:", sign)  
-            self.rockPaperScissors(sign)
-            #time.sleep(4)
+            print("sign:", sign)
+            user = self.playerChoice()
+            self.rockPaperScissors(sign,user)
             self.playAgain()
         elif(answer == "nej"):
-            #time.sleep(2)
             self.startRPSVoice()
         elif(answer == "tillbaka"):
             tts3 = gTTS(text='Okej, vi går tillbaka', lang='sv')  # Ta bort efter första inspelning
@@ -441,14 +449,67 @@ class SpeechController():
             self.playSound("Ljudfiler/tryAgain.mp3")
             self.startRPSVoice()
 
+    def playerChoice(self):
+        tts1 = gTTS(text='Vad valde du?', lang='sv')
+        tts1.save("Ljudfiler/playerChoice.mp3")
+        self.playSound("Ljudfiler/playerChoice.mp3")
+        audio = self.listenSpeech(5)
+        answer = self.recognizedAudio(audio)
+        if (answer == "sten"):
+            return 1
+        elif (answer == "sax"):
+            return 2
+        elif (answer == "påse"):
+            return 3
+        else:
+            tts1 = gTTS(text='Jag förstod inte vad du sa, vi tar det igen.', lang='sv')
+            tts1.save("Ljudfiler/playerChoiceUnclear.mp3")
+            self.playSound("Ljudfiler/playerChoiceUnclear.mp3")
+            self.playerChoice()
         
-    def rockPaperScissors(self, sign):
-        if(sign == 1):
-            tts = gTTS(text='Jag valde sten!', lang='sv')
-        elif(sign == 2):
-            tts = gTTS(text='Jag valde sax!', lang='sv')
-        elif(sign == 3):
-            tts = gTTS(text='Jag valde påse!', lang='sv')
+    def rockPaperScissors(self, sign, user):
+        currentWins = FileHandler().read(self.name, "wins")
+        if (currentWins == ""):
+            currentWins = 0
+        else:
+            currentWins = int(currentWins)
+
+        currentLosses = FileHandler().read(self.name, "losses")
+        if (currentLosses == ""):
+            currentLosses = 0
+        else:
+            currentLosses = int(currentLosses)
+        
+        if(sign == 1 and user == 1):
+            tts = gTTS(text='Jag valde också sten, så det blev lika!', lang='sv')
+        elif(sign == 1 and user == 2):
+            tts = gTTS(text='Jag valde sten, så då vann jag!', lang='sv')
+            currentLosses += 1
+            FileHandler().append(self.name, "losses", str(currentLosses))
+        elif(sign == 1 and user == 3):
+            tts = gTTS(text='Jag valde sten, så du vann, grattis!', lang='sv')
+            currentWins += 1
+            FileHandler().append(self.name, "wins", str(currentWins))
+        elif(sign == 2 and user == 1):
+            tts = gTTS(text='Jag valde sax, så du vann, grattis!', lang='sv')
+            currentWins += 1
+            FileHandler().append(self.name, "wins", str(currentWins))
+        elif (sign == 2 and user == 2):
+            tts = gTTS(text='Jag valde också sax, så det blev lika!', lang='sv')
+        elif (sign == 2 and user == 3):
+            tts = gTTS(text='Jag valde sax, så då vann jag!', lang='sv')
+            currentLosses += 1
+            FileHandler().append(self.name, "losses", str(currentLosses))
+        elif (sign == 3 and user == 1):
+            tts = gTTS(text='Jag valde också påse, så då vann jag!', lang='sv')
+            currentLosses += 1
+            FileHandler().append(self.name, "losses", str(currentLosses))
+        elif(sign == 3 and user == 2):
+            tts = gTTS(text='Jag valde påse, så du vann, grattis!', lang='sv')
+            currentWins += 1
+            FileHandler().append(self.name, "wins", str(currentWins))
+        elif (sign == 3 and user == 3):
+            tts = gTTS(text='Jag valde också påse, så det blev lika!', lang='sv')
         tts.save("Ljudfiler/iChoseX.mp3")
         self.playSound("Ljudfiler/iChoseX.mp3")
 
@@ -500,58 +561,27 @@ class SpeechController():
         self.playSound("Ljudfiler/RPSPhrase.mp3")
 
 
-    def startMath(self):
-        self.funcName = "startMath"
-        self.start_mathtest()
+   
 
-
-'''
-    def start_Schedule(self, manager):
+    def start_Schedule(self):
         # Switch from face screen to schedule screen
-        #Manager.current = 'schedule'
+        FileHandler().append(self.name,"screen","schedule")
 
         tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
         tts.save('Ljudfiler/schedule_instruction.mp3')
         self.playSound('Ljudfiler/schedule_instruction.mp3')
-        time.sleep(7)
-        demand = self.listenSpeech(4)
-        words = self.stringSplitter(demand)
+        time.sleep(5)
+        audio = self.listenSpeech(4)
+        string = self.recognizedAudio(audio)
+        words = self.stringSplitter(string)
+        
 
-        if any("nästa" in s for s in words):
-            x = Manager.current
-            def next_week(x):
-                list = {
-                    "schedule": 's2',
-                    's2': 's3',
-                    's3': 's4',
-                    's4': 's5',
-                    's5': 's6'
-                }
-                next_screen = list.get(x)
-                return next_screen
-            return next_week(x)
-
-        elif any("förra" in s for s in words):
-            x = Manager.currents
-            def previous_week(x):
-                list = {
-                    "s2": 'schedule',
-                    's3': 's2',
-                    's4': 's3',
-                    's5': 's4',
-                    's6': 's5'
-                }
-                next_screen = list.get(x)
-                return next_screen
-
-            return(previous_week(x))
-
-
+    
     def subtraction(self, first_term, second_term):
         return first_term - second_term
 
 
-    def addition(first_term, second_term):
+    def addition(self, first_term, second_term):
         return first_term + second_term
 
 
@@ -559,10 +589,25 @@ class SpeechController():
         return first_term * second_term
 
     def division(self, first_term, second_term):
-        return first_term / second_term
+        
+        if((first_term % second_term) != 0):
+
+            heltal = int(first_term / second_term)
+            rest = Fraction(first_term % second_term)
+            
+            ttsMathDivFrac = gTTS(text=str(heltal) + "och" + str(rest) + "över" + str(second_term), lang='sv')
+            ttsMathDivFrac.save("Ljudfiler/MathDivFrac.mp3")
+            self.playSound("Ljudfiler/MathDivFrac.mp3")
+            return
+        else:
+            ttsMathDiv = gTTS(text=str(int(first_term / second_term)), lang='sv')
+            ttsMathDiv.save("Ljudfiler/answerDivisionInteger.mp3")
+            self.playSound("Ljudfiler/answerDivisionInteger.mp3")
+            return 
+        
 
 
-    def find_numbers(self, str_input):
+    def findNumbers(self, str_input):
         temporary = list()
         i = 0
         temporary2 = []
@@ -580,88 +625,94 @@ class SpeechController():
         return temporary
 
 
-    def start_mathtest(self):
-        while True:
-            print("mathtest start")
-            ttsMath1 = gTTS(text='Vad vill du räkna ut? Ge mig två siffror och en operator.', lang='sv')
-            ttsMath1.save("Ljudfiler/newCount.mp3")
-            self.playSound("Ljudfiler/newCount.mp3")
-            audio = self.listenSpeech(7)
-            str_input = self.recognizedAudio(audio)
-            print(str_input)
+    def startMath(self):
+        funcName = "startMath"
+        print("mathtest start")
+        ttsMath1 = gTTS(text='Vad vill du räkna?', lang='sv')
+        ttsMath1.save("Ljudfiler/newCount.mp3")
+        self.playSound("Ljudfiler/newCount.mp3")
+        audio = self.listenSpeech(7)
+        str_input = self.recognizedAudio(audio)
+        print(str_input)
 
-            temp = list()
-            temp.extend(self.find_numbers(str_input))
+        temp = list()
+        temp.extend(self.findNumbers(str_input))
 
-            if len(temp) < 2:
-                ttsMath2 = gTTS(text='Fler siffror tack.', lang='sv')
-                ttsMath2.save("Ljudfiler/tooFewNumbers.mp3")
-                self.playSound("Ljudfiler/tooFewNumbers.mp3")
-                continue
+        if len(temp) < 2:
+            ttsMath2 = gTTS(text='Fler siffror tack.', lang='sv')
+            ttsMath2.save("Ljudfiler/tooFewNumbers.mp3")
+            self.playSound("Ljudfiler/tooFewNumbers.mp3")
 
-            if len(temp) > 2:
-                ttsMath3 = gTTS(text='Bara två termer tack.', lang='sv')
-                ttsMath3.save("Ljudfiler/fewerNumbersPlease.mp3")
-                self.playSound("Ljudfiler/fewerNumbersPlease.mp3")
-                continue
+        if len(temp) > 2:
+            ttsMath3 = gTTS(text='Bara två siffror tack.', lang='sv')
+            ttsMath3.save("Ljudfiler/fewerNumbersPlease.mp3")
+            self.playSound("Ljudfiler/fewerNumbersPlease.mp3")
 
-            first_term = int(temp[0])
-            second_term = int(temp[1])
+        first_term = int(temp[0])
+        second_term = int(temp[1])
 
-            operator_count = 0
-            operator_input = str_input.lower()
-            operators = {
-                'PLUS': ["plus", "addera", "lägg till"],
-                'MINUS': ["minus"],
-                'MULTIPLICATION': ["multiplicerat", "gånger"],
-                'DIVISION' : ["delat med", "delat på", "dividerat med", "dividerat på"]
-            }
+        operator_count = 0
+        operator_input = str_input.lower()
+        print(operator_input)
+        operators = {
+            'PLUS' : ["addera", "+"],
+            'MINUS': ["minus", "-"],
+            'MULTIPLIKATION' : ["gånger", "multiplicerat", "*"],
+            'DIVISION' : ["delat", "dividerat", "/"]
+        }
 
-            actual_operator = None
-            for operator, synonyms in operators.items():
-                count = 0
-                for synonym in synonyms:
-                    count += operator_input.count(synonym)
-                if count > 0:
-                    actual_operator = operator
-                operator_count += count
+        actual_operator = None
+        for operator, synonyms in operators.items():
+            count = 0
+            for synonym in synonyms:
+                count += operator_input.count(synonym)
+            if count > 0:
+                actual_operator = operator
+            operator_count += count
 
-            if operator_count > 1:
-                ttsMath4 = gTTS(text='Bara en operator tack.', lang='sv')
-                ttsMath4.save("Ljudfiler/tooManyOperators.mp3")
-                self.playSound("Ljudfiler/tooManyOperators.mp3")
-                continue
-            elif operator_count < 1:
-                ttsMath5 = gTTS(text='Kan jag få en operator?', lang='sv')
-                ttsMath5.save("Ljudfiler/tooFewOperators.mp3")
-                self.playSound("Ljudfiler/tooFewOperators.mp3")
-                continue
 
-            if actual_operator == 'MINUS':
-                ttsMath6 = gTTS(text=str(subtraction(first_term, second_term)), lang='sv')
-                ttsMath6.save("Ljudfiler/answerSubtraction.mp3")
-                self.playSound("Ljudfiler/answerSubtraction.mp3")
-                break
-            elif actual_operator == 'PLUS':
-                ttsMath7 = gTTS(text=str(addition(first_term, second_term)), lang='sv')
-                ttsMath7.save("Ljudfiler/answerAddition.mp3")
-                self.playSound("Ljudfiler/answerAddition.mp3")
-                break
-            elif actual_operator == 'MULTIPLICATION':
-                ttsMath8 = gTTS(text=str(multiplication(first_term, second_term)), lang='sv')
-                ttsMath8.save("Ljudfiler/answerMultiplication.mp3")
-                self.playSound("Ljudfiler/answerMultiplication.mp3")
-                break
-            elif actual_operator == 'DIVISION':
-                ttsMath9 = gTTS(text=str(division(first_term, second_term)), lang='sv')
-                ttsMath9.save("Ljudfiler/answerDivision.mp3")
-                self.playSound("Ljudfiler/answerDivision.mp3")
-                break
-            else:
-                ttsMath10 = gTTS(text='Försök igen med två siffror och en operator.', lang='sv')
-                ttsMath10.save("Ljudfiler/tryAgainMath.mp3")
-                self.playSound("Ljudfiler/tryAgainMath.mp3")
+        if operator_count > 1:
+            ttsMath4 = gTTS(text='Bara ett räknesätt tack.', lang='sv')
+            ttsMath4.save("Ljudfiler/tooManyOperators.mp3")
+            self.playSound("Ljudfiler/tooManyOperators.mp3")
+        elif operator_count < 1:
+            ttsMath5 = gTTS(text='Bestäm ett räknesätt.', lang='sv')
+            ttsMath5.save("Ljudfiler/tooFewOperators.mp3")
+            self.playSound("Ljudfiler/tooFewOperators.mp3")
 
-            break
-            return(previous_week(x))
-'''
+        if actual_operator == 'MINUS':
+            ttsMath6 = gTTS(text=str(self.subtraction(first_term, second_term)), lang='sv')
+            ttsMath6.save("Ljudfiler/answerSubtraction.mp3")
+            self.playSound("Ljudfiler/answerSubtraction.mp3")
+            
+        elif actual_operator == 'PLUS':
+            ttsMath7 = gTTS(text=str(self.addition(first_term, second_term)), lang='sv')
+            ttsMath7.save("Ljudfiler/answerAddition.mp3")
+            self.playSound("Ljudfiler/answerAddition.mp3")
+        elif actual_operator == 'MULTIPLIKATION':
+            ttsMath8 = gTTS(text=str(self.multiplication(first_term, second_term)), lang='sv')
+            ttsMath8.save("Ljudfiler/answerMultiplication.mp3")
+            self.playSound("Ljudfiler/answerMultiplication.mp3")
+            print(self.multiplication(first_term, second_term))
+        elif actual_operator == 'DIVISION':
+            self.division(first_term, second_term)
+        else:
+            ttsMath10 = gTTS(text='Försök igen med två siffror och en operator.', lang='sv')
+            ttsMath10.save("Ljudfiler/tryAgainMath.mp3")
+            self.playSound("Ljudfiler/tryAgainMath.mp3")
+            
+        tts = gTTS(text='Vill du räkna ett tal till?', lang='sv')
+        tts.save("Ljudfiler/countAgain.mp3")
+        self.playSound("Ljudfiler/countAgain.mp3")
+
+        audio2 = self.listenSpeech(3)
+        answer = self.recognizedAudio(audio2)
+
+        if (answer == "ja"):
+            self.startMath()
+        elif (answer == "nej"):
+            self.whatToDo()
+        else:
+            self.didntUnderstand()
+            self.startMath()
+   

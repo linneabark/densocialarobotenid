@@ -30,6 +30,7 @@ from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThr
     ScheduleScreenFive, ScheduleScreenSix
 #from user import User
 from TestScreen import TestScreen
+from FileController import FileHandler
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
@@ -46,26 +47,15 @@ class MainScreen(Screen):
     speaking = False
     img_src = 'Images/Face/mouthClosed.jpg'
 
-    def moveMouth(self,sc):
-        if(sc.speaking):
-            print("talking")
-            print(self.children[0].children[1].source)
-            self.children[0].children[1].source = 'Images/Face/speaking.gif'
-        else:
-            print("not talking")
-            self.children[0].children[1].source= 'Images/Face/mouthClosed.jpg'
-  
-    def on_touch_down(self, touch):
-        self.manager.startTimThread(5)
 
-    def schema(self):
-        ScheduleScreen.showSchema(self)
-    pass
-
-
-
+      
 class SleepScreen(Screen):
-    pass
+    print('In sleepscreen')
+    def on_touch_down(self, touch):
+        print('on touch down')
+        self.manager.startTimThread(5)
+        Clock.schedule_interval(self.manager.updateScreen,0.2)
+
 
 class TalkingScreen(Screen):
     pass
@@ -73,13 +63,14 @@ class TalkingScreen(Screen):
 class ScheduleScreen(Screen):
     pass
 
-class SleepScreen(Screen):
-    pass
-
-
 class MathScreen(Screen):
     pass
 
+class MathFaceScreen(Screen):
+    pass
+
+class RPSFaceScreen(Screen):
+    pass
 
 
 class Appview(Screen):
@@ -121,13 +112,14 @@ class Manager(ScreenManager):
         self.transition = SlideTransition()
         self.transition.duration = 1
         self.transition.direction = 'up'
-        Clock.schedule_interval(self.moveMouth,0.2)
+        self.current = "sleep"
+        print('Current screen: ' + self.current)
               
 
     def initialize(self):
+        self.add_widget(SleepScreen(name='sleep'))
         self.add_widget(MainScreen(name="main"))
         self.add_widget(ScheduleScreen(name="schedule"))
-        self.add_widget(SleepScreen(name='sleep'))
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
@@ -146,21 +138,30 @@ class Manager(ScreenManager):
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
         self.add_widget(TalkingScreen(name="talking"))
+        self.add_widget(MathFaceScreen(name="mathface"))
+        self.add_widget(RPSFaceScreen(name="rpsface"))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
-    def moveMouth(self,sec):
+    def updateScreen(self,sec):
+        print('update screen')
         self.transition = TransitionBase()
-        if(self.sc.speaking):
-            self.current = "talking"
+        if(self.sc.name == ""):
+            if(self.sc.speaking):
+                self.current = "talking"
+            else:
+                self.current = "main"    
         else:
-            self.current = "main"
+            self.current = FileHandler().read(self.sc.name,"screen")
+
 
     def startSchedule(self):
-        self.sc.start_Schedule(self, Manager)
-        self.current = next_screen
+        #if(self.sc.screen = "schedule")
+        #self.sc.start_Schedule(self, Manager)
+        #self.current = next_screen
+        pass
 
     def startTim(self):
         print('Start Tim')
