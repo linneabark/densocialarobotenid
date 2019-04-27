@@ -367,23 +367,42 @@ class SpeechController():
 
     def joke(self):
         self.funcName = "joke"
-        #Slumpa olika skämt
-        tts = gTTS(text='Det var en gång en dansk, en norsk och Bellman som skulle tävla om vem som kunde vara inne i en svinstia i längst tid.'
-                        'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
-                        'Då gick norsken in och efter två minuter kom han ut, grön i ansiktet och stönade: Grisen fes!'
-                        'Sedan var det Bellmans tur att gå in i svinstian. Efter tio minuter kom grisen ut och stönade: Bellman fes!', lang='sv')
-        tts.save("Ljudfiler/Bellman.mp3")
-        self.playSound("Ljudfiler/Bellman.mp3")
+        nr = random.randint(1, 5)
+        if (nr == 1):
+            tts = gTTS(text='Det var en gång en dansk, en norsk och Bellman som skulle tävla om vem som kunde vara inne i en svinstia i längst tid.'
+                            'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
+                            'Då gick norsken in och efter två minuter kom han ut, grön i ansiktet och stönade: Grisen fes!'
+                            'Sedan var det Bellmans tur att gå in i svinstian. Efter tio minuter kom grisen ut och stönade: Bellman fes!', lang='sv')
+        if (nr == 2):
+            tts1 = gTTS(text = 'Vet du vad man får om man korsar en giraff och en igelkott? ')
+            tts1.save("Ljudfiler/firstPartofJoke.mp3")
+            self.playSound("Ljudfiler/firstPartofJoke.mp3")
+            time.sleep(1)
+            tts = gTTS(text = 'En tre meter lång tandborste!')
+        if (nr == 3):
+            tts = gTTS(text = 'Pappa frågar sin dotter, ser du bra med dina nya glasögon? Dotten svarade, visst mamma!')
+        if (nr == 4):
+            tts1 = gTTS(text='Vad sa marsgubbarna när de landade på jorden?')
+            tts1.save("Ljudfiler/firstPartofJoke.mp3")
+            self.playSound("Ljudfiler/firstPartofJoke.mp3")
+            time.sleep(1)
+            tts = gTTS(text = 'Hej jordgubbar!')
+        if (nr == 5):
+            tts1 = gTTS(text='Vad är en groda utan ben?')
+            tts1.save("Ljudfiler/firstPartofJoke.mp3")
+            self.playSound("Ljudfiler/firstPartofJoke.mp3")
+            time.sleep(1)
+            tts = gTTS(text='Hopplös!')
 
-        #time.sleep(38)
+        tts.save("Ljudfiler/joke.mp3")
+        self.playSound("Ljudfiler/joke.mp3")
         self.playSound("Ljudfiler/drumroll.mp3")   #Dab?
 
-        tts = gTTS(text='Vill du höra ett till skämt, prata eller göra något annat?', lang='sv')
-        tts.save("Ljudfiler/SomethingElse.mp3")
-        self.playSound("Ljudfiler/SomethingElse.mp3")
+        tts = gTTS(text='Vill du höra ett till skämt, fortsätta prata eller göra något annat?', lang='sv')
+        tts.save("Ljudfiler/somethingElse.mp3")
+        self.playSound("Ljudfiler/somethingElse.mp3")
 
-        #time.sleep(5)
-        audio = self.listenSpeech(7)
+        audio = self.listenSpeech(5)
         self.postTalk(self.recognizedAudio(audio))
 
     def postTalk(self, message):
@@ -395,14 +414,9 @@ class SpeechController():
             self.smallTalk()
         elif any("annat" in s for s in keywords):
             self.whatToDo()
-        elif self.containsGoodbye(keywords):
-            self.goodbye()
         else:
-            tts = gTTS(text='Jag förstod inte, kan du säga igen?', lang='sv')
-            tts.save("Ljudfiler/didntUnderstand.mp3")
-            self.playSound("Ljudfiler/didntUnderstand.mp3")
-
-            audio = self.listenSpeech(7)
+            self.didntUnderstand()
+            audio = self.listenSpeech(5)
             self.postTalk(self.recognizedAudio(audio))
 
     def containsGoodbye(self, message):
