@@ -7,6 +7,7 @@ from pygame import mixer
 import pygame.mixer
 from pygame.mixer import Sound
 import speech_recognition as sr
+import datetime
 #from kivy.core.audio import SoundLoader
 
 from mutagen.mp3 import MP3
@@ -341,7 +342,7 @@ class SpeechController():
         elif (keyword == "hjälp"):
             self.help()
         elif (keyword == "klocka"):
-            x=1 # skicka till klockmetod
+            self.whatTime()
         elif (keyword == "app"):
             x=1 # Starta gui
         elif (keyword == "paus"):
@@ -363,6 +364,16 @@ class SpeechController():
 
         if (answer == "upprepa"):
             self.help()
+
+    def whatTime(self):
+        hour = datetime.datetime.now().hour
+        minute = datetime.datetime.now().minute
+
+        tts = gTTS(text='Klockan är ' + hour + minute, lang='sv') # Behöver testas!!
+        tts.save("Ljudfiler/clock.mp3")
+        self.playSound("Ljudfiler/clock.mp3")
+        time.sleep(1)
+        self.whatToDo()
 
 
     def didntUnderstand(self):
