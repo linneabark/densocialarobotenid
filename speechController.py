@@ -369,7 +369,7 @@ class SpeechController():
         hour = datetime.datetime.now().hour
         minute = datetime.datetime.now().minute
 
-        tts = gTTS(text='Klockan är ' + hour + minute, lang='sv') # Behöver testas!!
+        tts = gTTS(text='Klockan är ' + hour + ' ' + minute, lang='sv') # Behöver testas!!
         tts.save("Ljudfiler/clock.mp3")
         self.playSound("Ljudfiler/clock.mp3")
         time.sleep(1)
