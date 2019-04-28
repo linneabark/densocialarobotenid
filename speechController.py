@@ -102,6 +102,8 @@ class SpeechController():
             self.start_Schedule()
         elif (self.funcName == "startMath"):
             self.startMath()
+        elif (self.funcName == "help"):
+            self.help()
 
     def internetException(self):
         tts = gTTS(text= 'Inget internet', lang='sv')
@@ -321,7 +323,7 @@ class SpeechController():
             self.startTalking()      #skicka till pratmetod
         elif any(("klocka" in s for s in keywords) or ("tid" in s for s in keywords)):
             x=1 #skicka till klockmetod
-        elif any("info" in s for s in keywords):
+        elif any("hjälp" in s for s in keywords):
             x=1 #Skicka till infometod
         else:
             self.didntUnderstand()
@@ -336,8 +338,8 @@ class SpeechController():
             tts.save("Ljudfiler/goBack.mp3")
             self.playSound("Ljudfiler/goBack.mp3")
             self.whatToDo()
-        elif (keyword == "info"):
-            x=1 # skicka till infometod
+        elif (keyword == "hjälp"):
+            self.help()
         elif (keyword == "klocka"):
             x=1 # skicka till klockmetod
         elif (keyword == "app"):
@@ -346,6 +348,22 @@ class SpeechController():
             x=1 # Pausa interaktion
         else:
             x=1 # break?
+
+    def help(self):
+        self.funcName = "help"
+        tts = gTTS(text='Jag ska hjälpa dig. Säg ALTERNATIV för att få alternativ om vad du kan göra, '
+                        'säg HEJDÅ för att avsluta, säg APP för att öppna appen, '
+                        ', säg KLOCKA för att veta tiden, säg PAUS för att pausa, '
+                        'säg UPPREPA för att höra alternativen igen.', lang='sv')
+        tts.save("Ljudfiler/helpOptions.mp3")
+        self.playSound("Ljudfiler/helpOptions.mp3")
+
+        audio = self.listenSpeech(4)
+        answer = self.recognizedAudio(audio)
+
+        if (answer == "upprepa"):
+            self.help()
+
 
     def didntUnderstand(self):
         nr = random.randint(1, 10)
