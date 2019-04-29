@@ -9,14 +9,10 @@ from pygame.mixer import Sound
 import speech_recognition as sr
 import datetime
 #from kivy.core.audio import SoundLoader
-
 from mutagen.mp3 import MP3
-
-#from main import Manager, MainScreen
 from FileController import FileHandler
-#from mathtest import MathVoice
-#from main import Manager, MainScreen
 from fractions import Fraction
+import sys
 
 from FileController import FileHandler
 
@@ -46,13 +42,12 @@ class SpeechController():
     def playSound(self, fileName):
         FileHandler().append(self.name,"screen","talkingscreen")
         self.speaking = True
-        #MainScreen.moveMouth()
         audio = MP3(fileName)
         length = audio.info.length
         mixer.init()
         mixer.music.load(fileName)
         mixer.music.play()
-        time.sleep(length-0.05*length)
+        time.sleep(length-0.05)
         self.speaking = False
         FileHandler().append(self.name, "screen", "main")
         
@@ -61,14 +56,13 @@ class SpeechController():
         tts = gTTS(text= 'MP3, kan du prata tydligare?', lang='sv')
         tts.save("Ljudfiler/speakClear.mp3")
         self.playSound("Ljudfiler/speakClear.mp3")
-        #time.sleep(2)
         self.fromWhatFunc()
         
 
     def fromWhatFunc(self):
         print("Function name: ", self.funcName)
-        '''if(self.funcName == "listenForTim"):
-            self.listenForTim()'''
+        if(self.funcName == "listenForTim"):
+            self.listenForTim()
         if(self.funcName == "playHello"):
             self.playHello()
         elif(self.funcName == "handleKeywords"):
@@ -122,6 +116,7 @@ class SpeechController():
         try:
             string = self.r.recognize_google(audio, language="sv-SV")
             #string = self.recognize_azure(audio, key = "9528141d0163486b986c549ddc3f6a4e", language = "sv-SV")
+            self.overallKeyword(string)
             return string
         except sr.UnknownValueError:
             print("mp3Exception")
@@ -158,10 +153,6 @@ class SpeechController():
         with self.m as source:
             #audio = r.record(source, duration = 5)
             mixer.init()
-            #while(mixer.get_busy()):
-            #    print("hej")
-            #if(mixer.Channel(1).get_busy()):
-            #    print("Channel 1 busy")
             audio = self.r.listen(source, phrase_time_limit=time)
             self.playSound("Ljudfiler/stopRecording.mp3")
             return audio
@@ -178,18 +169,20 @@ class SpeechController():
 
         if(answer == "ja"):
             tts = gTTS(text='Okej, det var kul att leka med dig. Ses snart igen!', lang='sv')
-            # Metod som stänger av
+            tts.save("Ljudfiler/goodbyeSleep.mp3")
+            self.playSound("Ljudfiler/goodbyeSleep.mp3")
+            FileHandler().append(self.name,"screen","sleep")
         elif(answer == "nej"):
             tts = gTTS(text='Okej, då fortsätter vi leka!', lang='sv')
+            tts.save("Ljudfiler/okKeepPlaying.mp3")
+            self.playSound("Ljudfiler/okKeepPlaying.mp3")
             self.fromWhatFunc()
+        elif(answer == "avsluta"):
+            sys.exit()
         else:
-            tts = gTTS(text='Säg igen', lang='sv')
+            self.didntUnderstand()
             self.goodbye()
-        tts.save("Ljudfiler/goodbye.mp3")
-        self.playSound("Ljudfiler/goodbye.mp3")
-        FileHandler().append(self.name,"screen","sleep")
 
-           
 
     def containsHiMyAndName(self, stringArray):
         if any(("hej" in s for s in stringArray) and ("kim" in s for s in stringArray) and ("heter" in s for s in stringArray)):
@@ -202,11 +195,11 @@ class SpeechController():
         return self.name
 
    
-    def listenForTim(self, manager):
+    def listenForTim(self):
         self.funcName = "listenForTim"
+        print('Listen for Tim')
         audio = self.listenSpeech(5)
         string = self.recognizedAudio(audio)
-        self.manager = manager
         if(string == None):
             return
         stringArray = self.stringSplitter(string)
@@ -332,7 +325,10 @@ class SpeechController():
             self.handleKeyword(self.recognizedAudio(audio))
 
     def overallKeyword(self, keyword):
-        if (self.containsGoodbye(keyword)):
+        print('Overall keyword: ' + keyword)
+        answer = self.stringSplitter(keyword)
+        if any(("hejdå" in s for s in answer) or (
+                ("hej" in s for s in answer) and ("då" in s for s in answer))):
             self.goodbye()
         elif (keyword == "tillbaka"):
             tts = gTTS(text='Okej, vi går tillbaka!', lang='sv')
@@ -347,8 +343,11 @@ class SpeechController():
             x=1 # Starta gui
         elif (keyword == "paus"):
             x=1 # Pausa interaktion
-        else:
-            x=1 # break?
+        elif(keyword == 'avsluta'):
+            print('AVSLUTA')
+            sys.exit('Shutting down from SC')
+            print('After shut down from SC')
+
 
     def help(self):
         self.funcName = "help"
@@ -377,7 +376,7 @@ class SpeechController():
 
 
     def didntUnderstand(self):
-        nr = random.randint(1, 10)
+        nr = random.randint(1, 5)
         if(nr == 1):
             tts = gTTS(text='Jag förstod inte, kan du säga igen!', lang='sv')
         if(nr == 2):
@@ -576,12 +575,6 @@ class SpeechController():
             audio = self.listenSpeech(4)
             self.postTalk(self.recognizedAudio(audio))
 
-    def containsGoodbye(self, message):
-        answer = self.stringSplitter(message)
-        if any(("hejdå" in s for s in answer) or (("hej" in s for s in answer) and ("då" in s for s in answer))):  
-            return True
-        else:
-            return False
 
     def startRPSVoice(self):
         print('In startRPSVoice')
@@ -612,8 +605,6 @@ class SpeechController():
             self.whatToDo()
         elif(answer == "upprepa"):
             self.startRPSVoice()
-        elif(self.containsGoodbye(answer)):
-            self.goodbye()
         else:
             tts2 = gTTS(text='Jag förstod inte, vi testar igen!', lang='sv')  # Ta bort efter första inspelning
             tts2.save("Ljudfiler/tryAgain.mp3")
