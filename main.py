@@ -132,7 +132,7 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
-        self.add_widget(TalkingScreen(name="talking"))
+        self.add_widget(TalkingScreen(name="talkingscreen"))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
@@ -143,7 +143,7 @@ class Manager(ScreenManager):
         self.transition = TransitionBase()
         if(self.sc.name == ""):
             if(self.sc.speaking):
-                self.current = "talking"
+                self.current = "talkingscreen"
             else:
                 self.current = "main"    
         else:
