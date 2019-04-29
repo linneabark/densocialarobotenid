@@ -648,29 +648,29 @@ class SpeechController():
         elif(sign == 1 and user == 2):
             tts = gTTS(text='Jag valde sten, så då vann jag!', lang='sv')
             currentLosses += 1
-            FileHandler().append(self.name, "losses", str(currentLosses))
+            FileHandler().append(self.name, 'losses', str(currentLosses))
         elif(sign == 1 and user == 3):
             tts = gTTS(text='Jag valde sten, så du vann, grattis!', lang='sv')
             currentWins += 1
-            FileHandler().append(self.name, "wins", str(currentWins))
+            FileHandler().append(self.name, 'wins', str(currentWins))
         elif(sign == 2 and user == 1):
             tts = gTTS(text='Jag valde sax, så du vann, grattis!', lang='sv')
             currentWins += 1
-            FileHandler().append(self.name, "wins", str(currentWins))
+            FileHandler().append(self.name, 'wins', str(currentWins))
         elif (sign == 2 and user == 2):
             tts = gTTS(text='Jag valde också sax, så det blev lika!', lang='sv')
         elif (sign == 2 and user == 3):
             tts = gTTS(text='Jag valde sax, så då vann jag!', lang='sv')
             currentLosses += 1
-            FileHandler().append(self.name, "losses", str(currentLosses))
+            FileHandler().append(self.name, 'losses', str(currentLosses))
         elif (sign == 3 and user == 1):
             tts = gTTS(text='Jag valde också påse, så då vann jag!', lang='sv')
             currentLosses += 1
-            FileHandler().append(self.name, "losses", str(currentLosses))
+            FileHandler().append(self.name, 'losses', str(currentLosses))
         elif(sign == 3 and user == 2):
             tts = gTTS(text='Jag valde påse, så du vann, grattis!', lang='sv')
             currentWins += 1
-            FileHandler().append(self.name, "wins", str(currentWins))
+            FileHandler().append(self.name, 'wins', str(currentWins))
         elif (sign == 3 and user == 3):
             tts = gTTS(text='Jag valde också påse, så det blev lika!', lang='sv')
         tts.save("Ljudfiler/iChoseX.mp3")
@@ -704,6 +704,19 @@ class SpeechController():
     def playRPSPhrases(self):
         self.funcName = "playRPSPhrases"
         print('In playRPSPhrases')
+        if (os.path.isfile("users/" + name + ".json")):
+            tts1 = gTTS(text='Kul att du vill spela med mig igen! Du har vunnit ' + FileHandler.read(self.name, 'wins') + ' , och jag har vunnit ' + FileHandler.read(self.name, 'losses'), lang='sv')
+            tts1.save("Ljudfiler/existingUserRPS.mp3")
+            self.playSound("Ljudfiler/existingUserRPS.mp3")
+            if (FileHandler.read(self.name, 'wins') > FileHandler.read(self.name, 'losses')):
+                tts = gTTS(text='Du leder!', lang='sv')
+                tts.save("Ljudfiler/youAreWinning.mp3")
+                self.playSound("Ljudfiler/youAreWinning.mp3")
+            else:
+                tts = gTTS(text='Jag leder!', lang='sv')
+                tts.save("Ljudfiler/youAreLoosing.mp3")
+                self.playSound("Ljudfiler/youAreLoosing.mp3")
+
         nr = random.randint(1, 10)
         if(nr == 1):
             tts = gTTS(text='Passa dig, jag känner mig vass idag!', lang='sv')
