@@ -54,6 +54,7 @@ class SleepScreen(Screen):
     def on_touch_down(self, touch):
         print('on touch down')
         self.manager.startTimThread(5)
+        
         Clock.schedule_interval(self.manager.updateScreen,0.2)
 
 
@@ -66,6 +67,11 @@ class ScheduleScreen(Screen):
 class MathScreen(Screen):
     pass
 
+class MathFaceScreen(Screen):
+    pass
+
+class RPSFaceScreen(Screen):
+    pass
 
 
 class Appview(Screen):
@@ -113,8 +119,8 @@ class Manager(ScreenManager):
 
     def initialize(self):
         self.add_widget(SleepScreen(name='sleep'))
-        self.add_widget(MainScreen(name="main"))
-        self.add_widget(ScheduleScreen(name="schedule"))
+        self.add_widget(MainScreen(name='main'))
+        self.add_widget(ScheduleScreen(name='schedule'))
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
@@ -132,14 +138,16 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
-        self.add_widget(TalkingScreen(name="talkingscreen"))
+        self.add_widget(TalkingScreen(name='talkingscreen'))
+        self.add_widget(MathFaceScreen(name='mathface'))
+        self.add_widget(RPSFaceScreen(name='rpsface'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
     def updateScreen(self,sec):
-        print('update screen')
+        #print('update screen')
         self.transition = TransitionBase()
         if(self.sc.name == ""):
             if(self.sc.speaking):
@@ -158,7 +166,7 @@ class Manager(ScreenManager):
 
     def startTim(self):
         print('Start Tim')
-        string = self.sc.listenForTim(self)
+        string = self.sc.listenForTim()
         if string == "familiarUser":
             self.isVoiceActive = True
             self.sc.playHelloName(self.sc.name)
