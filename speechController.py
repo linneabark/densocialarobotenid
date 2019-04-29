@@ -259,8 +259,10 @@ class SpeechController():
             x=1 # Starta gui
         elif (keyword == "paus"):
             x=1 # Pausa interaktion
-        elif(answer == "exit"):
-            sys.exit()
+        elif(keyword == 'avsluta'):
+            print('AVSLUTA')
+            sys.exit('Shutting down from SC')
+            print('After shut down from SC')
 
 
     def didntUnderstand(self):
