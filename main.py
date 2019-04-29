@@ -113,7 +113,7 @@ class Manager(ScreenManager):
         self.transition = SlideTransition()
         self.transition.duration = 1
         self.transition.direction = 'up'
-        self.current = "sleep"
+        self.current = 'sleep'
         print('Current screen: ' + self.current)
               
 
@@ -149,13 +149,13 @@ class Manager(ScreenManager):
     def updateScreen(self,sec):
         #print('update screen')
         self.transition = TransitionBase()
-        if(self.sc.name == ""):
+        if(self.sc.name == ''):
             if(self.sc.speaking):
-                self.current = "talkingscreen"
+                self.current = 'talkingscreen'
             else:
-                self.current = "main"    
+                self.current = 'main'    
         else:
-            self.current = FileHandler().read(self.sc.name,"screen")
+            self.current = FileHandler().read(self.sc.name,'screen')
 
 
     def startSchedule(self):
