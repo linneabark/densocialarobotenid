@@ -8,13 +8,13 @@ class FileHandler:
           name = name.lower()
           if (os.path.isfile("users/"+name+".json")):
                return
-          d = {"name": name,
-               "age":"",
-               "sport":"",
-               "color":"",
-               "wins": "",
-               "losses": "",
-               "screen":""
+          d = {'name': name,
+               'age': '',
+               'sport': '',
+               'color': '',
+               "wins": '',
+               'losses': '',
+               'screen': ''
           }
           json.dump(d,open("users/"+name+".json","w"),indent=2)
 
