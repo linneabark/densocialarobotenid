@@ -1,8 +1,9 @@
 {
-    "age": "12",
-    "color": "",
     "screen": "main",
-    "wins": "",
+    "losses": "",
     "sport": "",
-    "name": "elina"
+    "wins": "",
+    "age": "",
+    "name": "elina",
+    "color": ""
 }
