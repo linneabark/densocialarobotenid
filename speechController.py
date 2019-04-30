@@ -218,9 +218,14 @@ class SpeechController():
             self.smallTalk()
                    
     def playHelloName(self, name):
-        if(name == None):
+        if (os.path.isfile("users/" + name + ".json")):
+            tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')
+            tts.save("Ljudfiler/existingUser.mp3")
+            self.playSound("Ljudfiler/existingUser.mp3")
+            self.whatToDo()
+        elif(name == None):
             name = ""
-        FileHandler().create(name)
+            FileHandler().create(name)
         self.name = name
         self.helloPhrasesFamiliarUser(self.name) # Skicka in bara "name"?
         self.whatToDo()
@@ -632,13 +637,13 @@ class SpeechController():
             self.playerChoice()
         
     def rockPaperScissors(self, sign, user):
-        currentWins = FileHandler().read(self.name, "wins")
+        currentWins = FileHandler().read(self.name, 'wins')
         if (currentWins == ""):
             currentWins = 0
         else:
             currentWins = int(currentWins)
 
-        currentLosses = FileHandler().read(self.name, "losses")
+        currentLosses = FileHandler().read(self.name, 'losses')
         if (currentLosses == ""):
             currentLosses = 0
         else:
