@@ -723,7 +723,6 @@ class SpeechController():
                 tts.save("Ljudfiler/youAreLoosing.mp3")
                 self.playSound("Ljudfiler/youAreLoosing.mp3")
 
-
         nr = random.randint(1, 10)
         if(nr == 1):
             tts = gTTS(text='Passa dig, jag känner mig vass idag!', lang='sv')
