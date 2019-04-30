@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # Requires PyAudio and PySpeech.
+import os
 import random
 import time
 from gtts import gTTS
@@ -704,7 +705,7 @@ class SpeechController():
     def playRPSPhrases(self):
         self.funcName = "playRPSPhrases"
         print('In playRPSPhrases')
-        if (os.path.isfile("users/" + name + ".json")):
+        if (os.path.isfile("users/" + self.name + ".json")):
             tts1 = gTTS(text='Kul att du vill spela med mig igen! Du har vunnit ' + FileHandler.read(self.name, 'wins') + ' , och jag har vunnit ' + FileHandler.read(self.name, 'losses'), lang='sv')
             tts1.save("Ljudfiler/existingUserRPS.mp3")
             self.playSound("Ljudfiler/existingUserRPS.mp3")
@@ -721,7 +722,7 @@ class SpeechController():
         if(nr == 1):
             tts = gTTS(text='Passa dig, jag känner mig vass idag!', lang='sv')
         elif(nr == 2):
-            tts = gTTS(text='Jag märker om du fuskar!', lang='sv')
+            tts = gTTS(text='Jag märker om du fuskar' + self.name + '!', lang='sv')
         elif(nr == 3):
             tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')
         elif(nr == 4):
@@ -800,6 +801,7 @@ class SpeechController():
 
 
     def startMath(self):
+        FileHandler.append(self.name, 'screen','mathvoicescreen')
         self.funcName = "startMath"
         print("mathtest start")
         ttsMath1 = gTTS(text='Vad vill du räkna?', lang='sv')
