@@ -272,7 +272,7 @@ class SpeechController():
 
     def playHello(self):
         self.funcName = "playHello"
-        self.helloPhrasesFamiliarUser()
+        self.helloPhrasesUnknownUser()
         audio = self.listenSpeech(4)
         answer = self.recognizedAudio(audio)
         self.playHelloName(answer)
