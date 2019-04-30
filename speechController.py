@@ -322,10 +322,6 @@ class SpeechController():
             self.startRPSVoice()
         elif any(("prata" in s for s in keywords)):
             self.startTalking()      #skicka till pratmetod
-        elif any(("klocka" in s for s in keywords) or ("tid" in s for s in keywords)):
-            x=1 #skicka till klockmetod
-        elif any("hjälp" in s for s in keywords):
-            x=1 #Skicka till infometod
         else:
             self.didntUnderstand()
             audio = self.listenSpeech(7)
