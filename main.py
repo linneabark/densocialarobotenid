@@ -67,10 +67,13 @@ class ScheduleScreen(Screen):
 class MathScreen(Screen):
     pass
 
-class MathFaceScreen(Screen):
+class RPSFaceScreen(Screen):
     pass
 
-class RPSFaceScreen(Screen):
+class RedHeartScreen(Screen):
+    pass
+
+class MathVoiceScreen(Screen):
     pass
 
 
@@ -139,8 +142,9 @@ class Manager(ScreenManager):
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
         self.add_widget(TalkingScreen(name='talkingscreen'))
-        self.add_widget(MathFaceScreen(name='mathface'))
         self.add_widget(RPSFaceScreen(name='rpsface'))
+        self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
+        self.add_widget(RedHeartScreen(name='redheartscreen'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
