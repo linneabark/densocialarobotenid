@@ -179,7 +179,8 @@ class SpeechController():
             self.playSound("Ljudfiler/okKeepPlaying.mp3")
             self.fromWhatFunc()
         elif(answer == "avsluta"):
-            sys.exit()
+            FileHandler().append(self.name,'screen','goodbye')
+            print("avsluta")
         else:
             self.didntUnderstand()
             self.goodbye()
@@ -351,7 +352,7 @@ class SpeechController():
             x=1 # Pausa interaktion
         elif(keyword == 'avsluta'):
             print('AVSLUTA')
-            sys.exit('Shutting down from SC')
+            FileHandler().append(self.name,'screen','goodbye')
             print('After shut down from SC')
 
 
@@ -371,8 +372,8 @@ class SpeechController():
             self.help()
 
     def whatTime(self):
-        hour = datetime.datetime.now().hour
-        minute = datetime.datetime.now().minute
+        hour = str(datetime.datetime.now().hour)
+        minute = str(datetime.datetime.now().minute)
 
         tts = gTTS(text='Klockan är ' + hour + ' ' + minute, lang='sv') # Behöver testas!!
         tts.save("Ljudfiler/clock.mp3")
@@ -806,7 +807,7 @@ class SpeechController():
 
 
     def startMath(self):
-        FileHandler.append(self.name, 'screen','mathvoicescreen')
+        FileHandler().append(self.name, 'screen','mathvoicescreen')
         self.funcName = "startMath"
         print("mathtest start")
         ttsMath1 = gTTS(text='Vad vill du räkna?', lang='sv')
