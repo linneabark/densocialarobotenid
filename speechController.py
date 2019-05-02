@@ -179,7 +179,7 @@ class SpeechController():
             self.playSound("Ljudfiler/okKeepPlaying.mp3")
             self.fromWhatFunc()
         elif(answer == "avsluta"):
-            sys.exit()
+            FileHandler().append(self.name,'screen','goodbye')
         else:
             self.didntUnderstand()
             self.goodbye()
@@ -342,13 +342,14 @@ class SpeechController():
         elif (keyword == "klocka"):
             self.whatTime()
         elif (keyword == "app"):
+            FileHandler().append(self.name,'screen','app')
             x=1 # Starta gui
         elif (keyword == "paus"):
             x=1 # Pausa interaktion
         elif(keyword == 'avsluta'):
             print('AVSLUTA')
-            #sys.exit('Shutting down from SC')
             FileHandler().append(self.name,'screen','goodbye')
+            #sys.exit('Shutting down from SC')
             print('After shut down from SC')
 
 
