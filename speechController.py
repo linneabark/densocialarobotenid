@@ -347,7 +347,8 @@ class SpeechController():
             x=1 # Pausa interaktion
         elif(keyword == 'avsluta'):
             print('AVSLUTA')
-            sys.exit('Shutting down from SC')
+            #sys.exit('Shutting down from SC')
+            FileHandler().append(self.name,'screen','goodbye')
             print('After shut down from SC')
 
 
