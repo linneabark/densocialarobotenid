@@ -152,6 +152,8 @@ class Manager(ScreenManager):
 
     def updateScreen(self,sec):
         #print('update screen')
+        if(FileHandler().readScreen(self.sc.name) == 'goodbye'):
+            App.get_running_app().quit()
         self.transition = TransitionBase()
         if(self.sc.name == ''):
             if(self.sc.speaking):

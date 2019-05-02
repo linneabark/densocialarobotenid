@@ -28,7 +28,6 @@ class FileHandler:
           except FileNotFoundError:
                return False
 
-          
 
      '''
      Detta är copy paste, kanske måste källhänvisa
@@ -46,3 +45,11 @@ class FileHandler:
                    f.truncate()
           except FileNotFoundError:
                return False
+
+     def readScreen(self,name):
+         name = name.lower()
+         try:
+             user = json.load(open('users/' + name + '.json', 'r'))
+             return user.get('screen')
+         except FileNotFoundError:
+             return 'main'
