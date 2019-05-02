@@ -520,21 +520,21 @@ class SpeechController():
                             'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
                             'Då gick norsken in och efter två minuter kom han ut, grön i ansiktet och stönade: Grisen fes!'
                             'Sedan var det Bellmans tur att gå in i svinstian. Efter tio minuter kom grisen ut och stönade: Bellman fes!', lang='sv')
-        if (nr == 2):
+        elif (nr == 2):
             tts1 = gTTS(text = 'Vet du vad man får om man korsar en giraff och en igelkott? ')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
             time.sleep(1)
             tts = gTTS(text = 'En tre meter lång tandborste!')
-        if (nr == 3):
+        elif (nr == 3):
             tts = gTTS(text = 'Pappa frågar sin dotter, ser du bra med dina nya glasögon? Dotten svarade, visst mamma!')
-        if (nr == 4):
+        elif (nr == 4):
             tts1 = gTTS(text='Vad sa marsgubbarna när de landade på jorden?')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
             time.sleep(1)
             tts = gTTS(text = 'Hej jordgubbar!')
-        if (nr == 5):
+        elif (nr == 5):
             tts1 = gTTS(text='Vad är en groda utan ben?')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
@@ -741,7 +741,7 @@ class SpeechController():
         self.funcName = "start_Schedule"
         FileHandler().append(self.name,"screen","schedule")
 
-        tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att byta vecka.', lang='sv')
+        tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att se en annan vecka.', lang='sv')
         tts.save('Ljudfiler/schedule_instruction.mp3')
         self.playSound('Ljudfiler/schedule_instruction.mp3')
         audio = self.listenSpeech(4)
