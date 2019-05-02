@@ -19,6 +19,7 @@ class FileHandler:
           json.dump(d,open('users/'+name+'.json','w'),indent=2)
 
     #Hittar en person och läser infon som man vill ha
+
      def read(self,name,info):
           name = name.lower()
           try:
@@ -26,6 +27,7 @@ class FileHandler:
                return user.get(info)
           except FileNotFoundError:
                return False
+
 
      '''
      Detta är copy paste, kanske måste källhänvisa
