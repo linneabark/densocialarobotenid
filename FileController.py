@@ -13,9 +13,9 @@ class FileHandler:
           json.dump(d,open("users/"+name+".json","w"),indent=2)
 
     #Hittar en person och läser infon som man vill ha
-     def read(self,name,info):
+     def read(self,name,category):
           user = json.load(open("users/"+name+".json","r"))
-          return user.get(info)
+          return user.get(category)
           
 
      '''
