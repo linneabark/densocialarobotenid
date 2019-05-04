@@ -52,4 +52,4 @@ class FileHandler:
              user = json.load(open('users/' + name + '.json', 'r'))
              return user.get('screen')
          except FileNotFoundError:
-             return 'main'
+             return 'mainscreen'
