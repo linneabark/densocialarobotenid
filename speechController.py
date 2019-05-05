@@ -230,9 +230,7 @@ class SpeechController():
         
         audio = self.listenSpeech(5)
         string = self.recognizedAudio(audio)
-        stringArray = self.stringSplitter(string)
-        print(stringArray)
-        self.name = self.detectName(stringArray)
+        self.name = self.detectName(string)
         
         if (FileHandler().userExists(self.name)):
             #tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')
@@ -322,7 +320,7 @@ class SpeechController():
         audio = self.listenSpeech(4)
         answer = self.recognizedAudio(audio)
         print(answer)
-        if(answer == "upprepa"):
+        if self.keywordRecognition(answer,'upprepa'):
             self.whatToDo()
         else:
             self.handleKeyword(answer)
@@ -330,46 +328,42 @@ class SpeechController():
 
     def handleKeyword(self, message):
         self.funcName = "handleKeyword"
-        keywords = self.stringSplitter(message)
-        print("keywords: ", keywords)
 
-        if any(("schema" in s for s in keywords) or ("kalender" in s for s in keywords)):
+        if self.keywordRecognition(message,'schema') or self.keywordRecognition(message,'kalender'):
             self.start_Schedule()
             x=1
-        elif any(("räkna" in s for s in keywords) or ("matte" in s for s in keywords)):
+        elif self.keywordRecognition(message,'räkna') or self.keywordRecognition(message,'matte'):
             self.startMath()
-        elif any(("sten" in s for s in keywords) or ("sax" in s for s in keywords) or ("påse" in s for s in keywords) or ("spela" in s for s in keywords)):
+        elif self.keywordRecognition(message,'sten') or self.keywordRecognition(message,'sax') or self.keywordRecognition(message,'påse') or self.keywordRecognition(message,'spela'):
             print('Startar RPS')
             self.startRPSVoice()
-        elif any(("prata" in s for s in keywords)):
+        elif self.keywordRecognition(message,'prata'):
             self.startTalking()      #skicka till pratmetod
         else:
             self.didntUnderstand()
             audio = self.listenSpeech(7)
             self.handleKeyword(self.recognizedAudio(audio))
 
-    def overallKeyword(self, keyword):
-        print('Overall keyword: ' + keyword)
-        answer = self.stringSplitter(keyword)
-        if any(("hejdå" in s for s in answer) or (
-                ("hej" in s for s in answer) and ("då" in s for s in answer))):
+    def overallKeyword(self, string):
+        print('Overall keyword: ' + string)
+        if self.keywordRecognition(string,'hejdå') or (self.keywordRecognition(string,'hej') and self.keywordRecognition(string,'då')):
             self.goodbye()
-        elif (keyword == "tillbaka"):
+        elif (string == "tillbaka"):
             tts = gTTS(text='Okej, vi går tillbaka!', lang='sv')
             tts.save("Ljudfiler/goBack.mp3")
             self.playSound("Ljudfiler/goBack.mp3")
             self.whatToDo()
-        elif (keyword == "hjälp"):
+        elif (string == "hjälp"):
             self.help()
-        elif (keyword == "klocka"):
+        elif (string == "klocka"):
             self.whatTime()
-        elif (keyword == "app"):
+        elif (string == "app"):
             FileHandler().append(self.name,'screen','appview')
             sys.exit()
             x=1 # Starta gui
-        elif (keyword == "paus"):
+        elif (string == "paus"):
             x=1 # Pausa interaktion
-        elif(keyword == 'avsluta'):
+        elif(string == 'avsluta'):
             sys.exit()
 
 
@@ -406,11 +400,11 @@ class SpeechController():
         if(nr == 2):
             tts = gTTS(text='Kan du upprepa det där?', lang='sv')
         if(nr == 3):
-            tts = gTTS(text='Jag har persilja i öronen, du får säga igen', lang='sv')
+            tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
         if(nr == 4):
-            tts = gTTS(text='Kan du prata tydligare', lang='sv')
+            tts = gTTS(text='Kan du prata tydligare?', lang='sv')
         if(nr == 5):
-            tts = gTTS(text='Kan du upprepa', lang='sv')
+            tts = gTTS(text='Kan du upprepa?', lang='sv')
 
         tts.save("Ljudfiler/didntUnderstand1.mp3")
         self.playSound("Ljudfiler/didntUnderstand1.mp3")
@@ -576,14 +570,13 @@ class SpeechController():
             self.postJoke()
 
     def postTalk(self, message):
-        self.funcName = "postTalk"
-        keywords = self.stringSplitter(message)
+        self.funcName = 'postTalk'
 
-        if any("skämt" in s for s in keywords):
+        if self.keywordRecognition(message,'skämt'):
             self.joke()
-        elif any("prata" in s for s in keywords):
+        elif self.keywordRecognition(message,'prata'):
             self.smallTalk()
-        elif any("annat" in s for s in keywords):
+        elif self.keywordRecognition(message,'annat'):
             self.whatToDo()
         else:
             self.didntUnderstand()
