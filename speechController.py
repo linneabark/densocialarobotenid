@@ -27,15 +27,19 @@ class SpeechController():
         self.manager = ""
 
 
-    def stringSplitter(self, string):
-        if(string == None):
-            return [""]
+    def stringSplitter(self, string, keywords):
+        if string == None or keywords == None:
+            return False
+
         stringArray = string.split()
-        i = 0
-        for x in stringArray:
+        for i in stringArray:
             stringArray[i] = stringArray[i].lower()
-            i += 1
-        return stringArray
+        for i in keywords:
+            keywords[i] = keywords[i].lower()
+
+        for word in keywords:
+            if word in stringArray:
+                return True
 
     def speakingFalse(self):
         self.speaking = False
@@ -62,8 +66,8 @@ class SpeechController():
 
     def fromWhatFunc(self):
         print("Function name: ", self.funcName)
-        if(self.funcName == "listenForTim"):
-            self.listenForTim()
+        if(self.funcName == "listenForKim"):
+            self.listenForKim()
         if(self.funcName == "playHello"):
             self.playHello()
         elif(self.funcName == "handleKeywords"):
@@ -185,7 +189,7 @@ class SpeechController():
             self.goodbye()
 
 
-    def containsHiMyAndName(self, stringArray):
+    def containsHiKimAndName(self, stringArray):
         if any(("hej" in s for s in stringArray) and ("kim" in s for s in stringArray) and ("heter" in s for s in stringArray)):
                return True
         return False
@@ -196,16 +200,16 @@ class SpeechController():
         return self.name
 
    
-    def listenForTim(self):
-        self.funcName = "listenForTim"
-        print('Listen for Tim')
+    def listenForKim(self):
+        self.funcName = "listenForKim"
+        print('Listen for Kim')
         audio = self.listenSpeech(5)
         string = self.recognizedAudio(audio)
         if(string == None):
             return
         stringArray = self.stringSplitter(string)
         print(stringArray)
-        if(self.containsHiMyAndName(stringArray)):
+        if(self.containsHiKimAndName(stringArray)):
             self.name = self.detectName(stringArray)
             FileHandler().create(self.name)
             print('Familiar user')
@@ -749,7 +753,33 @@ class SpeechController():
         string = self.recognizedAudio(audio)
         words = self.stringSplitter(string)
 
-        if any("upprepa" in s for s in words):
+        if any('nästa' in s for s in words):
+            current_screen = FileHandler().readScreen(self.name)
+            if current_screen == 'schedule':
+                FileHandler().append(self.name, 'screen', 's2')
+            elif current_screen == 's2':
+                FileHandler().append(self.name, 'screen', 's3')
+            elif current_screen == 's3':
+                FileHandler().append(self.name, 'screen', 's4')
+            elif current_screen == 's4':
+                FileHandler().append(self.name, 'screen', 's5')
+            elif current_screen == 's5':
+                FileHandler().append(self.name, 'screen', 's6')
+
+        elif any('förra' in s for s in words):
+            current_screen = FileHandler().readScreen(self.name)
+            if current_screen == 's2':
+                FileHandler().append(self.name, 'screen', 'schedule')
+            elif current_screen == 's3':
+                FileHandler().append(self.name, 'screen', 's2')
+            elif current_screen == 's4':
+                FileHandler().append(self.name, 'screen', 's3')
+            elif current_screen == 's5':
+                FileHandler().append(self.name, 'screen', 's4')
+            elif current_screen == 's6':
+                FileHandler().append(self.name, 'screen', 's5')
+
+        elif any("upprepa" in s for s in words):
             self.start_Schedule()
         
 

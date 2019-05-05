@@ -53,7 +53,7 @@ class SleepScreen(Screen):
     print('In sleepscreen')
     def on_touch_down(self, touch):
         print('on touch down')
-        self.manager.startTimThread(5)
+        self.manager.startKimThread(5)
         
         Clock.schedule_interval(self.manager.updateScreen,0.2)
 
@@ -165,14 +165,11 @@ class Manager(ScreenManager):
 
 
     def startSchedule(self):
-        #if(self.sc.screen = "schedule")
-        #self.sc.start_Schedule(self, Manager)
-        #self.current = next_screen
         pass
 
-    def startTim(self):
-        print('Start Tim')
-        string = self.sc.listenForTim()
+    def startKim(self):
+        print('Start Kim')
+        string = self.sc.listenForKim()
         if string == "familiarUser":
             self.isVoiceActive = True
             self.sc.playHelloName(self.sc.name)
@@ -180,11 +177,11 @@ class Manager(ScreenManager):
             self.isVoiceActive = True
             self.sc.playHello()                           
 
-    def startTimThread(self,sec):
+    def startKimThread(self,sec):
         if not(self.isVoiceActive):
             print("threadstart")
-            thread_startTim = Thread(target=self.startTim)
-            thread_startTim.start()
+            thread_startKim = Thread(target=self.startKim)
+            thread_startKim.start()
 
     def callback(self, sec):
         end = time.time()
