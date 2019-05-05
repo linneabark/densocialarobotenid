@@ -55,6 +55,7 @@ class SpeechController():
         
     
     def mp3Exception(self):
+        FileHandler().append(self.name,'screen','confusedscreen')
         tts = gTTS(text= 'MP3, kan du prata tydligare?', lang='sv')
         tts.save("Ljudfiler/speakClear.mp3")
         self.playSound("Ljudfiler/speakClear.mp3")
@@ -118,6 +119,7 @@ class SpeechController():
         try:
             string = self.r.recognize_google(audio, language="sv-SV")
             self.overallKeyword(string)
+            string = string.lower()
             return string
         except sr.UnknownValueError:
             print("mp3Exception")
@@ -205,33 +207,42 @@ class SpeechController():
             return
         stringArray = self.stringSplitter(string)
         print(stringArray)
-        if(self.containsHiMyAndName(stringArray)):
-            self.name = self.detectName(stringArray)
-            FileHandler().create(self.name)
-            print('Familiar user')
-            return "familiarUser"
-        elif any('hej' in s for s in stringArray):
+        #if(self.containsHiMyAndName(stringArray)):
+        #    self.name = self.detectName(stringArray)
+            #print('Familiar user')
+            #return "familiarUser"
+        if any('hej' in s for s in stringArray):
             return 'hej'
         elif any("spela" in s for s in stringArray):
             self.startRPSVoice()
         elif any("prata" in s for s in stringArray):
             self.smallTalk()
                    
-    def playHelloName(self, name):
-        if (os.path.isfile("users/" + name + ".json")):
-            tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')
-            tts.save("Ljudfiler/existingUser.mp3")
-            FileHandler().append(name, 'screen', 'mainscreen')
-            self.playSound("Ljudfiler/existingUser.mp3")
-            self.whatToDo()
-        elif(name == None):
-            name = ""
+    def playHelloName(self):
+        tts = gTTS(text='Vad heter du?', lang='sv')
+        tts.save("Ljudfiler/helloWhatsYourName.mp3")
+        self.playSound("Ljudfiler/helloWhatsYourName.mp3")
+        
+        audio = self.listenSpeech(5)
+        string = self.recognizedAudio(audio)
+        stringArray = self.stringSplitter(string)
+        print(stringArray)
+        self.name = self.detectName(stringArray)
+        
+        if (FileHandler().userExists(self.name)):
+            #tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')
+            #tts.save("Ljudfiler/existingUser.mp3")
+            FileHandler().append(self.name, 'screen', 'redheartscreen')
+            #self.playSound("Ljudfiler/existingUser.mp3")
+            #self.whatToDo()
+            self.helloPhrasesFamiliarUser(self.name) # Skicka in bara "name"?
         else:
-            FileHandler().create(name)
-            FileHandler().append(name, 'screen', 'mainscreen')
-        self.name = name
-        self.helloPhrasesFamiliarUser(self.name) # Skicka in bara "name"?
-        self.whatToDo()
+            FileHandler().create(self.name)
+            FileHandler().append(self.name, 'screen', 'mainscreen')
+            self.helloPhrasesUnknownUser()
+            
+
+
 
     def helloPhrasesFamiliarUser(self, name):
         nr = random.randint(1, 4)
@@ -244,7 +255,7 @@ class SpeechController():
         elif (nr == 2):
             tts = gTTS(text = 'Tjena' + name + 'vad vill du hitta på idag?', lang ='sv')
         elif (nr == 3):
-            tts = gTTS(text='Vad kul att träffa dig ' + name + ', nu ska vi leka!', lang='sv')
+            tts = gTTS(text='Vad kul att träffa dig igen ' + name + ', nu ska vi leka!', lang='sv')
         elif (nr == 4):
             tts = gTTS(text=name + ', det var ett fint namn!', lang='sv')
         elif (nr == 5):
@@ -275,24 +286,26 @@ class SpeechController():
 
     def playHello(self):
         self.funcName = "playHello"
-        self.helloPhrasesUnknownUser()
+        #self.helloPhrasesUnknownUser()
         audio = self.listenSpeech(4)
         answer = self.recognizedAudio(audio)
+        self.name = answer
         self.playHelloName(answer)
 
     def helloPhrasesUnknownUser(self):
         nr = random.randint(1,4)
         if (nr == 1):
-            tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
+            tts = gTTS(text='Hej! Jag heter Kim .', lang='sv')
         if (nr == 2):
-            tts = gTTS(text='Tjena polare! Mitt namn är Kim, vad är ditt?', lang='sv')
+            tts = gTTS(text='Tjena polare! Mitt namn är Kim .', lang='sv')
         if (nr == 3):
-            tts = gTTS(text='Äntligen någon som vill leka. Jag heter Kim, kan du berätta vad du heter?', lang='sv')
+            tts = gTTS(text='Äntligen någon som vill leka. Jag heter Kim .', lang='sv')
         if (nr == 4):
-            tts = gTTS(text='Hallå! Det är jag som är Kim, vad heter du?', lang='sv')
+            tts = gTTS(text='Hallå!' + self.name + 'Det är jag som är Kim .', lang='sv')
 
         tts.save("Ljudfiler/helloWhatsYourName.mp3")
         self.playSound("Ljudfiler/helloWhatsYourName.mp3")
+        self.whatToDo()
 
 
     def whatToDo(self):
@@ -420,7 +433,7 @@ class SpeechController():
         elif string == "rosa":
             tts = gTTS(text='åh, nu blev jag sugen på sockervadd!', lang='sv')
         elif string == "brun":
-            tts = gTTS(text='Är du helt säker på det, då ser det ju ut som... Chokladmousse!', lang='sv')
+            tts = gTTS(text='Är du helt säker på det, då ser det ju ut som ... Chokladmousse!', lang='sv')
         elif string == "lila":
             tts = gTTS(text='Ja det är fint!', lang='sv')
         else:
@@ -552,7 +565,7 @@ class SpeechController():
         if (answer == "ja"):
             self.joke()
         elif (answer == "nej"):
-            self.smallTalk(answer)
+            self.smallTalk()
         else:
             self.didntUnderstand()
             self.postJoke()
@@ -853,7 +866,7 @@ class SpeechController():
             if count > 0:
                 actual_operator = operator
             operator_count += count
-
+        FileHandler().append(self.name, 'screen', 'smartscreen')
 
         if operator_count > 1:
             ttsMath4 = gTTS(text='Bara ett räknesätt tack.', lang='sv')

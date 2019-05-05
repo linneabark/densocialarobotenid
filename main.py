@@ -50,14 +50,15 @@ class MainScreen(Screen):
 
       
 class SleepScreen(Screen):
-    event = None
+    event = None    
     def on_enter(self):        
         print('In sleepscreen')
     def on_touch_down(self, touch):
         print('on touch down')
-        self.manager.startTimThread(5)        
+        self.manager.startTimThread(5)
+        #FileHandler().append(self.manager.sc.name, 'screen', 'mainscreen')
         self.event = Clock.schedule_interval(self.manager.updateScreen,0.2)
-
+        
 
 class TalkingScreen(Screen):
     pass
@@ -66,6 +67,12 @@ class ScheduleScreen(Screen):
     pass
 
 class MathScreen(Screen):
+    pass
+
+class ConfusedScreen(Screen):
+    pass
+
+class SmartScreen(Screen):
     pass
 
 class RPSFaceScreen(Screen):
@@ -80,6 +87,14 @@ class MathVoiceScreen(Screen):
 class TalkingMathVoiceScreen(Screen):
     pass
 
+class TalkingRedHeartScreen(Screen):
+    pass
+
+class TalkingConfusedScreen(Screen):
+    pass
+
+class TalkingSmartScreen(Screen):
+    pass
 
 class Appview(Screen):
     def on_enter(self):
@@ -153,6 +168,11 @@ class Manager(ScreenManager):
         self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
         self.add_widget(RedHeartScreen(name='redheartscreen'))
         self.add_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
+        self.add_widget(TalkingRedHeartScreen(name='talkingredheartscreen'))
+        self.add_widget(TalkingConfusedScreen(name='talkingconfusedscreen'))
+        self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
+        self.add_widget(ConfusedScreen(name='confusedscreen'))
+        self.add_widget(SmartScreen(name='smartscreen'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
@@ -186,13 +206,13 @@ class Manager(ScreenManager):
         print('Start Tim')
         string = self.sc.listenForTim()
         print(string)
-        if string == 'familiarUser':
-            self.isVoiceActive = True
-            self.sc.playHelloName(self.sc.name)
+        #if string == 'familiarUser':
+        #    self.isVoiceActive = True
+        #    self.sc.playHelloName(self.sc.name)
         if string == 'hej':
             print('said hello')
             self.isVoiceActive = True
-            self.sc.playHello()                           
+            self.sc.playHelloName()                           
 
     def startTimThread(self,sec):
         print('kommer inte in')

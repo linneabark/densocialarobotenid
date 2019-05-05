@@ -27,7 +27,13 @@ class FileHandler:
                return user.get(info)
           except FileNotFoundError:
                return False
-
+          
+     def userExists(self, user):
+          if (os.path.isfile('users/'+user+'.json')):
+               return True
+          else:
+               return False
+               
 
      '''
      Detta är copy paste, kanske måste källhänvisa
