@@ -27,9 +27,9 @@ class SpeechController():
         self.manager = ""
 
 
-    def stringSplitter(self, string, keywords):
+    def keywordRecognition(self, string, keywords):
         if string == None or keywords == None:
-            return False
+            return
 
         stringArray = string.split()
         for i in stringArray:
@@ -38,7 +38,7 @@ class SpeechController():
             keywords[i] = keywords[i].lower()
 
         for word in keywords:
-            if word in stringArray:
+            if any(word in s for s in stringArray):
                 return True
 
     def speakingFalse(self):
@@ -189,12 +189,13 @@ class SpeechController():
             self.goodbye()
 
 
-    def containsHiKimAndName(self, stringArray):
+    '''def containsHiKimAndName(self, stringArray):
         if any(("hej" in s for s in stringArray) and ("kim" in s for s in stringArray) and ("heter" in s for s in stringArray)):
                return True
-        return False
+        return False'''
 
-    def detectName(self, stringArray):
+    def detectName(self, string):
+        stringArray = string.split()
         namePos = stringArray.index("heter") + 1
         self.name = stringArray[namePos]
         return self.name
@@ -207,18 +208,18 @@ class SpeechController():
         string = self.recognizedAudio(audio)
         if(string == None):
             return
-        stringArray = self.stringSplitter(string)
-        print(stringArray)
-        if(self.containsHiKimAndName(stringArray)):
-            self.name = self.detectName(stringArray)
+        #stringArray = self.stringSplitter(string)
+        #print(stringArray)
+        if(self.keywordRecognition(string,'hej') and self.keywordRecognition(string,'kim') and self.keywordRecognition(string,'heter')):
+            self.name = self.detectName(string)
             FileHandler().create(self.name)
             print('Familiar user')
             return "familiarUser"
-        elif any('hej' in s for s in stringArray):
+        elif self.keywordRecognition(string,'hej'):
             return 'hej'
-        elif any("spela" in s for s in stringArray):
+        elif self.keywordRecognition(string,'spela'):
             self.startRPSVoice()
-        elif any("prata" in s for s in stringArray):
+        elif self.keywordRecognition(string,'prata'):
             self.smallTalk()
                    
     def playHelloName(self, name):
