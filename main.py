@@ -38,8 +38,8 @@ from FileController import FileHandler
 # Config.set('graphics', 'fullscreen', 'auto')
 from speechController import SpeechController
 
-Config.set('graphics', 'width', '2000')
-Config.set('graphics', 'height', '8000')
+#Config.set('graphics', 'width', '2000')
+#Config.set('graphics', 'height', '8000')
 #Window.size = (586 * 1.3, 325 * 1.3)
 
 class MainScreen(Screen):
@@ -50,12 +50,13 @@ class MainScreen(Screen):
 
       
 class SleepScreen(Screen):
-    print('In sleepscreen')
+    event = None
+    def on_enter(self):        
+        print('In sleepscreen')
     def on_touch_down(self, touch):
         print('on touch down')
-        self.manager.startKimThread(5)
-        
-        Clock.schedule_interval(self.manager.updateScreen,0.2)
+        self.manager.startTimThread(5)        
+        self.event = Clock.schedule_interval(self.manager.updateScreen,0.2)
 
 
 class TalkingScreen(Screen):
@@ -76,8 +77,14 @@ class RedHeartScreen(Screen):
 class MathVoiceScreen(Screen):
     pass
 
+class TalkingMathVoiceScreen(Screen):
+    pass
+
 
 class Appview(Screen):
+    def on_enter(self):
+        self.manager.unschedule()
+        
     def launchRPS(self):
         print('Launch RPS')
         
@@ -122,7 +129,7 @@ class Manager(ScreenManager):
 
     def initialize(self):
         self.add_widget(SleepScreen(name='sleep'))
-        self.add_widget(MainScreen(name='main'))
+        self.add_widget(MainScreen(name='mainscreen'))
         self.add_widget(ScheduleScreen(name='schedule'))
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
@@ -141,10 +148,11 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
-        self.add_widget(TalkingScreen(name='talkingscreen'))
+        self.add_widget(TalkingScreen(name='talkingmainscreen'))
         self.add_widget(RPSFaceScreen(name='rpsface'))
         self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
         self.add_widget(RedHeartScreen(name='redheartscreen'))
+        self.add_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
@@ -152,36 +160,45 @@ class Manager(ScreenManager):
 
     def updateScreen(self,sec):
         #print('update screen')
-        if(FileHandler().readScreen(self.sc.name) == 'goodbye'):
-            App.get_running_app().quit()
         self.transition = TransitionBase()
         if(self.sc.name == ''):
             if(self.sc.speaking):
-                self.current = 'talkingscreen'
+                self.current = 'talkingmainscreen'
             else:
-                self.current = 'main'    
+                self.current = 'mainscreen'    
         else:
-            self.current = FileHandler().read(self.sc.name,'screen')
+            self.current = FileHandler().readScreen(self.sc.name)
+
+    def unschedule(self):
+        screen = self.get_screen('sleep')
+        screen.event.cancel()
+        isVoiceActive = False
+        FileHandler().append(self.sc.name, 'screen', 'sleep')
 
 
     def startSchedule(self):
         pass
 
+
     def startKim(self):
         print('Start Kim')
         string = self.sc.listenForKim()
-        if string == "familiarUser":
+        print(string)
+        if string == 'familiarUser':
+
             self.isVoiceActive = True
             self.sc.playHelloName(self.sc.name)
-        if string == "hej":
+        if string == 'hej':
+            print('said hello')
             self.isVoiceActive = True
             self.sc.playHello()                           
 
+
     def startKimThread(self,sec):
-        if not(self.isVoiceActive):
-            print("threadstart")
-            thread_startKim = Thread(target=self.startKim)
-            thread_startKim.start()
+        print('kommer inte in')
+        print("threadstart")
+        thread_startKim = Thread(target=self.startKim)
+        thread_startKim.start()
 
     def callback(self, sec):
         end = time.time()
