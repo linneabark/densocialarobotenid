@@ -198,15 +198,14 @@ class Manager(ScreenManager):
 
 
     def startSchedule(self):
-        #if(self.sc.screen = "schedule")
-        #self.sc.start_Schedule(self, Manager)
-        #self.current = next_screen
         pass
 
-    def startTim(self):
-        print('Start Tim')
-        string = self.sc.listenForTim()
+
+    def startKim(self):
+        print('Start Kim')
+        string = self.sc.listenForKim()
         print(string)
+
         #if string == 'familiarUser':
         #    self.isVoiceActive = True
         #    self.sc.playHelloName(self.sc.name)
@@ -215,11 +214,12 @@ class Manager(ScreenManager):
             self.isVoiceActive = True
             self.sc.playHelloName()                           
 
-    def startTimThread(self,sec):
+
+    def startKimThread(self,sec):
         print('kommer inte in')
         print("threadstart")
-        thread_startTim = Thread(target=self.startTim)
-        thread_startTim.start()
+        thread_startKim = Thread(target=self.startKim)
+        thread_startKim.start()
 
     def callback(self, sec):
         end = time.time()
