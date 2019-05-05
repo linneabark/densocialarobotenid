@@ -219,7 +219,7 @@ class SpeechController():
             self.smallTalk()
                    
     def playHelloName(self):
-        tts = gTTS(text='Vad heter du?', lang='sv')
+        tts = gTTS(text='Hej jag heter Kim, vad heter du?', lang='sv')
         tts.save("Ljudfiler/helloWhatsYourName.mp3")
         self.playSound("Ljudfiler/helloWhatsYourName.mp3")
         

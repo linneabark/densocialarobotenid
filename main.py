@@ -55,8 +55,9 @@ class SleepScreen(Screen):
         print('In sleepscreen')
     def on_touch_down(self, touch):
         print('on touch down')
+        #FileHandler().append(self.manager.sc.name, 'name', '')
+        # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
         self.manager.startTimThread(5)
-        #FileHandler().append(self.manager.sc.name, 'screen', 'mainscreen')
         self.event = Clock.schedule_interval(self.manager.updateScreen,0.2)
         
 
