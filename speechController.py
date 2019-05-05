@@ -27,19 +27,17 @@ class SpeechController():
         self.manager = ""
 
 
-    def keywordRecognition(self, string, keywords):
-        if string == None or keywords == None:
+    def keywordRecognition(self, string, keyword):
+        if string == None or keyword == None:
             return
 
         stringArray = string.split()
-        for i in stringArray:
-            stringArray[i] = stringArray[i].lower()
-        for i in keywords:
-            keywords[i] = keywords[i].lower()
+        for i, x in enumerate(stringArray):
+            stringArray[i] = x.lower()
+        keyword = keyword.lower()
 
-        for word in keywords:
-            if any(word in s for s in stringArray):
-                return True
+        if any(keyword in s for s in stringArray):
+            return True
 
     def speakingFalse(self):
         self.speaking = False
@@ -348,20 +346,20 @@ class SpeechController():
         print('Overall keyword: ' + string)
         if self.keywordRecognition(string,'hejdå') or (self.keywordRecognition(string,'hej') and self.keywordRecognition(string,'då')):
             self.goodbye()
-        elif (string == "tillbaka"):
+        elif (string == 'tillbaka'):
             tts = gTTS(text='Okej, vi går tillbaka!', lang='sv')
             tts.save("Ljudfiler/goBack.mp3")
             self.playSound("Ljudfiler/goBack.mp3")
             self.whatToDo()
-        elif (string == "hjälp"):
+        elif (string == 'hjälp'):
             self.help()
-        elif (string == "klocka"):
+        elif (string == 'klocka'):
             self.whatTime()
-        elif (string == "app"):
+        elif (string == 'app'):
             FileHandler().append(self.name,'screen','appview')
             sys.exit()
             x=1 # Starta gui
-        elif (string == "paus"):
+        elif (string == 'paus'):
             x=1 # Pausa interaktion
         elif(string == 'avsluta'):
             sys.exit()
@@ -486,9 +484,9 @@ class SpeechController():
         audio = self.listenSpeech(3)
         answer = self.recognizedAudio(audio)
 
-        if(answer == "ja"):
+        if self.keywordRecognition(answer, 'ja'):
             self.joke()
-        elif(answer == "nej"):
+        elif self.keywordRecognition(answer,'nej'):
             tts = gTTS(text='Okej, då slipper du.', lang='sv')
             tts.save("Ljudfiler/ok.mp3")
             self.playSound("Ljudfiler/ok.mp3")
@@ -506,9 +504,9 @@ class SpeechController():
         audio = self.listenSpeech(3)
         answer = self.recognizedAudio(audio)
 
-        if (answer == "ja"):
+        if self.keywordRecognition(answer, 'ja'):
             self.smallTalk()
-        elif (answer == "nej"):
+        elif self.keywordRecognition(answer, 'nej'):
             tts = gTTS(text='Okej, då gör vi något annat', lang='sv')
             tts.save("Ljudfiler/okLetsDoSomethingElse.mp3")
             self.playSound("Ljudfiler/okLetsDoSomethingElse.mp3")
@@ -518,7 +516,8 @@ class SpeechController():
 
     def joke(self):
         self.funcName = "joke"
-        nr = random.randint(1, 5)
+        #nr = random.randint(1, 5)
+        nr = 3
         if (nr == 1):
             tts = gTTS(text='Det var en gång en dansk, en norsk och Bellman som skulle tävla om vem som kunde vara inne i en svinstia i längst tid.'
                             'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
@@ -531,7 +530,7 @@ class SpeechController():
             time.sleep(1)
             tts = gTTS(text = 'En tre meter lång tandborste!', lang='sv')
         elif (nr == 3):
-            tts = gTTS(text = 'Pappa frågar sin dotter, ser du bra med dina nya glasögon? Dotten svarade, visst mamma!', lang='sv')
+            tts = gTTS(text = self.name, lang='sv')
         elif (nr == 4):
             tts1 = gTTS(text='Vad sa marsgubbarna när de landade på jorden?', lang='sv')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
@@ -561,9 +560,9 @@ class SpeechController():
         audio = self.listenSpeech(4)
         answer = self.recognizedAudio(audio)
 
-        if (answer == "ja"):
+        if self.keywordRecognition(answer, 'ja'):
             self.joke()
-        elif (answer == "nej"):
+        elif self.keywordRecognition(answer, 'nej'):
             self.smallTalk()
         else:
             self.didntUnderstand()
@@ -687,17 +686,18 @@ class SpeechController():
         self.playSound("Ljudfiler/playAgain.mp3")
 
         play_again_answer = self.listenSpeech(3)
-        if(self.recognizedAudio(play_again_answer) == "ja"):
+        answer = self.recognizedAudio(play_again_answer)
+        if self.keywordRecognition(answer, 'ja'):
             tts = gTTS(text='Vad kul!', lang='sv')               # Ta bort efter första inspelning
             tts.save("Ljudfiler/fun.mp3")
             self.playSound("Ljudfiler/fun.mp3")
             self.startRPSVoice()
-        elif (self.recognizedAudio(play_again_answer) == "nej"):
+        elif self.keywordRecognition(answer, 'nej')):
             tts = gTTS(text='Okej, vi kan spela mer en annan gång', lang='sv') # Ta bort efter första inspelning
             tts.save("Ljudfiler/playAnotherTime.mp3")
             self.playSound("Ljudfiler/playAnotherTime.mp3")
             self.whatToDo()
-        elif(self.recognizedAudio(play_again_answer) == "upprepa"):
+        elif self.keywordRecognition(answer, 'upprepa'):
             tts = gTTS(text='Okej, vi tar det igen', lang='sv') # Ta bort efter första inspelning
             tts.save("Ljudfiler/takeItAgain.mp3")
             self.playSound("Ljudfiler/takeItAgain.mp3")
@@ -929,9 +929,9 @@ class SpeechController():
         audio2 = self.listenSpeech(3)
         answer = self.recognizedAudio(audio2)
 
-        if (answer == "ja"):
+        if self.keywordRecognition(answer, 'ja'):
             self.startMath()
-        elif (answer == "nej"):
+        elif self.keywordRecognition(answer, 'nej'):
             self.whatToDo()
         else:
             self.didntUnderstand()
