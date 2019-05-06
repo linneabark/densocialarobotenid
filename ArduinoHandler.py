@@ -9,7 +9,7 @@ import time
 import serial
 
 class ArduinoHandler():
-    #python -m serial.tools.list_ports 
+    #python -m serial.tools.list_ports
     # ttyACM0" eller ttyACM1
     channel = None
 
