@@ -9,7 +9,7 @@ import time
 import serial
 
 class ArduinoHandler():
-
+    #python -m serial.tools.list_ports 
     # ttyACM0" eller ttyACM1
     channel = None
 
@@ -34,8 +34,7 @@ class ArduinoHandler():
             return serial.Serial('/dev/ttyACM1',self.baudRate, timeout = waitTime)
         pass
 
-    def __init__(self,waitTime):
-        self.channel = self.testChannel(waitTime)
+
 
     '''
     Ska läsa från arduino där "2" är antalet bytes den läser
@@ -58,6 +57,10 @@ class ArduinoHandler():
             return True
         else:
             return False
+
+
+    def __init__(self,waitTime):
+        self.channel = self.testChannel(waitTime)
 
 
 '''
