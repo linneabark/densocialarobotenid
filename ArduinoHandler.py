@@ -23,13 +23,11 @@ class ArduinoHandler():
     def testChannel(self, waitTime):
         ser = serial.Serial('/dev/ttyACM0',self.baudRate)
         s = [0, 1]
-        start = time.time()
-        t = 0
-        while (s[0] == None | t < 4):            #Denna kontroller behöver nog ändras, göra en metod som väntar TODO
-            read_serial = ser.readline()
-            s[0] = str(int(ser.readline(), 16))
-            print([0])
-            t += (time.time() - start)
+        #while (s[0] == None | t < 4):            #Denna kontroller behöver nog ändras, göra en metod som väntar TODO
+        read_serial = ser.readline()
+        s[0] = str(int(ser.readline(), 16))
+        print([0])
+        time.sleep(2)
         if(s[0]!= None):
             return serial.Serial('/dev/ttyACM0',self.baudRate, timeout = waitTime)
         else:
@@ -41,9 +39,11 @@ class ArduinoHandler():
 
     '''
     Ska läsa från arduino där "2" är antalet bytes den läser
+    ska den sleep här? 
     '''
     def read(self):
         string = str(self.channel.read(2))
+        #time.sleep(2)
         return string
 
     '''
