@@ -14,7 +14,7 @@ class ArduinoHandler():
     channel = None
 
     # Denna kanske också behöver ändras
-    baudRate = 115200
+    baudRate = 9600
 
     # Metod för testning om ttyACM0 eller ttyACM1 ska användas
     # Kanske går att använda ser.name för att se vilken kanal som används
