@@ -2,7 +2,7 @@ import time
 import serial
 
 
-class ArduinoHandler2():
+class ArduinoHandler2main():
     ser = serial.Serial(port='/dev/ttyUSB0', bauderate=115200, bytesize=EIGHTBITS, timeout=15, write_timeout=15)   # set port, vill vi sätta baude rate?
 
     def read(self):
@@ -25,7 +25,6 @@ class ArduinoHandler2():
         except SerialException:
             print('SerialException, no port found')
 
-        pass
 
     def __init__(self):
         pass
