@@ -105,25 +105,27 @@
         keep_ratio: False
         allow_stretch: True
 
-    FloatLayout:
+    BoxLayout:
+        orientation: 'vertical'
         Image:
             source: "Images/Sten_sax_pase/Pase.png"
         Button:
-            text: "Spela igen"
-            size: 150,75
             size_hint: None, None
-            pos: 315,220
+            background_normal: 'Images/RPSbuttons/playbutton.png'
+            background_down: 'Imges/RPSbuttons/playbutton.png'
+            size: 300, 200
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.4
+                root.manager.transition.duration = 0.5
                 root.manager.current = 'two'
-            Button:
-                text: "Tillbaka"
-                size: 150, 75
-                size_hint: None, None
-                pos: 0, 350
-                on_press:
-                    root.manager.current = 'appview'
+        Button:
+            size: 200, 200
+            size_hint: None, None
+            background_normal: 'Images/appviewbutton.png'
+            background_down: 'Images/appviewbutton.png'
+            on_press:
+                root.manager.transition.direction = 'down'
+                root.manager.current = 'appview'
 
 <ScreenSix>
     canvas.before:
@@ -135,25 +137,27 @@
         keep_ratio: False
         allow_stretch: True
 
-    FloatLayout:
+    BoxLayout:
+        orientation: 'vertical'
         Image:
             source: "Images/Sten_sax_pase/Sten.png"
         Button:
-            text: "Spela igen"
-            size: 150,75
             size_hint: None, None
-            pos: 315,220
+            background_normal: 'Images/RPSbuttons/playbutton.png'
+            background_down: 'Imges/RPSbuttons/playbutton.png'
+            size: 300, 200
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.4
+                root.manager.transition.duration = 0.5
                 root.manager.current = 'two'
-            Button:
-                text: "Tillbaka"
-                size: 150, 75
-                size_hint: None, None
-                pos: 0, 350
-                on_press:
-                    root.manager.current = 'appview'
+        Button:
+            size: 200, 200
+            size_hint: None, None
+            background_normal: 'Images/appviewbutton.png'
+            background_down: 'Images/appviewbutton.png'
+            on_press:
+                root.manager.transition.direction = 'down'
+                root.manager.current = 'appview'
 
 
 <ScreenSeven>
@@ -166,22 +170,24 @@
         keep_ratio: False
         allow_stretch: True
 
-    FloatLayout:
+    BoxLayout:
+        orientation: 'vertical'
         Image:
             source: "Images/Sten_sax_pase/Sax.png"
         Button:
-            text: "Spela igen"
-            size: 150,75
             size_hint: None, None
-            pos: 315,220
+            background_normal: 'Images/RPSbuttons/playbutton.png'
+            background_down: 'Imges/RPSbuttons/playbutton.png'
+            size: 300, 200
             on_press:
                 root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.4
+                root.manager.transition.duration = 0.5
                 root.manager.current = 'two'
         Button:
-            text: "Tillbaka"
-            size: 150, 75
+            size: 200, 200
             size_hint: None, None
-            pos: 0, 350
+            background_normal: 'Images/appviewbutton.png'
+            background_down: 'Images/appviewbutton.png'
             on_press:
+                root.manager.transition.direction = 'down'
                 root.manager.current = 'appview'
