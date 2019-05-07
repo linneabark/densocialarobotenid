@@ -2,7 +2,7 @@ import time
 import serial
 from serial import Serial
 
-class ArduinoHandler2main():
+class ArduinoHandler():
     ser = serial.Serial()   # set port, vill vi sätta baude rate?
     ser.port = '/dev/ttyACM1'
     ser.timeout = 5
