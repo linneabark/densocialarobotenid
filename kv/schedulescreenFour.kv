@@ -17,40 +17,28 @@
                 background_down: 'Images/appviewbutton.png'
                 size_hint: None, None
                 size: 150, 150
-        #pos: (1350,700)
                 on_press:
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "appview"
-        BoxLayout:
-            orientation: 'horizontal'
-            AnchorLayout:
-                anchor_y: 'center'
+            BoxLayout:
+                orientation: 'horizontal'
                 Button:
                     background_normal: 'Images/leftarrowbutton.png'
                     background_down: 'Images/leftarrowbutton.png'
-                    size_hint: 0.2, 0.2
-    #pos: (0,350)
+                    size_hint: 0.1, 0.1
                     on_press:
                         root.manager.transition.direction = "right"
                         root.manager.transition.duration = 1
                         root.manager.current = "s3"
-            Image:
-                allow_stretch: True
-                source: 'Images/schedule_pics/vecka4.jpeg'
-                size: self.size
-        #Button:
-        #    background_color: 0,0,0,0
-        #    on_touch_down:
-        #       app.root.transition = SlideTransition(direction = 'left')
-        #       root.manager.current = "appview"
-            AnchorLayout:
-                anchor_y: 'center'
+                Image:
+                    allow_stretch: True
+                    source: 'Images/schedule_pics/vecka4.jpeg'
+                    size_hint: 0.9, 0.9
                 Button:
                     background_normal: 'Images/rightarrowbutton.png'
                     background_down: 'Images/rightarrowbutton.png'
-                    size_hint: 0.2, 0.2
-        #pos: (1400,350)
+                    size_hint: 0.1, 0.1
                     on_press:
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
