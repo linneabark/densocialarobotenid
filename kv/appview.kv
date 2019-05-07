@@ -1,53 +1,69 @@
 <Appview>
-   #Change backgroundcolor
-    #canvas:
-       # Color:
-          #  rgba:
-       # Rectangle:
+    #canvas.before:
+     #   Rectangle:
+      #      pos: self.pos
        #     size: self.size
-        #    pos: self.pos
+    #Image:
+     #   source: "Images/redbackground.png"
+      #  keep_ratio: False
+       # allow_stretch: True
 
     BoxLayout:
         orientation: 'vertical'
-        padding: 20
+        padding: 40
         spacing: 20
         GridLayout:
-            cols: 4
+            cols: 8
             rows: 1
-            size_hint: 1, .4
+            size_hint: 1, .2
             spacing: 10
 
-            Label:
-                text: ""
-
             Button:
-                text: "Test"
-                size_hint: .3, .2
+
+                #size_hint: .1, .1
+                background_normal: 'voiceknapp4.png'
+                background_down: 'voiceknapp4.png'
                 on_press:
                     root.manager.current = 'test'
                     #root.manager.current =  "main"
-                    #root.listen()
-            Button:
-                size_hint: .3, .2
-                id:btnExit
-                text:"Exit"
-                on_press: app.quit()
+                    root.listen()
 
             Label:
                 text: ""
 
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
+            Label:
+                text: ""
+
+            Button:
+                background_normal: 'Images/shutdownbutton.png'
+                background_down: 'Images/shutdownbutton.png'
+                #background_color: (1, .3, .4, .85)
+                on_press: app.quit()
+
+
 
         GridLayout:
-            cols: 4
-            spacing: 20
-            padding: 20
+            cols: 3
+            spacing: 50
+            #padding: 20
 
             Button:
                 #center: self.parent.center
-                font_size: 28
                 #pos: (10,100)
-                background_normal: 'Images/schedulebuttons/schemaknapp4.png'
-                background_down: 'Images/schedulebuttons/schemaknapp4.png'
+                background_normal: 'Images/schedulebuttons/schemaknapp61.png'
+                background_down: 'Images/schedulebuttons/schemaknapp61.png'
                 #background_color: (1, .3, .4, .85)
                 on_press:
                     app.root.transition = SlideTransition(direction = 'right')
@@ -55,19 +71,19 @@
 
             Button:
                 #center: self.parent.center
-                font_size: 28
+                #font_size: 28
                 background_normal: 'Images/RPSbuttons/RPS5.png'
                 background_down: 'Images/RPSbuttons/RPS5.png'
                 #pos: (10,100)
                 #background_color: (1, .3, .4, .85)
                 on_press:
-                    #app.root.transition = SlideTransition(direction = 'up')
+                    app.root.transition = SlideTransition(direction = 'up')
                     root.manager.current =  "one"
                     #root.launchRPS()
 
             Button:
                 #center: self.parent.center
-                font_size: 28
+                #font_size: 28
                 #pos: (10,100)
                 background_normal: 'Images/mathbuttons/mattknapp5.png'
                 background_down: 'Images/mathbuttons/mattknapp5.png'

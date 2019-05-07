@@ -1,13 +1,13 @@
-<MathScreen>
-    Image:
-        allow_stretch: True
-        source: 'Images/matte.jpg'
-        size: self.size
-        Button:
-            background_color: 0,0,0,0
-            on_touch_down:
-                app.root.transition = SlideTransition(direction = 'right')
-                root.manager.current = "appview"
+#<MathScreen>
+ #   Image:
+  #      allow_stretch: True
+   #     source: 'Images/matte.jpg'
+    #    size: self.size
+     #   Button:
+      #      background_color: 0,0,0,0
+       #     on_touch_down:
+        #        app.root.transition = SlideTransition(direction = 'right')
+         #       root.manager.current = "appview"
 
 <Calculator>
     id: calculator
@@ -17,7 +17,7 @@
             pos: self.pos
             size: self.size
     Image:
-        source: "guimathbg.jpg"
+        source: 'Images/mathbuttons/greenbackground.png'
         keep_ratio: False
         allow_stretch: True
 
@@ -25,14 +25,17 @@
         orientation: 'vertical'
 
         AnchorLayout:
-            size_hint: 1, .2
+            size_hint: 0.1, 0.2
             Button:
-                text: "Tillbaka"
+                #text: "Tillbaka"
+                size: 180, 180
+                background_normal: 'Images/appviewbutton.png'
+                background_down: 'Images/appviewbutton.png'
                 on_press:
                     root.manager.current = 'appview'
-                size_hint: 0.4, 0.4
-                anchor_x: 'center'
-                anchor_y: 'center'
+                    root.manager.transition.direction = 'right'
+                anchor_x: 'left'
+                anchor_y: 'top'
 
 
         GridLayout:
@@ -47,8 +50,8 @@
                     size_hint: .4, .4
                     anchor_x: 'center'
                     anchor_y: 'center'
-                    background_normal: 'Images/mathbuttons/clearbutton.png'
-                    background_down: 'Images/mathbuttons/clearbutton.png'
+                    background_normal: 'Images/mathbuttons/clearbutton2.png'
+                    background_down: 'Images/mathbuttons/clearbutton2.png'
 
             AnchorLayout:
                 TextInput:
@@ -57,6 +60,8 @@
                     multiline: False
                     anchor_x: 'center'
                     anchor_y: 'center'
+                    background_normal: 'Images/redbackground.png'
+                    background_down: 'Images/redbackground.png'
 
             AnchorLayout:
                 Button:
@@ -64,14 +69,14 @@
                     size_hint: 0.4, 0.4
                     anchor_x: 'center'
                     anchor_y: 'center'
-                    background_normal: 'Images/mathbuttons/eqbutton.png'
-                    background_down: 'Images/mathbuttons/eqbutton.png'
+                    background_normal: 'Images/mathbuttons/eqbutton2.png'
+                    background_down: 'Images/mathbuttons/eqbutton2.png'
 
 
         GridLayout:
             cols: 6
             rows: 1
-            size_hint: 1, .2
+            size_hint: 1, 0.3
             padding: 10
             spacing: 10
 
@@ -80,20 +85,20 @@
 
             Button:
                 on_press: entry.text += "+"
-                background_normal: 'Images/mathbuttons/addbutton.png'
-                background_down: 'Images/mathbuttons/addbutton.png'
+                background_normal: 'Images/mathbuttons/addbutton2.png'
+                background_down: 'Images/mathbuttons/addbutton2.png'
             Button:
                 on_press: entry.text += "-"
-                background_normal: 'Images/mathbuttons/subbutton.png'
-                background_down: 'Images/mathbuttons/subbutton.png'
+                background_normal: 'Images/mathbuttons/subbutton3.png'
+                background_down: 'Images/mathbuttons/subbutton3.png'
             Button:
                 on_press: entry.text += "*"
-                background_normal: 'Images/mathbuttons/multbutton.png'
-                background_down: 'Images/mathbuttons/multbutton.png'
+                background_normal: 'Images/mathbuttons/multbutton2.png'
+                background_down: 'Images/mathbuttons/multbutton2.png'
             Button:
                 on_press: entry.text += "/"
-                background_normal: 'Images/mathbuttons/divbutton.png'
-                background_down: 'Images/mathbuttons/divbutton.png'
+                background_normal: 'Images/mathbuttons/divbutton2.png'
+                background_down: 'Images/mathbuttons/divbutton2.png'
 
             Label:
                 text: ""
@@ -106,42 +111,43 @@
             spacing: 10
 
             Button:
-                text: "0"
                 on_press: entry.text += self.text
+                background_normal: 'Images/mathbuttons/0button1.png'
+                background_down: 'Images/mathbuttons/0button1.png'
             Button:
                 on_press: entry.text += "1"
-                background_normal: 'Images/mathbuttons/1button.png'
-                background_down: 'Images/mathbuttons/1button.png'
+                background_normal: 'Images/mathbuttons/1button1.png'
+                background_down: 'Images/mathbuttons/1button1.png'
             Button:
                 on_press: entry.text += "2"
-                background_normal: 'Images/mathbuttons/2button.png'
-                background_down: 'Images/mathbuttons/2button.png'
+                background_normal: 'Images/mathbuttons/2button1.png'
+                background_down: 'Images/mathbuttons/2button1.png'
             Button:
                 on_press: entry.text += "3"
-                background_normal: 'Images/mathbuttons/3button.png'
-                background_down: 'Images/mathbuttons/3button.png'
+                background_normal: 'Images/mathbuttons/3button2.png'
+                background_down: 'Images/mathbuttons/3button2.png'
             Button:
                 on_press: entry.text += "4"
-                background_normal: 'Images/mathbuttons/4button.png'
-                background_down: 'Images/mathbuttons/4button.png'
+                background_normal: 'Images/mathbuttons/4button1.png'
+                background_down: 'Images/mathbuttons/4button1.png'
             Button:
                 on_press: entry.text += "5"
-                background_normal: 'Images/mathbuttons/5button.png'
-                background_down: 'Images/mathbuttons/5button.png'
+                background_normal: 'Images/mathbuttons/5button1.png'
+                background_down: 'Images/mathbuttons/5button1.png'
             Button:
                 on_press: entry.text += "6"
-                background_normal: 'Images/mathbuttons/6button.png'
-                background_down: 'Images/mathbuttons/6button.png'
+                background_normal: 'Images/mathbuttons/6button1.png'
+                background_down: 'Images/mathbuttons/6button1.png'
             Button:
                 on_press: entry.text += "7"
-                background_normal: 'Images/mathbuttons/7button.png'
-                background_down: 'Images/mathbuttons/7button.png'
+                background_normal: 'Images/mathbuttons/7button1.png'
+                background_down: 'Images/mathbuttons/7button1.png'
             Button:
                 on_press: entry.text += "8"
-                background_normal: 'Images/mathbuttons/8button.png'
-                background_down: 'Images/mathbuttons/8button.png'
+                background_normal: 'Images/mathbuttons/8button1.png'
+                background_down: 'Images/mathbuttons/8button1.png'
             Button:
                 on_press: entry.text += "9"
-                background_normal: 'Images/mathbuttons/9button.png'
-                background_down: 'Images/mathbuttons/9button.png'
+                background_normal: 'Images/mathbuttons/9button1.png'
+                background_down: 'Images/mathbuttons/9button1.png'
 
