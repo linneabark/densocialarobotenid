@@ -39,7 +39,7 @@ class FileHandler:
      Detta är copy paste, kanske måste källhänvisa
      https://stackoverflow.com/questions/21035762/python-read-json-file-and-modify
      '''
-    # Lägger till info on en person
+    # Lägger till info om en person
      def append(self,name,category,info):
           name = name.lower()
           try:

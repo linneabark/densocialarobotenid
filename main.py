@@ -47,18 +47,18 @@ class MainScreen(Screen):
     speaking = False
     img_src = 'Images/Face/mouthClosed.jpg'
 
-
       
 class SleepScreen(Screen):
     event = None    
     def on_enter(self):        
         print('In sleepscreen')
+        #self.manager.sc.name = ''
     def on_touch_down(self, touch):
         print('on touch down')
         #FileHandler().append(self.manager.sc.name, 'name', '')
         # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
         self.manager.startKimThread(5)
-        self.event = Clock.schedule_interval(self.manager.updateScreen,0.2)
+        self.event = Clock.schedule_interval(self.manager.updateScreen,0.1)
         
 
 class TalkingScreen(Screen):
@@ -95,6 +95,9 @@ class TalkingConfusedScreen(Screen):
     pass
 
 class TalkingSmartScreen(Screen):
+    pass
+
+class TalkingSleepScreen(Screen):
     pass
 
 class Appview(Screen):
@@ -148,22 +151,22 @@ class Manager(ScreenManager):
         self.add_widget(MainScreen(name='mainscreen'))
         self.add_widget(ScheduleScreen(name='schedule'))
         self.add_widget(Appview(name='appview'))
-        self.add_widget(MathScreen(name='math'))
-        self.add_widget(RPSScreen(name='rps'))
-        self.add_widget(ScreenOne(name='one'))
-        self.add_widget(ScreenTwo(name='two'))
-        self.add_widget(ScreenThree(name='three'))
-        self.add_widget(ScreenFour(name='four'))
-        self.add_widget(ScreenFive(name='five'))
-        self.add_widget(ScreenSix(name='six'))
-        self.add_widget(ScreenSeven(name='seven'))
+        #self.add_widget(MathScreen(name='math'))
+        #self.add_widget(RPSScreen(name='rps'))
+        #self.add_widget(ScreenOne(name='one'))
+        #self.add_widget(ScreenTwo(name='two'))
+        #self.add_widget(ScreenThree(name='three'))
+        #self.add_widget(ScreenFour(name='four'))
+        #self.add_widget(ScreenFive(name='five'))
+        #self.add_widget(ScreenSix(name='six'))
+        #self.add_widget(ScreenSeven(name='seven'))
         self.add_widget(ScheduleScreenTwo(name='s2'))
         self.add_widget(ScheduleScreenThree(name='s3'))
         self.add_widget(ScheduleScreenFour(name='s4'))
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
-        self.add_widget(Calculator(name='calculator'))
-        self.add_widget(TestScreen(name='test'))
+        #self.add_widget(Calculator(name='calculator'))
+        #self.add_widget(TestScreen(name='test'))
         self.add_widget(TalkingScreen(name='talkingmainscreen'))
         self.add_widget(RPSFaceScreen(name='rpsface'))
         self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
@@ -171,9 +174,10 @@ class Manager(ScreenManager):
         self.add_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
         self.add_widget(TalkingRedHeartScreen(name='talkingredheartscreen'))
         self.add_widget(TalkingConfusedScreen(name='talkingconfusedscreen'))
-        self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
+        #self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
         self.add_widget(ConfusedScreen(name='confusedscreen'))
-        self.add_widget(SmartScreen(name='smartscreen'))
+        #self.add_widget(SmartScreen(name='smartscreen'))
+        self.add_widget(TalkingSleepScreen(name='talkingsleep'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
