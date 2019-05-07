@@ -1,9 +1,9 @@
 {
-    "screen": "confusedscreen",
-    "sport": "",
     "name": "",
+    "wins": "",
     "losses": "",
     "age": "",
+    "sport": "",
     "color": "",
-    "wins": ""
+    "screen": "mainscreen"
 }

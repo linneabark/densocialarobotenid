@@ -207,8 +207,11 @@ class SpeechController():
 
     def detectName(self, string):
         stringArray = string.split()
-        namePos = stringArray.index("heter") + 1
-        self.name = stringArray[namePos]
+        if len(stringArray) == 1:
+            self.name = stringArray[0]
+        else:
+            namePos = stringArray.index("heter") + 1
+            self.name = stringArray[namePos]
         return self.name
 
    
@@ -339,7 +342,6 @@ class SpeechController():
         self.funcName = "handleKeyword"
 
         if self.keywordRecognition(message,'schema') or self.keywordRecognition(message,'kalender'):
-            FileHandler().append(self.name, 'screen', 'schedule')
             self.startSchedule()
         elif self.keywordRecognition(message,'räkna') or self.keywordRecognition(message,'matte'):
             self.startMath()
@@ -767,8 +769,7 @@ class SpeechController():
     def startSchedule(self):
         # Switch from face screen to schedule screen
         self.funcName = "startSchedule"
-        current_screen = FileHandler().readScreen(self.name)
-        FileHandler().append(self.name,'screen',current_screen)
+        FileHandler().append(self.name, 'screen', 'schedule')
         
         tts = gTTS(text='Du kan välja att klicka på pilarna eller säga nästa eller förra för att byta mellan olika veckor.', lang='sv')
         tts.save('Ljudfiler/schedule_instruction.mp3')
@@ -804,6 +805,7 @@ class SpeechController():
             FileHandler().append(self.name, 'screen', 's6')
         elif current_screen == 's6':
             tts = gTTS(text= 'Du är på sista veckan.')
+        time.sleep(3)
         self.switchSchedule()
 
     def lastWeek(self):
@@ -820,6 +822,7 @@ class SpeechController():
             FileHandler().append(self.name, 'screen', 's4')
         elif current_screen == 's6':
             FileHandler().append(self.name, 'screen', 's5')
+        time.sleep(3)
         self.switchSchedule()
 
     

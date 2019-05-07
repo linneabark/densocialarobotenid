@@ -1,9 +1,9 @@
 {
-    "color": "",
-    "screen": "s2",
-    "sport": "",
-    "age": "",
     "losses": "1",
+    "screen": "schedule",
+    "name": "pernilla",
+    "sport": "",
     "wins": "1",
-    "name": "pernilla"
+    "age": "",
+    "color": ""
 }
