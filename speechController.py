@@ -154,12 +154,12 @@ class SpeechController():
         #print("Google Speech Recognition could not understand audio")
             
     def listenSpeech(self, time):
-        self.playSound("Ljudfiler/startRecording.mp3")
+        self.playSound("Ljudfiler/startBeep.mp3")
         with self.m as source:
             #audio = r.record(source, duration = 5)
             mixer.init()
             audio = self.r.listen(source, phrase_time_limit=time)
-            self.playSound("Ljudfiler/stopRecording.mp3")
+            self.playSound("Ljudfiler/stopBeep.mp3")
             return audio
             #self.tryListen(audio)
 
