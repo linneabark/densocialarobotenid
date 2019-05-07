@@ -94,8 +94,8 @@ class SpeechController():
             self.playerChoice()
         elif (self.funcName == "playRPSPhrases"):
             self.playRPSPhrases()
-        elif (self.funcName == "start_Schedule"):
-            self.start_Schedule()
+        elif (self.funcName == "startSchedule"):
+            self.startSchedule()
         elif (self.funcName == "startMath"):
             self.startMath()
         elif (self.funcName == "help"):
@@ -328,8 +328,8 @@ class SpeechController():
         self.funcName = "handleKeyword"
 
         if self.keywordRecognition(message,'schema') or self.keywordRecognition(message,'kalender'):
-            self.start_Schedule()
-            x=1
+            FileHandler().append(self.name, 'screen', 'schedule')
+            self.startSchedule()
         elif self.keywordRecognition(message,'räkna') or self.keywordRecognition(message,'matte'):
             self.startMath()
         elif self.keywordRecognition(message,'sten') or self.keywordRecognition(message,'sax') or self.keywordRecognition(message,'påse') or self.keywordRecognition(message,'spela'):
@@ -753,46 +753,61 @@ class SpeechController():
         self.playSound("Ljudfiler/RPSPhrase.mp3")
 
 
-    def start_Schedule(self):
+    def startSchedule(self):
         # Switch from face screen to schedule screen
-        self.funcName = "start_Schedule"
-        FileHandler().append(self.name,'screen','schedule')
+        self.funcName = "startSchedule"
+        current_screen = FileHandler().readScreen(self.name)
+        FileHandler().append(self.name,'screen',current_screen)
         
-        tts = gTTS(text='Här är ditt schema! Säg nästa vecka eller förra veckan för att se en annan vecka.', lang='sv')
+        tts = gTTS(text='Du kan välja att klicka på pilarna eller säga nästa eller förra för att byta mellan olika veckor.', lang='sv')
         tts.save('Ljudfiler/schedule_instruction.mp3')
-        #self.playSound('Ljudfiler/schedule_instruction.mp3')
-        #audio = self.listenSpeech(4)
-        #string = self.recognizedAudio(audio)
-        #ords = self.stringSplitter(string)
+        self.playSound('Ljudfiler/schedule_instruction.mp3')
+        self.switchSchedule()
 
-        if any('nästa' in s for s in words):
-            current_screen = FileHandler().readScreen(self.name)
-            if current_screen == 'schedule':
-                FileHandler().append(self.name, 'screen', 's2')
-            elif current_screen == 's2':
-                FileHandler().append(self.name, 'screen', 's3')
-            elif current_screen == 's3':
-                FileHandler().append(self.name, 'screen', 's4')
-            elif current_screen == 's4':
-                FileHandler().append(self.name, 'screen', 's5')
-            elif current_screen == 's5':
-                FileHandler().append(self.name, 'screen', 's6')
+    def switchSchedule(self):
+        audio = self.listenSpeech(4)
+        answer = self.recognizedAudio(audio)
 
-        elif any('förra' in s for s in words):
-            current_screen = FileHandler().readScreen(self.name)
-            if current_screen == 's2':
-                FileHandler().append(self.name, 'screen', 'schedule')
-            elif current_screen == 's3':
-                FileHandler().append(self.name, 'screen', 's2')
-            elif current_screen == 's4':
-                FileHandler().append(self.name, 'screen', 's3')
-            elif current_screen == 's5':
-                FileHandler().append(self.name, 'screen', 's4')
-            elif current_screen == 's6':
-                FileHandler().append(self.name, 'screen', 's5')
+        self.overallKeyword(answer)
 
-        elif any("upprepa" in s for s in words):
-            self.start_Schedule()
+        if self.keywordRecognition(answer, 'nästa'):
+            self.nextWeek()
+        elif self.keywordRecognition(answer, 'förra'):
+            self.lastWeek()
+        elif self.keywordRecognition(answer, 'upprepa'):
+            self.startSchedule()
+
+    def nextWeek(self):
+        current_screen = FileHandler().readScreen(self.name)
+        if current_screen == 'schedule':
+            FileHandler().append(self.name, 'screen', 's2')
+        elif current_screen == 's2':
+            FileHandler().append(self.name, 'screen', 's3')
+        elif current_screen == 's3':
+            FileHandler().append(self.name, 'screen', 's4')
+        elif current_screen == 's4':
+            FileHandler().append(self.name, 'screen', 's5')
+        elif current_screen == 's5':
+            FileHandler().append(self.name, 'screen', 's6')
+        elif current_screen == 's6':
+            tts = gTTS(text= 'Du är på sista veckan, vill du ')
+        self.switchSchedule()
+
+    def lastWeek(self):
+        current_screen = FileHandler().readScreen(self.name)
+        if current_screen == 's2':
+            FileHandler().append(self.name, 'screen', 'schedule')
+        elif current_screen == 's3':
+            FileHandler().append(self.name, 'screen', 's2')
+        elif current_screen == 's4':
+            FileHandler().append(self.name, 'screen', 's3')
+        elif current_screen == 's5':
+            FileHandler().append(self.name, 'screen', 's4')
+        elif current_screen == 's6':
+            FileHandler().append(self.name, 'screen', 's5')
+        self.switchSchedule()
+
+
         
 
     
