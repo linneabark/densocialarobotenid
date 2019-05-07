@@ -10,14 +10,13 @@
     BoxLayout:
         orientation: 'vertical'
         AnchorLayout:
-            anchor_x: 'right'
             anchor_y: 'top'
-            size_hint: 0.2, 0.2
+            anchor_x: 'center'
             Button:
                 background_normal: 'Images/appviewbutton.png'
                 background_down: 'Images/appviewbutton.png'
-                #size_hint: None, None
-                #size: 150, 150
+                size_hint: None, None
+                size: 150, 150
         #pos: (1350,700)
                 on_press:
                     root.manager.transition.direction = "left"

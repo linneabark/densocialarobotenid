@@ -7,58 +7,39 @@
         source: "Images/schedulebuttons/pinkbackground.png"
         keep_ratio: False
         allow_stretch: True
-
     BoxLayout:
         orientation: 'vertical'
         AnchorLayout:
             anchor_y: 'top'
-            anchor_x: 'right'
+            anchor_x: 'center'
             Button:
                 background_normal: 'Images/appviewbutton.png'
                 background_down: 'Images/appviewbutton.png'
                 size_hint: None, None
                 size: 150, 150
-                pos: (1350,700)
+        #pos: (1350,700)
                 on_press:
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "appview"
-
-        AnchorLayout:
-            anchor_x: 'center'
-            anchor_y: 'center'
-            GridLayout:
-                cols: 3
-                rows: 1
-                #size_hint: 1, 0.3
-                #padding: 10
-                #spacing: 10
-                Label:
-                    text: ""
-
-                Image:
-                    source: 'Images/schedule_pics/schedule1.png'
-                    allow_stretch: True
-                #Button:
-                    #background_normal: "Images/schedulebuttons/schemaknapp4.png"
-                   # RightButton:
-                     #   on_release:
-                      #      root.manager.transition.direction = "left"
-                      #      root.manager.transition.duration = 1
-                        #    root.manager.current = "appview"
-                    #Button:
-                    #    background_color: 0,0,0,0
-                    #    on_touch_down:
-                     #       app.root.transition = SlideTransition(direction = 'left')
-                     #       root.manager.current = "appview"
-
-
+        BoxLayout:
+            orientation: 'horizontal'
+            Image:
+                allow_stretch: True
+                source: 'Images/schedule_pics/vecka2.jpeg'
+                size: self.size
+        #Button:
+        #    background_color: 0,0,0,0
+        #    on_touch_down:
+        #       app.root.transition = SlideTransition(direction = 'left')
+        #       root.manager.current = "appview"
+            AnchorLayout:
+                anchor_y: 'center'
                 Button:
                     background_normal: 'Images/rightarrowbutton.png'
                     background_down: 'Images/rightarrowbutton.png'
-                    pos: (1400,350)
-                    size: 100, 100
-                    size_hint: None, None
+                    size_hint: 0.2, 0.2
+        #pos: (1400,350)
                     on_press:
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
