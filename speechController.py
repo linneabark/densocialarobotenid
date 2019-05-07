@@ -41,10 +41,20 @@ class SpeechController():
 
     def speakingFalse(self):
         self.speaking = False
+
+    def booleanSchedule(self, screen):
+        if screen == 'schedule' or screen == 's2' or screen == 's3' or screen == 's4' or screen == 's5' or screen == 's6':
+            return True
+        else:
+            return False
+        
         
     def playSound(self, fileName):
         screen = FileHandler().readScreen(self.name)
-        FileHandler().append(self.name,'screen','talking' + screen)
+        if self.booleanSchedule(screen):
+            screen = screen
+        else:
+            FileHandler().append(self.name,'screen','talking' + screen)
         self.speaking = True
         audio = MP3(fileName)
         length = audio.info.length
@@ -54,7 +64,8 @@ class SpeechController():
         time.sleep(length)
         self.speaking = False
         FileHandler().append(self.name, 'screen', screen)
-        
+    
+    
     
     def mp3Exception(self):
         FileHandler().append(self.name,'screen','confusedscreen')
@@ -779,8 +790,10 @@ class SpeechController():
 
     def nextWeek(self):
         current_screen = FileHandler().readScreen(self.name)
+        print('Skärmen i filehandler:' + current_screen)
         if current_screen == 'schedule':
             FileHandler().append(self.name, 'screen', 's2')
+            print('Skärmen i filehandler ändrad till: ' + FileHandler().readScreen(self.name))
         elif current_screen == 's2':
             FileHandler().append(self.name, 'screen', 's3')
         elif current_screen == 's3':
@@ -790,12 +803,14 @@ class SpeechController():
         elif current_screen == 's5':
             FileHandler().append(self.name, 'screen', 's6')
         elif current_screen == 's6':
-            tts = gTTS(text= 'Du är på sista veckan, vill du ')
+            tts = gTTS(text= 'Du är på sista veckan.')
         self.switchSchedule()
 
     def lastWeek(self):
         current_screen = FileHandler().readScreen(self.name)
-        if current_screen == 's2':
+        if current_screen == 'schedule':
+            tts = gTTS(text= 'Du är på första veckan.')
+        elif current_screen == 's2':
             FileHandler().append(self.name, 'screen', 'schedule')
         elif current_screen == 's3':
             FileHandler().append(self.name, 'screen', 's2')
@@ -806,9 +821,6 @@ class SpeechController():
         elif current_screen == 's6':
             FileHandler().append(self.name, 'screen', 's5')
         self.switchSchedule()
-
-
-        
 
     
     def subtraction(self, first_term, second_term):
