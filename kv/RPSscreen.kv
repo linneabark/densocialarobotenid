@@ -16,7 +16,7 @@
     BoxLayout:
         orientation: "vertical"
         AnchorLayout:
-            anchor_x: 'right'
+            anchor_x: 'center'
             anchor_y: 'top'
             Button:
                 size: 200, 200
@@ -26,27 +26,29 @@
                 on_press:
                     root.manager.transition.direction = 'down'
                     root.manager.current = 'appview'
-
-        AnchorLayout:
+        BoxLayout:
+            orientation: 'horizontal'
+            #AnchorLayout:
             Image:
                 source: 'Images/Sten_sax_pase/rps.png'
-                anchor_x: 'center'
-                anchor_y: 'center'
-                size_hint_x: 0.4
-
-        AnchorLayout:
-            anchor_x: 'center'
-            anchor_y: 'center'
-            Button:
+                #anchor_x: 'center'
+                #anchor_y: 'top'
                 size_hint: None, None
-                background_normal: 'Images/RPSbuttons/playbutton.png'
-                background_down: 'Imges/RPSbuttons/playbutton.png'
-                size: 400, 200
-                #pos: 315,220
-                on_press:
-                    root.manager.transition.direction = 'left'
-                    root.manager.transition.duration = 0.5
-                    root.manager.current = 'two'
+                size: 700, 700
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'top'
+                Button:
+                    size_hint: None, None
+                    background_normal: 'Images/RPSbuttons/playbutton.png'
+                    background_down: 'Imges/RPSbuttons/playbutton.png'
+                    size: 300, 200
+                    #pos: 315,220
+                    on_press:
+                        root.manager.transition.direction = 'left'
+                        root.manager.transition.duration = 0.5
+                        root.manager.current = 'two'
 
 
 <ScreenTwo>
