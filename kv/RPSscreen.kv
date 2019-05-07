@@ -107,25 +107,36 @@
 
     BoxLayout:
         orientation: 'vertical'
-        Image:
-            source: "Images/Sten_sax_pase/Pase.png"
-        Button:
-            size_hint: None, None
-            background_normal: 'Images/RPSbuttons/playbutton.png'
-            background_down: 'Imges/RPSbuttons/playbutton.png'
-            size: 300, 200
-            on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
-                root.manager.current = 'two'
-        Button:
-            size: 200, 200
-            size_hint: None, None
-            background_normal: 'Images/appviewbutton.png'
-            background_down: 'Images/appviewbutton.png'
-            on_press:
-                root.manager.transition.direction = 'down'
-                root.manager.current = 'appview'
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
+            Button:
+                size: 200, 200
+                size_hint: None, None
+                background_normal: 'Images/appviewbutton.png'
+                background_down: 'Images/appviewbutton.png'
+                on_press:
+                    root.manager.transition.direction = 'down'
+                    root.manager.current = 'appview'
+        AnchorLayout:
+            anchor_x: 'center'
+            Image:
+                source: "Images/Sten_sax_pase/Pase.png"
+                size: 500, 500
+                size_hint: None, None
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+            Button:
+                size_hint: None, None
+                background_normal: 'Images/RPSbuttons/playbutton.png'
+                background_down: 'Imges/RPSbuttons/playbutton.png'
+                size: 200, 100
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.transition.duration = 0.5
+                    root.manager.current = 'two'
+
 
 <ScreenSix>
     canvas.before:
@@ -139,25 +150,37 @@
 
     BoxLayout:
         orientation: 'vertical'
-        Image:
-            source: "Images/Sten_sax_pase/Sten.png"
-        Button:
-            size_hint: None, None
-            background_normal: 'Images/RPSbuttons/playbutton.png'
-            background_down: 'Imges/RPSbuttons/playbutton.png'
-            size: 300, 200
-            on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
-                root.manager.current = 'two'
-        Button:
-            size: 200, 200
-            size_hint: None, None
-            background_normal: 'Images/appviewbutton.png'
-            background_down: 'Images/appviewbutton.png'
-            on_press:
-                root.manager.transition.direction = 'down'
-                root.manager.current = 'appview'
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
+            Button:
+                size: 200, 200
+                size_hint: None, None
+                background_normal: 'Images/appviewbutton.png'
+                background_down: 'Images/appviewbutton.png'
+                on_press:
+                    root.manager.transition.direction = 'down'
+                    root.manager.current = 'appview'
+        AnchorLayout:
+            anchor_x: 'center'
+            Image:
+                source: "Images/Sten_sax_pase/Sten.png"
+                size: 500, 500
+                size_hint: None, None
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+            Button:
+                size_hint: None, None
+                background_normal: 'Images/RPSbuttons/playbutton.png'
+                background_down: 'Imges/RPSbuttons/playbutton.png'
+                size: 200, 100
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.transition.duration = 0.5
+                    root.manager.current = 'two'
+
 
 
 <ScreenSeven>
@@ -172,22 +195,33 @@
 
     BoxLayout:
         orientation: 'vertical'
-        Image:
-            source: "Images/Sten_sax_pase/Sax.png"
-        Button:
-            size_hint: None, None
-            background_normal: 'Images/RPSbuttons/playbutton.png'
-            background_down: 'Imges/RPSbuttons/playbutton.png'
-            size: 300, 200
-            on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.transition.duration = 0.5
-                root.manager.current = 'two'
-        Button:
-            size: 200, 200
-            size_hint: None, None
-            background_normal: 'Images/appviewbutton.png'
-            background_down: 'Images/appviewbutton.png'
-            on_press:
-                root.manager.transition.direction = 'down'
-                root.manager.current = 'appview'
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
+            Button:
+                size: 200, 200
+                size_hint: None, None
+                background_normal: 'Images/appviewbutton.png'
+                background_down: 'Images/appviewbutton.png'
+                on_press:
+                    root.manager.transition.direction = 'down'
+                    root.manager.current = 'appview'
+        AnchorLayout:
+            anchor_x: 'center'
+            Image:
+                source: "Images/Sten_sax_pase/Sax.png"
+                size: 500, 500
+                size_hint: None, None
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+            Button:
+                size_hint: None, None
+                background_normal: 'Images/RPSbuttons/playbutton.png'
+                background_down: 'Imges/RPSbuttons/playbutton.png'
+                size: 200, 100
+                on_press:
+                    root.manager.transition.direction = 'left'
+                    root.manager.transition.duration = 0.5
+                    root.manager.current = 'two'
+
