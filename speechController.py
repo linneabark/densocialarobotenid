@@ -532,7 +532,7 @@ class SpeechController():
             tts = gTTS(text='Okej, då slipper du.', lang='sv')
             tts.save("Ljudfiler/ok.mp3")
             self.playSound("Ljudfiler/ok.mp3")
-            self.whatToDo()
+            self.smallTalk()
         else:
             self.didntUnderstand()
             self.wantToHearAJoke()
@@ -552,14 +552,15 @@ class SpeechController():
             tts = gTTS(text='Okej, då gör vi något annat', lang='sv')
             tts.save("Ljudfiler/okLetsDoSomethingElse.mp3")
             self.playSound("Ljudfiler/okLetsDoSomethingElse.mp3")
+            self.whatToDo()
         else:
             self.didntUnderstand()
-            self.whatToDo()
+            self.wantToContinueTalking()
+
 
     def joke(self):
         self.funcName = "joke"
-        #nr = random.randint(1, 5)
-        nr = 3
+        nr = random.randint(2, 4)
         if (nr == 1):
             tts = gTTS(text='Det var en gång en dansk, en norsk och Bellman som skulle tävla om vem som kunde vara inne i en svinstia i längst tid.'
                             'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
@@ -572,14 +573,12 @@ class SpeechController():
             time.sleep(1)
             tts = gTTS(text = 'En tre meter lång tandborste!', lang='sv')
         elif (nr == 3):
-            tts = gTTS(text = self.name, lang='sv')
-        elif (nr == 4):
             tts1 = gTTS(text='Vad sa marsgubbarna när de landade på jorden?', lang='sv')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
             time.sleep(1)
             tts = gTTS(text = 'Hej jordgubbar!', lang='sv')
-        elif (nr == 5):
+        elif (nr == 4):
             tts1 = gTTS(text='Vad är en groda utan ben?', lang='sv')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
