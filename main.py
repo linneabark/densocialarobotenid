@@ -38,9 +38,9 @@ from FileController import FileHandler
 # Config.set('graphics', 'fullscreen', 'auto')
 from speechController import SpeechController
 
-Config.set('graphics', 'width', '2000')
-Config.set('graphics', 'height', '8000')
-Window.size = (586 * 1.3, 325 * 1.3)
+#Config.set('graphics', 'width', '2000')
+#Config.set('graphics', 'height', '8000')
+#Window.size = (586 * 1.3, 325 * 1.3)
 #Config.set('graphics', 'width', '2000')
 #Config.set('graphics', 'height', '8000')
 #Window.size = (586 * 1.3, 325 * 1.3)
@@ -50,18 +50,18 @@ class MainScreen(Screen):
     speaking = False
     img_src = 'Images/Face/mouthClosed.jpg'
 
-
       
 class SleepScreen(Screen):
     event = None    
     def on_enter(self):        
         print('In sleepscreen')
+        #self.manager.sc.name = ''
     def on_touch_down(self, touch):
         print('on touch down')
         #FileHandler().append(self.manager.sc.name, 'name', '')
         # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
         self.manager.startKimThread(5)
-        self.event = Clock.schedule_interval(self.manager.updateScreen,0.2)
+        self.event = Clock.schedule_interval(self.manager.updateScreen,0.1)
         
 
 class TalkingScreen(Screen):
@@ -99,6 +99,9 @@ class TalkingConfusedScreen(Screen):
 
 class TalkingSmartScreen(Screen):
 
+    pass
+
+class TalkingSleepScreen(Screen):
     pass
 
 class Appview(Screen):
@@ -167,7 +170,7 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
-        self.add_widget(TestScreen(name='test'))
+        #self.add_widget(TestScreen(name='test'))
         self.add_widget(TalkingScreen(name='talkingmainscreen'))
         self.add_widget(RPSFaceScreen(name='rpsface'))
         self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
@@ -175,9 +178,10 @@ class Manager(ScreenManager):
         self.add_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
         self.add_widget(TalkingRedHeartScreen(name='talkingredheartscreen'))
         self.add_widget(TalkingConfusedScreen(name='talkingconfusedscreen'))
-        self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
+        #self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
         self.add_widget(ConfusedScreen(name='confusedscreen'))
-        self.add_widget(SmartScreen(name='smartscreen'))
+        #self.add_widget(SmartScreen(name='smartscreen'))
+        self.add_widget(TalkingSleepScreen(name='talkingsleep'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)

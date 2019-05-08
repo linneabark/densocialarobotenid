@@ -1,9 +1,9 @@
 {
-    "wins": "",
-    "color": "",
     "losses": "",
-    "sport": "",
-    "screen": "mainscreen",
     "age": "",
-    "name": "klara"
+    "name": "klara",
+    "wins": "",
+    "screen": "mathvoicescreen",
+    "sport": "",
+    "color": ""
 }
