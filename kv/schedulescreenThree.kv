@@ -1,6 +1,50 @@
 <ScheduleScreenThree>
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
     Image:
+        source: "Images/schedulebuttons/pinkbackground.png"
+        keep_ratio: False
         allow_stretch: True
+<<<<<<< HEAD
+    BoxLayout:
+        orientation: 'vertical'
+        AnchorLayout:
+            anchor_y: 'top'
+            anchor_x: 'center'
+            Button:
+                background_normal: 'Images/appviewbutton.png'
+                background_down: 'Images/appviewbutton.png'
+                size_hint: None, None
+                size: 150, 150
+                on_press:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "appview"
+            BoxLayout:
+                orientation: 'horizontal'
+                Button:
+                    background_normal: 'Images/leftarrowbutton.png'
+                    background_down: 'Images/leftarrowbutton.png'
+                    size_hint: 0.1, 0.1
+                    on_press:
+                        root.manager.transition.direction = "right"
+                        root.manager.transition.duration = 1
+                        root.manager.current = "s2"
+                Image:
+                    allow_stretch: True
+                    source: 'Images/schedule_pics/vecka3.jpeg'
+                    size_hint: 0.9, 0.9
+                Button:
+                    background_normal: 'Images/rightarrowbutton.png'
+                    background_down: 'Images/rightarrowbutton.png'
+                    size_hint: 0.1, 0.1
+                    on_press:
+                        root.manager.transition.direction = "left"
+                        root.manager.transition.duration = 1
+                        root.manager.current = "s4"
+=======
         source: 'Images/schedule_pics/vecka3.png'
         size: self.size
         #Button:
@@ -36,3 +80,4 @@
                 root.manager.transition.direction = "right"
                 root.manager.transition.duration = 1
                 root.manager.current = "s2"
+>>>>>>> 125aa536392fbc60a6046a21c4426d42e6fd5a3e

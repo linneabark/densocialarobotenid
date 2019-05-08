@@ -38,6 +38,9 @@ from FileController import FileHandler
 # Config.set('graphics', 'fullscreen', 'auto')
 from speechController import SpeechController
 
+Config.set('graphics', 'width', '2000')
+Config.set('graphics', 'height', '8000')
+Window.size = (586 * 1.3, 325 * 1.3)
 #Config.set('graphics', 'width', '2000')
 #Config.set('graphics', 'height', '8000')
 #Window.size = (586 * 1.3, 325 * 1.3)
