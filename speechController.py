@@ -383,7 +383,7 @@ class SpeechController():
             x=1 # Pausa interaktion
         elif self.keywordRecognition(string, 'avsluta'):
             sys.exit()
-        self.handleKeyword(string)
+        #self.handleKeyword(string)
 
     def demo(self):
         tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')  # Behöver testas!!
@@ -491,12 +491,16 @@ class SpeechController():
         return string
     
     def smallTalk(self):
-        #question = random.randint(1,5)
-        question = 4
+        question = random.randint(1,5)
+        question = 1
+
         if question == 1:
             tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name,"age",string)
+            tts = gTTS(text= 'Då är du äldre än, jag är bara 2 månader!', lang='sv')
+            tts.save("Ljudfiler/wowage.mp3")
+            self.playSound("Ljudfiler/wowage.mp3")
             
         elif question == 2:
             tts = gTTS(text='Vilken är din favoritfärg?', lang='sv')
@@ -539,7 +543,7 @@ class SpeechController():
 
     def wantToContinueTalking(self):
         self.funcName = "wantToContinueTalking"
-        tts = gTTS(text='Vill du fortsätta prata eller göra något annat?', lang='sv')
+        tts = gTTS(text='Vill du fortsätta prata?', lang='sv')
         tts.save("Ljudfiler/wantToContinueTalking.mp3")
         self.playSound("Ljudfiler/wantToContinueTalking.mp3")
 

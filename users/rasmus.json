@@ -1,9 +1,9 @@
 {
-    "color": "",
-    "sport": "",
-    "name": "rasmus",
-    "screen": "sleep",
-    "losses": "",
     "wins": "1",
-    "age": ""
+    "age": "85",
+    "losses": "",
+    "color": "bajs",
+    "name": "rasmus",
+    "sport": "bajs",
+    "screen": "mainscreen"
 }

@@ -8,13 +8,13 @@ class FileHandler:
           name = name.lower()
           if (os.path.isfile('users/'+name+'.json')):
                return
-          d = {'name': name,
-               'age':'',
-               'sport':'',
-               'color':'',
-               'wins': '',
-               'losses': '',
-               'screen':'mainscreen'
+          d = {"name": name,
+               "age":"",
+               "sport":"",
+               "color":"",
+               "wins": "",
+               "losses": "",
+               "screen":"mainscreen"
           }
           json.dump(d,open('users/'+name+'.json','w'),indent=2)
 
@@ -56,6 +56,6 @@ class FileHandler:
          name = name.lower()
          try:
              user = json.load(open('users/' + name + '.json', 'r'))
-             return user.get('screen')
+             return user.get("screen")
          except FileNotFoundError:
-             return 'mainscreen'
+             return "mainscreen"
