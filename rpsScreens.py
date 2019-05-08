@@ -26,7 +26,7 @@ class ScreenTwo(Screen):
 
     def on_enter(self, *args):
         #self.animate()
-        Clock.schedule_once(self.callbackfun, 5)
+        Clock.schedule_once(self.callbackfun, 0.3)
 
 
     def callbackfun(self, dt):
@@ -34,7 +34,7 @@ class ScreenTwo(Screen):
 
 class ScreenThree(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
+        Clock.schedule_once(self.callbackfun, 0.3)
 
     def callbackfun(self, dt):
         self.manager.current = 'four'
@@ -42,7 +42,7 @@ class ScreenThree(Screen):
 
 class ScreenFour(Screen):
     def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
+        Clock.schedule_once(self.callbackfun, 0.3)
 
     def callbackfun(self, dt):
         list = ["five", "six", "seven"]
