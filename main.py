@@ -98,6 +98,7 @@ class TalkingConfusedScreen(Screen):
     pass
 
 class TalkingSmartScreen(Screen):
+
     pass
 
 class TalkingSleepScreen(Screen):

@@ -23,11 +23,12 @@
 
     BoxLayout:
         orientation: 'vertical'
-
         AnchorLayout:
             size_hint: 0.1, 0.2
             Button:
                 #text: "Tillbaka"
+                anchor_x: 'right'
+                anchor_y: 'top'
                 size: 180, 180
                 background_normal: 'Images/appviewbutton.png'
                 background_down: 'Images/appviewbutton.png'
@@ -35,16 +36,12 @@
                     app.root.transition = SlideTransition(direction='right')
                     root.manager.current = 'appview'
                     root.manager.transition.direction = 'right'
-                anchor_x: 'left'
-                anchor_y: 'top'
-
 
         GridLayout:
             cols: 3
             size_hint: 1, .4
             padding: 10
             spacing: 10
-
             AnchorLayout:
                 Button:
                     on_press: entry.text = ""

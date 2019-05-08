@@ -24,23 +24,26 @@
                     root.manager.current = "appview"
         BoxLayout:
             orientation: 'horizontal'
+            Label:
+                text: ""
+            #Button:
+             #   background_normal: 'Images/leftarrowbutton.png'
+              #  background_down: 'Images/leftarrowbutton.png'
+               # size_hint: 0.1, 0.1
+                #on_press:
+                 #   root.manager.transition.direction = "right"
+                  #  root.manager.transition.duration = 1
+                   # root.manager.current = "schedule"
             Image:
                 allow_stretch: True
-                source: 'Images/schedule_pics/vecka1.png'
-                size: self.size
-        #Button:
-        #    background_color: 0,0,0,0
-        #    on_touch_down:
-        #       app.root.transition = SlideTransition(direction = 'left')
-        #       root.manager.current = "appview"
-            AnchorLayout:
-                anchor_y: 'center'
-                Button:
-                    background_normal: 'Images/rightarrowbutton.png'
-                    background_down: 'Images/rightarrowbutton.png'
-                    size_hint: 0.2, 0.2
-        #pos: (1400,350)
-                    on_press:
-                        root.manager.transition.direction = "left"
-                        root.manager.transition.duration = 1
-                        root.manager.current = "s2"
+                source: 'Images/schedule_pics/vecka2.jpeg'
+                size_hint: 2.0, 2.0
+            Button:
+                background_normal: 'Images/rightarrowbutton.png'
+                background_down: 'Images/rightarrowbutton.png'
+                size_hint: 0.3, 0.3
+                on_press:
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "s3"
+
