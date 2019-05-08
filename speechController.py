@@ -383,6 +383,7 @@ class SpeechController():
             x=1 # Pausa interaktion
         elif self.keywordRecognition(string, 'avsluta'):
             sys.exit()
+        self.handleKeyword(string)
 
     def demo(self):
         tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')  # Behöver testas!!
