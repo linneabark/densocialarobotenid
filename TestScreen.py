@@ -1,10 +1,7 @@
 from kivy.uix.screenmanager import Screen
-
+from ArduinoHandler2 import ArduinoHandler
 
 class TestScreen(Screen):
     def send(self,text):
-        file = open("familiarNames.txt","a")
-        file.write("\n")
-        file.write(text)
-        file.close()
+        ArduinoHandler().write(text)
     pass

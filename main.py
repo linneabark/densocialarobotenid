@@ -38,8 +38,11 @@ from FileController import FileHandler
 # Config.set('graphics', 'fullscreen', 'auto')
 from speechController import SpeechController
 
-Config.set('graphics', 'width', '2000')
-Config.set('graphics', 'height', '8000')
+#Config.set('graphics', 'width', '2000')
+#Config.set('graphics', 'height', '8000')
+#Window.size = (586 * 1.3, 325 * 1.3)
+#Config.set('graphics', 'width', '2000')
+#Config.set('graphics', 'height', '8000')
 #Window.size = (586 * 1.3, 325 * 1.3)
 
 class MainScreen(Screen):
@@ -47,16 +50,19 @@ class MainScreen(Screen):
     speaking = False
     img_src = 'Images/Face/mouthClosed.jpg'
 
-
       
 class SleepScreen(Screen):
-    print('In sleepscreen')
+    event = None    
+    def on_enter(self):        
+        print('In sleepscreen')
+        #self.manager.sc.name = ''
     def on_touch_down(self, touch):
         print('on touch down')
-        self.manager.startTimThread(5)
+        #FileHandler().append(self.manager.sc.name, 'name', '')
+        # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
+        self.manager.startKimThread(5)
+        self.event = Clock.schedule_interval(self.manager.updateScreen,0.1)
         
-        Clock.schedule_interval(self.manager.updateScreen,0.2)
-
 
 class TalkingScreen(Screen):
     pass
@@ -65,6 +71,12 @@ class ScheduleScreen(Screen):
     pass
 
 class MathScreen(Screen):
+    pass
+
+class ConfusedScreen(Screen):
+    pass
+
+class SmartScreen(Screen):
     pass
 
 class RPSFaceScreen(Screen):
@@ -76,8 +88,25 @@ class RedHeartScreen(Screen):
 class MathVoiceScreen(Screen):
     pass
 
+class TalkingMathVoiceScreen(Screen):
+    pass
+
+class TalkingRedHeartScreen(Screen):
+    pass
+
+class TalkingConfusedScreen(Screen):
+    pass
+
+class TalkingSmartScreen(Screen):
+    pass
+
+class TalkingSleepScreen(Screen):
+    pass
 
 class Appview(Screen):
+    def on_enter(self):
+        self.manager.unschedule()
+        
     def launchRPS(self):
         print('Launch RPS')
         
@@ -122,7 +151,7 @@ class Manager(ScreenManager):
 
     def initialize(self):
         self.add_widget(SleepScreen(name='sleep'))
-        self.add_widget(MainScreen(name='main'))
+        self.add_widget(MainScreen(name='mainscreen'))
         self.add_widget(ScheduleScreen(name='schedule'))
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
@@ -140,11 +169,18 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
-        self.add_widget(TestScreen(name='test'))
-        self.add_widget(TalkingScreen(name='talkingscreen'))
+        #self.add_widget(TestScreen(name='test'))
+        self.add_widget(TalkingScreen(name='talkingmainscreen'))
         self.add_widget(RPSFaceScreen(name='rpsface'))
         self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
         self.add_widget(RedHeartScreen(name='redheartscreen'))
+        self.add_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
+        self.add_widget(TalkingRedHeartScreen(name='talkingredheartscreen'))
+        self.add_widget(TalkingConfusedScreen(name='talkingconfusedscreen'))
+        #self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
+        self.add_widget(ConfusedScreen(name='confusedscreen'))
+        #self.add_widget(SmartScreen(name='smartscreen'))
+        self.add_widget(TalkingSleepScreen(name='talkingsleep'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
@@ -157,34 +193,42 @@ class Manager(ScreenManager):
         self.transition = TransitionBase()
         if(self.sc.name == ''):
             if(self.sc.speaking):
-                self.current = 'talkingscreen'
+                self.current = 'talkingmainscreen'
             else:
-                self.current = 'main'    
+                self.current = 'mainscreen'    
         else:
-            self.current = FileHandler().read(self.sc.name,'screen')
+            self.current = FileHandler().readScreen(self.sc.name)
+
+    def unschedule(self):
+        screen = self.get_screen('sleep')
+        screen.event.cancel()
+        isVoiceActive = False
+        FileHandler().append(self.sc.name, 'screen', 'sleep')
 
 
     def startSchedule(self):
-        #if(self.sc.screen = "schedule")
-        #self.sc.start_Schedule(self, Manager)
-        #self.current = next_screen
         pass
 
-    def startTim(self):
-        print('Start Tim')
-        string = self.sc.listenForTim()
-        if string == "familiarUser":
-            self.isVoiceActive = True
-            self.sc.playHelloName(self.sc.name)
-        if string == "hej":
-            self.isVoiceActive = True
-            self.sc.playHello()                           
 
-    def startTimThread(self,sec):
-        if not(self.isVoiceActive):
-            print("threadstart")
-            thread_startTim = Thread(target=self.startTim)
-            thread_startTim.start()
+    def startKim(self):
+        print('Start Kim')
+        string = self.sc.listenForKim()
+        print(string)
+
+        #if string == 'familiarUser':
+        #    self.isVoiceActive = True
+        #    self.sc.playHelloName(self.sc.name)
+        if string == 'hej':
+            print('said hello')
+            self.isVoiceActive = True
+            self.sc.playHelloName()                           
+
+
+    def startKimThread(self,sec):
+        print('kommer inte in')
+        print("threadstart")
+        thread_startKim = Thread(target=self.startKim)
+        thread_startKim.start()
 
     def callback(self, sec):
         end = time.time()

@@ -16,16 +16,16 @@ class ScreenOne(Screen):
 
 
 class ScreenTwo(Screen):
-    def animate(self):
-        print('Animation')
-        if(self.children[0].children[0].pos == (80,10)):
-            self.children[0].children[0].pos = (0, 0)
-        anim = Animation(pos=(80, 10))
-        anim.repeat = True
-        anim.start(self.children[0].children[0])
+   # def animate(self):
+      #  print('Animation')
+      #  if(self.children[0].children[0].pos == (80,10)):
+     #       self.children[0].children[0].pos = (0, 0)
+      #  anim = Animation(pos=(80, 10))
+       # anim.repeat = True
+        #anim.start(self.children[0].children[0])
 
     def on_enter(self, *args):
-        self.animate()
+        #self.animate()
         Clock.schedule_once(self.callbackfun, 5)
 
 
