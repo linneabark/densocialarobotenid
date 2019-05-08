@@ -1,7 +1,7 @@
 <MainScreen>:
     canvas.before:
         Color:
-            rgba: 0, 0, 0, 1
+            rgba: 0,0,0,1
         Rectangle:
             pos: self.pos
             size: self.size
@@ -9,29 +9,29 @@
         cols: 1
         rows: 3
         row_force_default: True
-        row_default_height: 200
+        row_default_height: 600
         Image:
             allow_stretch: True
-            source: 'Images/Face/blinking3.gif'
+            source: 'Images/Face/blinking.gif'
             #source: root.img_blinking
-            size_hint: None, None
-            size: 750, 250
-            pos: 0, 200
+            size_hint: 1, 1
+            #size: 750, 250
+            pos: 0, 100
             #pos: (0,150)
             keep_data: True
             #on_touch_down: root.onTouch()
+
         Image:
             allow_stretch: True
-            source: root.img_src
-            size_hint: None, None
-            size: 710, 200
-            pos: 0, 0
+            source: 'Images/Face/mouthClosed.jpg'
+            size_hint: 1, 1
+            pos: 100, 0
 
         Button:
             background_color: 0,0,0,0
-            on_touch_down:
-                app.root.transition.direction = 'up'
-                root.manager.current = 'appview'
+            #on_touch_down:
+             #   app.root.transition.direction = 'up'
+             #   root.manager.current = 'appview'		
 
     #FloatLayout:
       #  size: 50, 50

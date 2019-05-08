@@ -15,180 +15,108 @@ from kivy.properties import NumericProperty, ReferenceListProperty, \
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.animation import Animation
-from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition
+from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition, SwapTransition, SlideTransition, TransitionBase
 # from WebTest import WebManager
 from kivy.uix.screenmanager import FadeTransition
 import time
 import subprocess
 import random
-import schedule_app
-#from pygame import mixer
+#import schedule_app
+from pygame import mixer
 from kivy.properties import StringProperty
-from user import User
 
+from rpsScreens import RPSScreen, ScreenOne, ScreenTwo, ScreenFour, ScreenThree, ScreenFive, ScreenSix, ScreenSeven
+from scheduleScreens import ScheduleScreen, ScheduleScreenTwo, ScheduleScreenThree, ScheduleScreenFour, \
+    ScheduleScreenFive, ScheduleScreenSix
+#from user import User
+from TestScreen import TestScreen
+from FileController import FileHandler
 
 #Config.set('kivy','log_level','debug')
 #Config.set('graphics', 'fullscreen', 'auto')
 # Config.set('kivy','log_level','debug')
 # Config.set('graphics', 'fullscreen', 'auto')
-#from speechController import SpeechController
+from speechController import SpeechController
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
 Window.size = (586 * 1.3, 325 * 1.3)
+#Config.set('graphics', 'width', '2000')
+#Config.set('graphics', 'height', '8000')
+#Window.size = (586 * 1.3, 325 * 1.3)
 
 class MainScreen(Screen):
-
-    # def play(self):
-    #   anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-    #  anim.repeat = True
-    #  anim.start(self.children[0].children[0])
-    #  pass
     Window.clearcolor = (1, 1, 1, 1)
-
-    
-    if 1==1: # SKRIV ISTÄLLET EN IF SOM I 'OM ROBOTEN PRATAR/AVÄNDER PRATFUNKTIONEN'
-        img_src = StringProperty('Images/Face/speaking.gif')
-    else:
-        img_src = StringProperty('Images/Face/mouthClosed.png')
-
-        img_blinking = StringProperty('Images/Face/eyesOpen.jpg')
-
-    '''def blink(self):
-        if 1==1: #Starta klocka och tråd?
-            img_blinking = StringProperty('Images/Face/blinking.gif')
-            print('Gif started')
-        else:
-            img_blinking = StringProperty('Images/Face/eyesOpen.jpg')'''
-
-    #threadEyes = threading.Thread(target=blink)
-    #threadEyes.start()
-    #print('Started eye thread')
-    #print('Total number of threads: ', threading.activeCount())
-    #print('List of threads: ', threading.enumerate())
+    speaking = False
+    img_src = 'Images/Face/mouthClosed.jpg'
 
 
-    def schema(self):
-        ScheduleScreen.showSchema(self)
+      
+class SleepScreen(Screen):
+    event = None    
+    def on_enter(self):        
+        print('In sleepscreen')
+    def on_touch_down(self, touch):
+        print('on touch down')
+        #FileHandler().append(self.manager.sc.name, 'name', '')
+        # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
+        self.manager.startKimThread(5)
+        self.event = Clock.schedule_interval(self.manager.updateScreen,0.2)
+        
+
+class TalkingScreen(Screen):
     pass
-
 
 class ScheduleScreen(Screen):
-    def showSchema(self, *args):
-        # wb = WebManager()
-        # wb.findSchema()
-        self.children[0].children[1].background_normal = 'test.png'
-
-    pass
-
-
-class SleepScreen(Screen):
-    pass
-
-class ScheduleScreenTwo(Screen):
-    pass
-
-class ScheduleScreenThree(Screen):
-    pass
-
-class ScheduleScreenFour(Screen):
-    pass
-
-class ScheduleScreenFive(Screen):
-    pass
-
-class ScheduleScreenSix(Screen):
     pass
 
 class MathScreen(Screen):
     pass
 
-
-class RPSScreen(Screen):
+class ConfusedScreen(Screen):
     pass
 
-# Lägg till en skärm som räknar ner tills spelet startar
-
-class ScreenOne(Screen):
+class SmartScreen(Screen):
     pass
 
-
-class ScreenTwo(Screen):
-    def animate(self):
-        print('Animation')
-        if(self.children[0].children[0].pos == (80,10)):
-            self.children[0].children[0].pos = (0, 0)
-        anim = Animation(pos=(80, 10))
-        anim.repeat = True
-        anim.start(self.children[0].children[0])
-
-    def on_enter(self, *args):
-        self.animate()
-        Clock.schedule_once(self.callbackfun, 5)
-
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-    # def play(self):
-    #  anim = Animation(x=50, y=50, duration=2.) + Animation(x=-50, y=-50, duration=2.)
-    #  anim.repeat = True
-    #  anim.start(self.children[0].children[0])
-    #  pass
-class TestScreen(Screen):
-    def send(self,text):
-        print(text)
+class RPSFaceScreen(Screen):
     pass
 
-class ScreenThree(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        self.manager.current = 'four'
-
-
-class ScreenFour(Screen):
-    def on_enter(self, *args):
-        Clock.schedule_once(self.callbackfun, 1)
-
-    def callbackfun(self, dt):
-        list = ["five", "six", "seven"]
-        self.manager.current = random.choice(list)
-
-
-class ScreenFive(Screen):
+class RedHeartScreen(Screen):
     pass
 
-
-class ScreenSix(Screen):
+class MathVoiceScreen(Screen):
     pass
 
+class TalkingMathVoiceScreen(Screen):
+    pass
 
-class ScreenSeven(Screen):
+class TalkingRedHeartScreen(Screen):
+    pass
+
+class TalkingConfusedScreen(Screen):
+    pass
+
+class TalkingSmartScreen(Screen):
     pass
 
 class Appview(Screen):
+    def on_enter(self):
+        self.manager.unschedule()
+        
     def launchRPS(self):
         print('Launch RPS')
-        # subprocess.Popen('python kv/RPS.py', shell=True)
-        # RPSscreenApp().run()
         
-    '''def doSpeech(self):
+    def doSpeech(self):
         print("speech")
-        sc = SpeechController()
-        screen = sc.listenSpeech()
-        string = sc.recognizedAudio(screen)
-        if(string == "matematik"):
-            self.manager.current = "calculator"'''
+
 
     def listen(self):
         thread_listen = Thread(target=self.doSpeech)
         thread_listen.start()
 
     pass
-
+        
 class Calculator(Screen):
 
     def calculate(self, calculation):
@@ -205,24 +133,23 @@ class ScheduleSScreen(Screen):
 
 class Manager(ScreenManager):
     t = time.time()
-    user = User(None,None,None)
     isVoiceActive = False
-    
+    sc = SpeechController()
+
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
         self.transition = SlideTransition()
         self.transition.duration = 1
         self.transition.direction = 'up'
-        #Clock.schedule_interval(self.callback, 2)
-        Clock.schedule_interval(self.startTimThread, 8)
-        #Clock.schedule_interval(self.startKeywordThread, 8)
-        
+        self.current = 'sleep'
+        print('Current screen: ' + self.current)
+              
 
     def initialize(self):
-        self.add_widget(MainScreen(name="main"))
-        self.add_widget(ScheduleScreen(name="schedule"))
         self.add_widget(SleepScreen(name='sleep'))
+        self.add_widget(MainScreen(name='mainscreen'))
+        self.add_widget(ScheduleScreen(name='schedule'))
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
         self.add_widget(RPSScreen(name='rps'))
@@ -240,42 +167,62 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
         self.add_widget(TestScreen(name='test'))
+        self.add_widget(TalkingScreen(name='talkingmainscreen'))
+        self.add_widget(RPSFaceScreen(name='rpsface'))
+        self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
+        self.add_widget(RedHeartScreen(name='redheartscreen'))
+        self.add_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
+        self.add_widget(TalkingRedHeartScreen(name='talkingredheartscreen'))
+        self.add_widget(TalkingConfusedScreen(name='talkingconfusedscreen'))
+        self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
+        self.add_widget(ConfusedScreen(name='confusedscreen'))
+        self.add_widget(SmartScreen(name='smartscreen'))
 
     def on_touch_down(self,touch):
         self.current_screen.on_touch_down(touch)
         self.t = time.time()
 
+    def updateScreen(self,sec):
+        #print('update screen')
+        self.transition = TransitionBase()
+        if(self.sc.name == ''):
+            if(self.sc.speaking):
+                self.current = 'talkingmainscreen'
+            else:
+                self.current = 'mainscreen'    
+        else:
+            self.current = FileHandler().readScreen(self.sc.name)
 
-    def startTim(self):
-        '''
+    def unschedule(self):
+        screen = self.get_screen('sleep')
+        screen.event.cancel()
+        isVoiceActive = False
+        FileHandler().append(self.sc.name, 'screen', 'sleep')
 
-        :return:
 
-        string = SpeechController().listenForTim(self)
-        if string == "familiarUser":
+    def startSchedule(self):
+        pass
+
+
+    def startKim(self):
+        print('Start Kim')
+        string = self.sc.listenForKim()
+        print(string)
+
+        #if string == 'familiarUser':
+        #    self.isVoiceActive = True
+        #    self.sc.playHelloName(self.sc.name)
+        if string == 'hej':
+            print('said hello')
             self.isVoiceActive = True
-            SpeechController().playHelloName(self.user.name)
-        if string == "hej":
-            self.isVoiceActive = True
-            SpeechController().playHello()            
-            #self.current.moveMouth()
+            self.sc.playHelloName()                           
 
-        '''
-        
-        #SpeechController.detectKeywords()
 
-                
-
-    def startTimThread(self,sec):
-        if not(self.isVoiceActive):
-            print("threadstart")
-            thread_startTim = Thread(target=self.startTim)
-            thread_startTim.start()
-
-    '''def startKeywordThread(self, sec):
-        thread_listenKeywords = Thread(taget = self.listenKeywords)
-        thread_listenKeywords.start()'''
-
+    def startKimThread(self,sec):
+        print('kommer inte in')
+        print("threadstart")
+        thread_startKim = Thread(target=self.startKim)
+        thread_startKim.start()
 
     def callback(self, sec):
         end = time.time()

@@ -7,6 +7,7 @@
         source: "Images/schedulebuttons/pinkbackground.png"
         keep_ratio: False
         allow_stretch: True
+<<<<<<< HEAD
     BoxLayout:
         orientation: 'vertical'
         AnchorLayout:
@@ -43,3 +44,40 @@
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
                         root.manager.current = "s6"
+=======
+        source: 'Images/schedule_pics/vecka5.png'
+        size: self.size
+        #Button:
+        #    background_color: 0,0,0,0
+        #    on_touch_down:
+         #       app.root.transition = SlideTransition(direction = 'left')
+         #       root.manager.current = "appview"
+
+        Button:
+            background_normal: 'Images/appviewbutton.png'
+            background_down: 'Images/appviewbutton.png'
+            size_hint: None, None
+            size: 150, 150
+            pos: (1350,700)
+            on_press:
+                root.manager.transition.direction = "left"
+                root.manager.transition.duration = 1
+                root.manager.current = "appview"
+        Button:
+            background_normal: 'Images/rightarrowbutton.png'
+            background_down: 'Images/rightarrowbutton.png'
+            pos: (1400,350)
+            on_press:
+                root.manager.transition.direction = "left"
+                root.manager.transition.duration = 1
+                root.manager.current = "s6"
+
+        Button:
+            background_normal: 'Images/leftarrowbutton.png'
+            background_down: 'Images/leftarrowbutton.png'
+            pos: (0,350)
+            on_press:
+                root.manager.transition.direction = "right"
+                root.manager.transition.duration = 1
+                root.manager.current = "s4"
+>>>>>>> 125aa536392fbc60a6046a21c4426d42e6fd5a3e

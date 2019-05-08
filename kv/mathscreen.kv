@@ -32,6 +32,7 @@
                 background_normal: 'Images/appviewbutton.png'
                 background_down: 'Images/appviewbutton.png'
                 on_press:
+                    app.root.transition = SlideTransition(direction='right')
                     root.manager.current = 'appview'
                     root.manager.transition.direction = 'right'
                 anchor_x: 'left'
