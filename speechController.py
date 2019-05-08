@@ -384,6 +384,28 @@ class SpeechController():
         elif self.keywordRecognition(string, 'avsluta'):
             sys.exit()
 
+    def demo(self):
+        tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')  # Behöver testas!!
+        tts.save("Ljudfiler/demo.mp3")
+        self.playSound("Ljudfiler/demo.mp3")
+
+        audio1 = self.listenSpeech(4)
+        answer1 = self.recognizedAudio(audio1)
+
+        tts = gTTS(text='Vad kul att träffa dig ' + answer1, lang='sv')  # Behöver testas!!
+        tts.save("Ljudfiler/demo.mp3")
+        self.playSound("Ljudfiler/demo.mp3")
+
+        audio2 = self.listenSpeech(4)
+        answer2 = self.recognizedAudio(audio2)
+
+        tts = gTTS(text='Jag mår bra tack! Det är jätteroligt att vara här på Johannebergskolan idag!', lang='sv')  # Behöver testas!!
+        tts.save("Ljudfiler/demo.mp3")
+        self.playSound("Ljudfiler/demo.mp3")
+
+        audio3 = self.listenSpeech(4)
+        answer3 = self.recognizedAudio(audio2)
+
 
     def help(self):
         self.funcName = "help"
