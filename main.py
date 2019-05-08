@@ -98,7 +98,6 @@ class TalkingConfusedScreen(Screen):
     pass
 
 class TalkingSmartScreen(Screen):
-
     pass
 
 class TalkingSleepScreen(Screen):
@@ -188,9 +187,7 @@ class Manager(ScreenManager):
         self.t = time.time()
 
     def updateScreen(self,sec):
-        if(FileHandler().read(self.sc.name,'screen') == 'goodbye'):
-            sys.exit()
-        #print(self.parent.quit())
+        #print('update screen')
         self.transition = TransitionBase()
         if(self.sc.name == ''):
             if(self.sc.speaking):
@@ -213,16 +210,16 @@ class Manager(ScreenManager):
 
     def startKim(self):
         print('Start Kim')
-        string = self.sc.listenForKim()
+        string = self.sc.playHelloName()
         print(string)
 
         #if string == 'familiarUser':
         #    self.isVoiceActive = True
         #    self.sc.playHelloName(self.sc.name)
-        if string == 'hej':
-            print('said hello')
-            self.isVoiceActive = True
-            self.sc.playHelloName()                           
+        #if string == 'hej':
+        #    print('said hello')
+        #    self.isVoiceActive = True
+        #   self.sc.playHelloName()                           
 
 
     def startKimThread(self,sec):

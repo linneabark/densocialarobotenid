@@ -14,7 +14,7 @@ class FileHandler:
                'color':'',
                'wins': '',
                'losses': '',
-               'screen':''
+               'screen':'mainscreen'
           }
           json.dump(d,open('users/'+name+'.json','w'),indent=2)
 

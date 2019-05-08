@@ -51,10 +51,10 @@ class SpeechController():
         
     def playSound(self, fileName):
         screen = FileHandler().readScreen(self.name)
-        #if self.booleanSchedule(screen):
-         #   screen = screen
-        #else:
-        FileHandler().append(self.name,'screen','talking' + screen)
+        if self.booleanSchedule(screen):
+            screen = screen
+        else:
+            FileHandler().append(self.name,'screen','talking' + screen)
         self.speaking = True
         audio = MP3(fileName)
         length = audio.info.length
@@ -69,7 +69,7 @@ class SpeechController():
     
     def mp3Exception(self):
         FileHandler().append(self.name,'screen','confusedscreen')
-        tts = gTTS(text= 'MP3, kan du prata tydligare?', lang='sv')
+        tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
         tts.save("Ljudfiler/speakClear.mp3")
         self.playSound("Ljudfiler/speakClear.mp3")
         self.fromWhatFunc()
@@ -192,7 +192,7 @@ class SpeechController():
             FileHandler().append(self.name,"screen","sleep")
             sys.exit()
         elif self.keywordRecognition(answer, 'nej'):
-            tts = gTTS(text='Okej' + self.name + 'då fortsätter vi leka!', lang='sv')
+            tts = gTTS(text='Okej! ' + self.name + 'då fortsätter vi leka!', lang='sv')
             tts.save("Ljudfiler/okKeepPlaying.mp3")
             self.playSound("Ljudfiler/okKeepPlaying.mp3")
             self.fromWhatFunc()
@@ -243,7 +243,7 @@ class SpeechController():
                    
     def playHelloName(self):
         self.funcName = 'playHelloName'
-        tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv', slow=True)
+        tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
         tts.save("Ljudfiler/helloWhatsYourName.mp3")
         self.playSound("Ljudfiler/helloWhatsYourName.mp3")
         
@@ -260,7 +260,7 @@ class SpeechController():
             self.helloPhrasesFamiliarUser(self.name) # Skicka in bara "name"?
         else:
             FileHandler().create(self.name)
-            FileHandler().append(self.name, 'screen', 'mainscreen')
+            #FileHandler().append(self.name, 'screen', 'mainscreen')
             self.helloPhrasesUnknownUser()
             
 
@@ -273,7 +273,7 @@ class SpeechController():
             nr = 5
             sport = "fotboll" # Välj sporten från json-filen
         if (nr == 1):
-            tts = gTTS(text='Hej' + name + ', jag har saknat dig! Vad vill du göra?', lang='sv')
+            tts = gTTS(text='Hej ' + name + ', jag har saknat dig! Vad vill du göra?', lang='sv')
         elif (nr == 2):
             tts = gTTS(text = 'Tjena ' + name + 'vad kul att du vill leka igen. Det var så kul sist!', lang ='sv')
         elif (nr == 3):
@@ -333,7 +333,7 @@ class SpeechController():
     def whatToDo(self):
         FileHandler().append(self.name, 'screen','mainscreen')
         self.funcName = "whatToDo"
-        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv', slow=True)
+        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='fr')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
         audio = self.listenSpeech(4)
@@ -418,7 +418,7 @@ class SpeechController():
         if(nr == 2):
             tts = gTTS(text='Kan du upprepa det där?', lang='sv')
         if(nr == 3):
-            tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
+            tts = gTTS(text='Jag har sockervadd i öronen, du får säga igen.', lang='sv')
         if(nr == 4):
             tts = gTTS(text='Kan du prata tydligare?', lang='sv')
         if(nr == 5):
@@ -471,7 +471,7 @@ class SpeechController():
         #question = random.randint(1,5)
         question = 4
         if question == 1:
-            tts = gTTS(text='Hur gammal är du?' + self.name, lang='sv')
+            tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name,"age",string)
             
