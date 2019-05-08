@@ -494,7 +494,7 @@ class SpeechController():
         #question = random.randint(1,5)
         question = 4
         if question == 1:
-            tts = gTTS(text='Hur gammal är du?' + self.name, lang='sv')
+            tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name,"age",string)
             
@@ -670,7 +670,7 @@ class SpeechController():
         elif self.keywordRecognition(answer, 'påse'):
             return 3
         else:
-            tts1 = gTTS(text='Jag förstod inte vad du sa' + self.name + 'vi tar det igen.', lang='sv')
+            tts1 = gTTS(text='Jag förstod inte vad du sa, ' + self.name + ', vi tar det igen.', lang='sv')
             tts1.save("Ljudfiler/playerChoiceUnclear.mp3")
             self.playSound("Ljudfiler/playerChoiceUnclear.mp3")
             self.playerChoice()
@@ -730,7 +730,7 @@ class SpeechController():
         play_again_answer = self.listenSpeech(3)
         answer = self.recognizedAudio(play_again_answer)
         if self.keywordRecognition(answer, 'ja'):
-            tts = gTTS(text='Vad kul' + self.name, lang='sv')               # Ta bort efter första inspelning
+            tts = gTTS(text='Vad kul, ' + self.name, lang='sv')               # Ta bort efter första inspelning
             tts.save("Ljudfiler/fun.mp3")
             self.playSound("Ljudfiler/fun.mp3")
             self.startRPSVoice()
@@ -781,9 +781,9 @@ class SpeechController():
 
         nr = random.randint(1, 10)
         if(nr == 1):
-            tts = gTTS(text='Passa dig' + self.name + 'jag känner mig vass idag!', lang='sv')
+            tts = gTTS(text='Passa dig, ' + self.name + ', jag känner mig vass idag!', lang='sv')
         elif(nr == 2):
-            tts = gTTS(text='Jag märker om du fuskar' + self.name + '!', lang='sv')
+            tts = gTTS(text='Jag märker om du fuskar, ' + self.name + '!', lang='sv')
         elif(nr == 3):
             tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')
         elif(nr == 4):
