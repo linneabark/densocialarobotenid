@@ -243,7 +243,7 @@ class SpeechController():
                    
     def playHelloName(self):
         self.funcName = 'playHelloName'
-        tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv', slow=True)
+        tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
         tts.save("Ljudfiler/helloWhatsYourName.mp3")
         self.playSound("Ljudfiler/helloWhatsYourName.mp3")
         
@@ -333,7 +333,7 @@ class SpeechController():
     def whatToDo(self):
         FileHandler().append(self.name, 'screen','mainscreen')
         self.funcName = "whatToDo"
-        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv', slow=True)
+        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
         audio = self.listenSpeech(4)
