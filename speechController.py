@@ -243,13 +243,11 @@ class SpeechController():
                    
     def playHelloName(self):
         self.funcName = 'playHelloName'
-        tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
-        tts.save("Ljudfiler/helloWhatsYourName.mp3")
-        self.playSound("Ljudfiler/helloWhatsYourName.mp3")
+        self.startPhrases()
         
-        audio = self.listenSpeech(5)
+        audio = self.listenSpeech(4)
         string = self.recognizedAudio(audio)
-        self.name = self.detectName(string)
+        self.name = string
         
         if (FileHandler().userExists(self.name)):
             #tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')
@@ -261,13 +259,40 @@ class SpeechController():
         else:
             FileHandler().create(self.name)
             #FileHandler().append(self.name, 'screen', 'mainscreen')
-            self.helloPhrasesUnknownUser()
-            
+            self.helloPhrasesUnknownUser(self.name)
 
+    def startPhrases(self):
+        nr = random.randint(1,4)
+        nr = 4
+        if (nr == 1):
+            tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
+        elif (nr == 2):
+            tts = gTTS(text='Tjenare! Mitt namn är Kim, vad är ditt?', lang='sv')
+        elif (nr == 3):
+            tts = gTTS(text='Äntligen någon som vill leka! Det är jag som är Kim, vad heter du?', lang='sv')
+        elif (nr == 4):
+            tts = gTTS(text= self.timeOfDay() + ' Mitt namn är Kim, vad heter du?', lang='sv')
+
+        tts.save("Ljudfiler/helloWhatsYourName.mp3")
+        self.playSound("Ljudfiler/helloWhatsYourName.mp3")
+
+
+    def timeOfDay(self):
+        hour = datetime.datetime.now().hour
+        
+        if hour < 10:
+            string = 'God morgon!'
+        elif hour > 10 and hour < 14:
+            string = 'Goddag!'
+        elif hour > 14 and hour < 18:
+            string = 'God eftermiddag!'
+        elif hour > 18:
+            string = 'Gokväll!'
+        return string
 
 
     def helloPhrasesFamiliarUser(self, name):
-        nr = random.randint(1, 3)
+        nr = random.randint(1, 4)
 
         if (nr == 10): # Om aktuell user har en sport i sin json-fil
             nr = 5
@@ -278,6 +303,8 @@ class SpeechController():
             tts = gTTS(text = 'Tjena ' + name + 'vad kul att du vill leka igen. Det var så kul sist!', lang ='sv')
         elif (nr == 3):
             tts = gTTS(text='Vad kul att träffa dig igen ' + name + ', nu ska vi leka!', lang='sv')
+        elif (nr == 4):
+            tts = gTTS(text='Tjena polare! Vad vill du hitta på idag ' + name + '?', lang='sv')
         elif (nr == 5):
             self.haveYouPlayed(name, sport)
         tts.save("Ljudfiler/helloWhatToDo.mp3")
@@ -304,22 +331,22 @@ class SpeechController():
         else:
             self.didntUnderstand()
 
-    def playHello(self):
+    '''def playHello(self):
         self.funcName = "playHello"
         #self.helloPhrasesUnknownUser()
         audio = self.listenSpeech(4)
         answer = self.recognizedAudio(audio)
         self.name = answer
-        self.playHelloName(answer)
+        self.playHelloName(answer)'''
 
-    def helloPhrasesUnknownUser(self):
+    def helloPhrasesUnknownUser(self, name):
         nr = random.randint(1,5)
         if (nr == 1):
-            tts = gTTS(text='Hej! Trevligt att träffas! Vad vill du göra nu?', lang='sv')
+            tts = gTTS(text='Hej! Trevligt att träffa dig,' + name + '! Vad vill du göra nu?', lang='sv')
         elif (nr == 2):
-            tts = gTTS(text='Tjena polare! Vad vill du hitta på?', lang='sv')
+            tts = gTTS(text='Hej ' + name + ', vad kul att få lära känna dig! Vad vill du hitta på?', lang='sv')
         elif (nr == 3):
-            tts = gTTS(text='Äntligen någon som vill leka. Vad ska vi göra?', lang='sv')
+            tts = gTTS(text='Äntligen någon som vill leka! Vad ska vi göra ' + name + '?', lang='sv')
         elif (nr == 4):
             tts = gTTS(text='Hallå!' + self.name + 'Äntligen en till kompis!', lang='sv')
         elif (nr == 5):
@@ -378,12 +405,28 @@ class SpeechController():
         elif self.keywordRecognition(string, 'app'):
             FileHandler().append(self.name,'screen','appview')
             sys.exit()
-            x=1 # Starta gui
-        elif self.keywordRecognition(string, 'paus'):
-            x=1 # Pausa interaktion
         elif self.keywordRecognition(string, 'avsluta'):
             sys.exit()
-        #self.handleKeyword(string)
+        elif self.keywordRecognition(string,'schema') or self.keywordRecognition(string,'kalender'):
+            self.startSchedule()
+        elif self.keywordRecognition(string,'räkna') or self.keywordRecognition(string,'matte'):
+            self.startMath()
+        elif self.keywordRecognition(string,'sten') or self.keywordRecognition(string,'sax') or self.keywordRecognition(string,'påse') or self.keywordRecognition(string,'spela'):
+            print('Startar RPS')
+            self.startRPSVoice()
+        elif self.keywordRecognition(string,'prata'):
+            self.startTalking()
+
+
+    '''
+    def isWhatToDoKeyword(self, string):
+        if self.keywordRecognition(string, 'schema') or self.keywordRecognition(string,'kalender') or self.keywordRecognition(string,'räkna') or
+        self.keywordRecognition(string,'matte') or self.keywordRecognition(string,'sten') or self.keywordRecognition(string,'sax') or
+        self.keywordRecognition(string,'påse') or self.keywordRecognition(string,'spela') or self.keywordRecognition(string,'prata'):
+                return True
+        else:
+            return False'''
+    
 
     def demo(self):
         tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')  # Behöver testas!!
