@@ -1,9 +1,9 @@
 {
-    "age": "15",
-    "sport": "",
-    "screen": "mainscreen",
-    "name": "elina",
     "losses": "1",
-    "color": "",
-    "wins": ""
+    "screen": "mainscreen",
+    "age": "15",
+    "name": "elina",
+    "color": "bl\u00e5",
+    "wins": "",
+    "sport": "fotboll"
 }

@@ -386,7 +386,7 @@ class SpeechController():
             self.startTalking()      #skicka till pratmetod
         else:
             self.didntUnderstand()
-            audio = self.listenSpeech(7)
+            audio = self.listenSpeech(4)
             self.handleKeyword(self.recognizedAudio(audio))
 
     def overallKeyword(self, string):
@@ -535,13 +535,12 @@ class SpeechController():
     
     def smallTalk(self):
         question = random.randint(1,5)
-        question = 1
 
         if question == 1:
             tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name,"age",string)
-            tts = gTTS(text= 'Då är du äldre än, jag är bara 2 månader!', lang='sv')
+            tts = gTTS(text= 'Då är du äldre än mig, jag är bara 2 månader!', lang='sv')
             tts.save("Ljudfiler/wowage.mp3")
             self.playSound("Ljudfiler/wowage.mp3")
             
@@ -632,6 +631,8 @@ class SpeechController():
             time.sleep(1)
             tts = gTTS(text='Hopplös!', lang='sv')
 
+
+        time.sleep(0.5)
         tts.save("Ljudfiler/joke.mp3")
         self.playSound("Ljudfiler/joke.mp3")
         self.playSound("Ljudfiler/drumroll.mp3")   #Dab?
@@ -957,7 +958,7 @@ class SpeechController():
         ttsMath1 = gTTS(text='Vad vill du räkna?', lang='sv')
         ttsMath1.save("Ljudfiler/newCount.mp3")
         self.playSound("Ljudfiler/newCount.mp3")
-        audio = self.listenSpeech(7)
+        audio = self.listenSpeech(5)
         str_input = self.recognizedAudio(audio)
         print(str_input)
 
