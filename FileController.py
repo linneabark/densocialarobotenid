@@ -27,6 +27,7 @@ class FileHandler:
                return user.get(info)
           except FileNotFoundError:
                return False
+
           
      def userExists(self, user):
           if (os.path.isfile('users/'+user+'.json')):
@@ -58,4 +59,15 @@ class FileHandler:
              user = json.load(open('users/' + name + '.json', 'r'))
              return user.get("screen")
          except FileNotFoundError:
-             return "mainscreen"
+              return "mainscreen"
+         except json.decoder.JSONDecodeError:
+              return "mainscreen"
+
+
+
+
+
+
+
+
+          

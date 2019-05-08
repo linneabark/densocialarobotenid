@@ -333,7 +333,7 @@ class SpeechController():
     def whatToDo(self):
         FileHandler().append(self.name, 'screen','mainscreen')
         self.funcName = "whatToDo"
-        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='fr')
+        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
         audio = self.listenSpeech(4)
@@ -492,7 +492,6 @@ class SpeechController():
     
     def smallTalk(self):
         question = random.randint(1,5)
-        question = 1
 
         if question == 1:
             tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
@@ -766,7 +765,7 @@ class SpeechController():
             currentLosses = int(currentLosses)
         print('In playRPSPhrases')
         #if (("users/" + self.name + ".json")):
-        tts1 = gTTS(text='Kul att du vill spela med mig igen! Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
+        tts1 = gTTS(text='Kul att du vill spela med mig! Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
         tts1.save("Ljudfiler/existingUserRPS.mp3")
         self.playSound("Ljudfiler/existingUserRPS.mp3")
         if (currentWins > currentLosses):
@@ -777,6 +776,10 @@ class SpeechController():
             tts = gTTS(text='Jag leder!', lang='sv')
             tts.save("Ljudfiler/youAreLoosing.mp3")
             self.playSound("Ljudfiler/youAreLoosing.mp3")
+        elif(currentWins == 0 and currentLosses == 0):
+            tts = gTTS(text='Det här är vår första match, spännande!', lang='sv')
+            tts.save("Ljudfiler/firstGame.mp3")
+            self.playSound("Ljudfiler/firstGame.mp3")
         else:
             tts = gTTS(text='wow, det står lika, detta blir spännande!', lang='sv')
             tts.save("Ljudfiler/weAreEven.mp3")
@@ -786,7 +789,7 @@ class SpeechController():
         if(nr == 1):
             tts = gTTS(text='Passa dig, ' + self.name + ', jag känner mig vass idag!', lang='sv')
         elif(nr == 2):
-            tts = gTTS(text='Jag märker om du fuskar, ' + self.name + '!', lang='sv')
+            tts = gTTS(text='Jag märker om du fuskar ' + self.name + '!', lang='sv')
         elif(nr == 3):
             tts = gTTS(text='Jag är olympisk mästare på sten sax påse', lang='sv')
         elif(nr == 4):
@@ -827,7 +830,6 @@ class SpeechController():
         print('Skärmen i filehandler:' + current_screen)
         if current_screen == 'schedule':
             FileHandler().append(self.name, 'screen', 's2')
-            print('Skärmen i filehandler ändrad till: ' + FileHandler().readScreen(self.name))
         elif current_screen == 's2':
             FileHandler().append(self.name, 'screen', 's3')
         elif current_screen == 's3':

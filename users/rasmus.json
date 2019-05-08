@@ -1,9 +1,9 @@
 {
-    "wins": "1",
-    "age": "85",
-    "losses": "",
     "color": "bajs",
+    "age": "r\u00e4kna",
+    "sport": "hockey",
+    "screen": "mainscreen",
+    "wins": "3",
     "name": "rasmus",
-    "sport": "bajs",
-    "screen": "mainscreen"
+    "losses": ""
 }
