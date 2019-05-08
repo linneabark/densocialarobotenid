@@ -189,7 +189,7 @@ class Manager(ScreenManager):
 
     def updateScreen(self,sec):
         if(FileHandler().read(self.sc.name,'screen') == 'goodbye'):
-            sys.exit()
+            sys.exit() # change to go to sleep screen
         #print(self.parent.quit())
         self.transition = TransitionBase()
         if(self.sc.name == ''):
@@ -213,17 +213,17 @@ class Manager(ScreenManager):
 
     def startKim(self):
         print('Start Kim')
-        #string = self.sc.listenForKim()
-        self.sc.playHelloName()
+        string = self.sc.listenForKim()
+        #self.sc.playHelloName()
         print(string)
 
         #if string == 'familiarUser':
         #    self.isVoiceActive = True
         #    self.sc.playHelloName(self.sc.name)
-        '''if string == 'hej':
+        if string == 'hej':
             print('said hello')
             self.isVoiceActive = True
-            self.sc.playHelloName() '''                          
+            self.sc.playHelloName()                     
 
 
     def startKimThread(self,sec):

@@ -243,11 +243,18 @@ class SpeechController():
                    
     def playHelloName(self):
         self.funcName = 'playHelloName'
+
+        print('In playHelloName()')
+        
         self.startPhrases()
+        
+        print('Before recording')
         
         audio = self.listenSpeech(4)
         string = self.recognizedAudio(audio)
         self.name = string
+
+        print('After recording, string: ' + string)
         
         if (FileHandler().userExists(self.name)):
             #tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')
@@ -263,7 +270,6 @@ class SpeechController():
 
     def startPhrases(self):
         nr = random.randint(1,4)
-        nr = 4
         if (nr == 1):
             tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
         elif (nr == 2):
@@ -411,7 +417,7 @@ class SpeechController():
             self.startSchedule()
         elif self.keywordRecognition(string,'räkna') or self.keywordRecognition(string,'matte'):
             self.startMath()
-        elif self.keywordRecognition(string,'sten') or self.keywordRecognition(string,'sax') or self.keywordRecognition(string,'påse') or self.keywordRecognition(string,'spela'):
+        elif self.keywordRecognition(string,'spela'):
             print('Startar RPS')
             self.startRPSVoice()
         elif self.keywordRecognition(string,'prata'):
@@ -676,7 +682,6 @@ class SpeechController():
         print('In startRPSVoice')
         self.funcName = "startRPSVoice"
         self.playRPSPhrases()
-        print('After playRPSPhrases')
         tts1 = gTTS(text='Gör dig redo.', lang='sv')
         tts1.save("Ljudfiler/newReady.mp3")
         self.playSound("Ljudfiler/newReady.mp3")
@@ -687,7 +692,9 @@ class SpeechController():
         print("sign:", sign)
         user = self.playerChoice()
         self.rockPaperScissors(sign,user)
+        print('Before playAgain')
         self.playAgain()
+        print('After playAgain')
         #elif(answer == "nej"):
             #self.startRPSVoice()
         #elif(answer == "tillbaka"):
@@ -810,7 +817,8 @@ class SpeechController():
             currentLosses = int(currentLosses)
         print('In playRPSPhrases')
         #if (("users/" + self.name + ".json")):
-        tts1 = gTTS(text='Kul att du vill spela med mig igen! Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
+        #tts1 = gTTS(text='Kul att du vill spela med mig igen! Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
+        tts1 = gTTS(text='Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
         tts1.save("Ljudfiler/existingUserRPS.mp3")
         self.playSound("Ljudfiler/existingUserRPS.mp3")
         if (currentWins > currentLosses):
