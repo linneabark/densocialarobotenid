@@ -254,7 +254,7 @@ class SpeechController():
         string = self.recognizedAudio(audio)
         self.name = string
 
-        print('After recording, string: ' + string)
+        print('After recording, name: ' + string)
         
         if (FileHandler().userExists(self.name)):
             #tts = gTTS(text='Hej' + name + ', kul att se dig igen! Vad vill du göra idag?', lang='sv')

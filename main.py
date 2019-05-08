@@ -223,7 +223,7 @@ class Manager(ScreenManager):
         if string == 'hej':
             print('said hello')
             self.isVoiceActive = True
-            self.sc.playHelloName()                     
+            self.sc.playHelloName()             
 
 
     def startKimThread(self,sec):
