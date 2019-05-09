@@ -188,9 +188,6 @@ class Manager(ScreenManager):
         self.t = time.time()
 
     def updateScreen(self,sec):
-        if(FileHandler().read(self.sc.name,'screen') == 'goodbye'):
-            sys.exit() # change to go to sleep screen
-        #print(self.parent.quit())
         self.transition = TransitionBase()
         if(self.sc.name == ''):
             if(self.sc.speaking):

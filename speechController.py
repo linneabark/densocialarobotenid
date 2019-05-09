@@ -271,13 +271,13 @@ class SpeechController():
     def startPhrases(self):
         nr = random.randint(1,4)
         if (nr == 1):
-            tts = gTTS(text='Hej! Jag heter Kim, vad heter du?', lang='sv')
+            tts = gTTS(text='Hej! Vad kul att få vara här på Johannebergsskolan idag! Jag heter Kim, vad heter du?', lang='sv')
         elif (nr == 2):
-            tts = gTTS(text='Tjenare! Mitt namn är Kim, vad är ditt?', lang='sv')
+            tts = gTTS(text='Tjenare! Vad kul att få vara här på Johannebergsskolan idag! Mitt namn är Kim, vad är ditt?', lang='sv')
         elif (nr == 3):
-            tts = gTTS(text='Äntligen någon som vill leka! Det är jag som är Kim, vad heter du?', lang='sv')
+            tts = gTTS(text='Äntligen någon som vill leka! Och vad kul att få vara här på Johannebergsskolan idag! Det är jag som är Kim, vad heter du?', lang='sv')
         elif (nr == 4):
-            tts = gTTS(text= self.timeOfDay() + ' Mitt namn är Kim, vad heter du?', lang='sv')
+            tts = gTTS(text= self.timeOfDay() + ' Vad kul att få vara här på Johannebergsskolan idag! Mitt namn är Kim, vad heter du?', lang='sv')
 
         tts.save("Ljudfiler/helloWhatsYourName.mp3")
         self.playSound("Ljudfiler/helloWhatsYourName.mp3")
@@ -399,7 +399,7 @@ class SpeechController():
         print('Overall keyword: ' + string)
         if self.keywordRecognition(string,'hejdå') or (self.keywordRecognition(string,'hej') and self.keywordRecognition(string,'då')):
             self.goodbye()
-        elif self.keywordRecognition(string, 'tillbaka'):
+        elif self.keywordRecognition(string, 'kim'):
             tts = gTTS(text='Okej, vi går tillbaka!', lang='sv')
             tts.save("Ljudfiler/goBack.mp3")
             self.playSound("Ljudfiler/goBack.mp3")

@@ -1,9 +1,9 @@
 {
-    "age": "",
-    "wins": "",
     "name": "per",
-    "color": "",
-    "screen": "mainscreen",
+    "screen": "sleep",
     "sport": "",
-    "losses": "2"
+    "losses": "2",
+    "age": "",
+    "color": "",
+    "wins": ""
 }
