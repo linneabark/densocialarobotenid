@@ -3,5 +3,5 @@ from ArduinoHandler2 import ArduinoHandler
 
 class TestScreen(Screen):
     def send(self,text):
-        ArduinoHandler().write(text)
+        ArduinoHandler2main().write('text')
     pass

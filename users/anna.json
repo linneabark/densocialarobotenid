@@ -1,9 +1,9 @@
 {
-    "name": "anna",
-    "wins": "1",
-    "screen": "mainscreen",
-    "age": "55",
-    "color": "",
-    "losses": "",
-    "sport": ""
+    "wins": "4",
+    "age": "8",
+    "color": "lila",
+    "sport": "fotboll",
+    "losses": "1",
+    "screen": "sleep",
+    "name": "anna"
 }

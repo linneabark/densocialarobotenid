@@ -1,9 +1,9 @@
 {
-    "color": "",
-    "name": "petter",
-    "age": "85",
+    "sport": "",
     "wins": "1",
     "losses": "",
-    "screen": "sleep",
-    "sport": ""
+    "age": "85",
+    "color": "",
+    "name": "petter",
+    "screen": "mainscreen"
 }

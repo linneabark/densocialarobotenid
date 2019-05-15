@@ -45,6 +45,8 @@ from speechController import SpeechController
 #Config.set('graphics', 'height', '8000')
 #Window.size = (586 * 1.3, 325 * 1.3)
 
+from ArduinoHandler2 import ArduinoHandler
+
 class MainScreen(Screen):
     Window.clearcolor = (1, 1, 1, 1)
     speaking = False
@@ -62,7 +64,7 @@ class SleepScreen(Screen):
         # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
         self.manager.startKimThread(5)
         self.event = Clock.schedule_interval(self.manager.updateScreen,0.1)
-        
+        ArduinoHandler().write(b'l')
 
 class TalkingScreen(Screen):
     pass
@@ -98,7 +100,6 @@ class TalkingConfusedScreen(Screen):
     pass
 
 class TalkingSmartScreen(Screen):
-
     pass
 
 class TalkingSleepScreen(Screen):
