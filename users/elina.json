@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "sport": "",
     "age": "",
     "wins": "1",
@@ -6,4 +7,13 @@
     "losses": "",
     "screen": "mainscreen",
     "name": "elina"
+=======
+    "screen": "appview",
+    "losses": "1",
+    "wins": "1",
+    "age": "",
+    "color": "",
+    "name": "elina",
+    "sport": ""
+>>>>>>> 75b202e38d91a41e3525e2345302585c8435b69f
 }

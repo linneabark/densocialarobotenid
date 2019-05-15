@@ -202,7 +202,7 @@ class Manager(ScreenManager):
         screen = self.get_screen('sleep')
         screen.event.cancel()
         isVoiceActive = False
-        FileHandler().append(self.sc.name, 'screen', 'sleep')
+        #FileHandler().append(self.sc.name, 'screen', 'sleep')
 
 
     def startSchedule(self):

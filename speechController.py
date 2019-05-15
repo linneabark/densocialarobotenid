@@ -405,9 +405,12 @@ class SpeechController():
         if self.keywordRecognition(string,'hejdå') or (self.keywordRecognition(string,'hej') and self.keywordRecognition(string,'då')):
             self.goodbye()
         elif self.keywordRecognition(string, 'kim'):
+<<<<<<< HEAD
             tts = gTTS(text='Okej, vi går tillbaka!', lang='sv')
             tts.save("Ljudfiler/goBack.mp3")
             self.playSound("Ljudfiler/goBack.mp3")
+=======
+>>>>>>> 75b202e38d91a41e3525e2345302585c8435b69f
             self.whatToDo()
         elif self.keywordRecognition(string, 'hjälp'):
             self.help()
