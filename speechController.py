@@ -293,13 +293,13 @@ class SpeechController():
     def timeOfDay(self):
         hour = datetime.datetime.now().hour
         string = 'Nej men tjena!' 
-        if hour < 10:
+        if hour <= 10:
             string = 'God morgon!'
         elif hour > 10 and hour < 14:
             string = 'Goddag!'
-        elif hour > 14 and hour < 18:
+        elif hour >= 14 and hour < 18:
             string = 'God eftermiddag!'
-        elif hour > 18:
+        elif hour >= 18:
             string = 'Gokväll!'
         return string
 
