@@ -75,9 +75,7 @@ class SpeechController():
     
     def mp3Exception(self):
         FileHandler().append(self.name,'screen','confusedscreen')
-        tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
-        tts.save("Ljudfiler/speakClear.mp3")
-        self.playSound("Ljudfiler/speakClear.mp3")
+        self.didntUnderstand()
         self.fromWhatFunc()
         
 
@@ -527,7 +525,7 @@ class SpeechController():
 
 
     def didntUnderstand(self):
-        nr = random.randint(1, 5)
+        nr = random.randint(1, 6)
         if(nr == 1):
             tts = gTTS(text='Jag förstod inte, kan du säga igen!', lang='sv')
         if(nr == 2):
@@ -538,6 +536,8 @@ class SpeechController():
             tts = gTTS(text='Kan du prata tydligare?', lang='sv')
         if(nr == 5):
             tts = gTTS(text='Kan du upprepa?', lang='sv')
+        if (nr == 6):
+            tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
 
         tts.save("Ljudfiler/didntUnderstand1.mp3")
         self.playSound("Ljudfiler/didntUnderstand1.mp3")
