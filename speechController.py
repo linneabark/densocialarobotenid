@@ -574,6 +574,30 @@ class SpeechController():
 
         tts.save("Ljudfiler/favoriteColors.mp3")
         self.playSound("Ljudfiler/favoriteColors.mp3")
+
+    def whatSport(self,string):
+        print(string)
+        if self.keywordRecognition(string, 'fotboll'):
+            tts = gTTS(text='Min med! Zlatan är min idol.', lang='sv')
+        elif self.keywordRecognition(string, 'löpning'):
+            tts = gTTS(text='Jag slår vad om att jag slår dig på 100 meter.', lang='sv')
+        elif self.keywordRecognition(string, 'hockey'):
+            tts = gTTS(text='Såg du hockey VM? Sverige var ju grymma!', lang='sv') # Uppdatera innan redovisning
+        elif self.keywordRecognition(string, 'ishockey'):
+            tts = gTTS(text='Såg du hockey VM? Sverige var ju grymma!', lang='sv')  # Uppdatera innan redovisning
+        elif self.keywordRecognition(string, 'innebandy'):
+            tts = gTTS(text='Åh då kan du lära mig hur man håller klubban!', lang='sv')
+        elif self.keywordRecognition(string, 'handboll'):
+            tts = gTTS(text='Är det för svårt att hantera bollen med fötterna eller?', lang='sv')
+        elif self.keywordRecognition(string, 'esport'):
+            tts = gTTS(text='Va? Det är ju ingen riktig sport.', lang='sv')
+        elif self.keywordRecognition(string, 'skidor'):
+            tts = gTTS(text='Se upp i backen! Annars får du tusen hål i nacken.', lang='sv')
+        else:
+            tts = gTTS(text='Oj det låter farligt!', lang='sv')
+
+        tts.save("Ljudfiler/favoriteSport.mp3")
+        self.playSound("Ljudfiler/favoriteSport.mp3")
             
 
     def askQuestion(self, tts):
@@ -585,7 +609,7 @@ class SpeechController():
         return string
     
     def smallTalk(self):
-        question = random.randint(1,4)
+        question = random.randint(1,5)
 
         if (len(self.differentSmallTalk) == 4):
             tts = gTTS(text='Nu har jag slut på samtalsämnen, men wow vilken intellektuell resa vi har gjort ' + self.name, lang='sv')
@@ -613,11 +637,17 @@ class SpeechController():
             self.differentSmallTalk.append(3)
             tts = gTTS(text='Vilken är din favoritsport?', lang='sv')
             string = self.askQuestion(tts)
+            self.whatSport(string)
             FileHandler().append(self.name, "sport", string)
 
         elif question == 4 and 4 not in self.differentSmallTalk:
             self.differentSmallTalk.append(4)
             self.wantToHearAJoke()
+
+        elif question == 5 and 5 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(5)
+            tts = gTTS(text='Vad vill du bli när du blir stor?', lang='sv')
+
 
         self.smallTalk()
 
