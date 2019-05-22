@@ -18,13 +18,13 @@ class ArduinoHandler():
         #    print('SerialException, no port found')
 
     def write(self, character):
-        #try:
-        self.ser.open()
-        self.ser.write(character)
-        self.ser.close()
-        return character
-#        except SerialException:
-            #print('SerialException, no port found')
+        try:
+            self.ser.open()
+            self.ser.write(character)
+            self.ser.close()
+            return character
+        except serial.serialutil.SerialException:
+            print('SerialException, no port found')
 
 
     def __init__(self):

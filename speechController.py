@@ -515,7 +515,7 @@ class SpeechController():
         hour = str(datetime.datetime.now().hour)
         minute = str(datetime.datetime.now().minute)
 
-        if(minute < 10):        
+        if(int(minute) < 10):        
             tts = gTTS(text='Klockan är ' + hour + ' noll ' + minute, lang='sv') # Behöver testas!!
         else:
             tts = gTTS(text='Klockan är ' + hour + ' ' + minute, lang='sv')
