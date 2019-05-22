@@ -34,7 +34,7 @@ from kivy.properties import StringProperty
 
 Config.set('graphics', 'width', '2000')
 Config.set('graphics', 'height', '8000')
-#Window.size = (586 * 1.3, 325 * 1.3)
+Window.size = (586 * 1.3, 325 * 1.3)
 
 class MainScreen(Screen):
 
