@@ -374,7 +374,7 @@ class SpeechController():
         FileHandler().append(self.name, 'screen','mainscreen')
         self.funcName = "whatToDo"
         #tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
-        tts = gTTS(text='säg klocka', lang='sv')
+        tts = gTTS(text='säg ett nyckelord', lang='sv')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
         audio = self.listenSpeech(4)
