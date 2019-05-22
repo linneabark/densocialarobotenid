@@ -30,6 +30,9 @@ class SpeechController():
         self.name = ""
         self.manager = ""
         self.differentJoke = []
+        self.differentSmallTalk =[]
+        self.playedRPSBefore = False
+        self.counterRPS = 0
 
 
     def keywordRecognition(self, string, keyword):
@@ -74,9 +77,7 @@ class SpeechController():
     
     def mp3Exception(self):
         FileHandler().append(self.name,'screen','confusedscreen')
-        tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
-        tts.save("Ljudfiler/speakClear.mp3")
-        self.playSound("Ljudfiler/speakClear.mp3")
+        self.didntUnderstand()
         self.fromWhatFunc()
         
 
@@ -373,7 +374,7 @@ class SpeechController():
         FileHandler().append(self.name, 'screen','mainscreen')
         self.funcName = "whatToDo"
         #tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
-        tts = gTTS(text='säg klocka', lang='sv')
+        tts = gTTS(text='säg ett nyckelord', lang='sv')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
         audio = self.listenSpeech(4)
@@ -526,7 +527,7 @@ class SpeechController():
 
 
     def didntUnderstand(self):
-        nr = random.randint(1, 5)
+        nr = random.randint(1, 6)
         if(nr == 1):
             tts = gTTS(text='Jag förstod inte, kan du säga igen!', lang='sv')
         if(nr == 2):
@@ -537,6 +538,8 @@ class SpeechController():
             tts = gTTS(text='Kan du prata tydligare?', lang='sv')
         if(nr == 5):
             tts = gTTS(text='Kan du upprepa?', lang='sv')
+        if (nr == 6):
+            tts = gTTS(text='Jag har persilja i öronen, du får säga igen.', lang='sv')
 
         tts.save("Ljudfiler/didntUnderstand1.mp3")
         self.playSound("Ljudfiler/didntUnderstand1.mp3")
@@ -571,6 +574,30 @@ class SpeechController():
 
         tts.save("Ljudfiler/favoriteColors.mp3")
         self.playSound("Ljudfiler/favoriteColors.mp3")
+
+    def whatSport(self,string):
+        print(string)
+        if self.keywordRecognition(string, 'fotboll'):
+            tts = gTTS(text='Min med! Zlatan är min idol.', lang='sv')
+        elif self.keywordRecognition(string, 'löpning'):
+            tts = gTTS(text='Jag slår vad om att jag slår dig på 100 meter.', lang='sv')
+        elif self.keywordRecognition(string, 'hockey'):
+            tts = gTTS(text='Såg du hockey VM? Sverige var ju grymma!', lang='sv') # Uppdatera innan redovisning
+        elif self.keywordRecognition(string, 'ishockey'):
+            tts = gTTS(text='Såg du hockey VM? Sverige var ju grymma!', lang='sv')  # Uppdatera innan redovisning
+        elif self.keywordRecognition(string, 'innebandy'):
+            tts = gTTS(text='Åh då kan du lära mig hur man håller klubban!', lang='sv')
+        elif self.keywordRecognition(string, 'handboll'):
+            tts = gTTS(text='Är det för svårt att hantera bollen med fötterna eller?', lang='sv')
+        elif self.keywordRecognition(string, 'esport'):
+            tts = gTTS(text='Va? Det är ju ingen riktig sport.', lang='sv')
+        elif self.keywordRecognition(string, 'skidor'):
+            tts = gTTS(text='Se upp i backen! Annars får du tusen hål i nacken.', lang='sv')
+        else:
+            tts = gTTS(text='Oj det låter farligt!', lang='sv')
+
+        tts.save("Ljudfiler/favoriteSport.mp3")
+        self.playSound("Ljudfiler/favoriteSport.mp3")
             
 
     def askQuestion(self, tts):
@@ -584,7 +611,14 @@ class SpeechController():
     def smallTalk(self):
         question = random.randint(1,5)
 
-        if question == 1:
+        if (len(self.differentSmallTalk) == 4):
+            tts = gTTS(text='Nu har jag slut på samtalsämnen, men wow vilken intellektuell resa vi har gjort ' + self.name, lang='sv')
+            tts.save("Ljudfiler/endOfConversation.mp3")
+            self.playSound("Ljudfiler/endOfConversation.mp3")
+            self.differentSmallTalk = []
+            self.whatToDo()
+        if question == 1 and 1 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(1)
             tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name,"age",string)
@@ -592,22 +626,28 @@ class SpeechController():
             tts.save("Ljudfiler/wowage.mp3")
             self.playSound("Ljudfiler/wowage.mp3")
             
-        elif question == 2:
+        elif question == 2 and 2 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(2)
             tts = gTTS(text='Vilken är din favoritfärg?', lang='sv')
             string = self.askQuestion(tts)
             self.whatColor(string)
             FileHandler().append(self.name, "color", string)
 
-        elif question == 3:
+        elif question == 3 and 3 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(3)
             tts = gTTS(text='Vilken är din favoritsport?', lang='sv')
             string = self.askQuestion(tts)
+            self.whatSport(string)
             FileHandler().append(self.name, "sport", string)
 
-        elif question == 4:
+        elif question == 4 and 4 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(4)
             self.wantToHearAJoke()
 
-        elif question == 5:
-            self.wantToContinueTalking()
+        elif question == 5 and 5 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(5)
+            tts = gTTS(text='Vad vill du bli när du blir stor?', lang='sv')
+
 
         self.smallTalk()
 
@@ -659,6 +699,7 @@ class SpeechController():
             tts = gTTS(text = 'Nu har jag slut på skämt, du och jag ' + self.name + ' vilken skrattfest vi har haft. Låt oss fortsätta prata.', lang='sv')
             tts.save("Ljudfiler/joke.mp3")
             self.playSound("Ljudfiler/joke.mp3")
+            self.differentJoke = []
             self.smallTalk()
         elif (nr == 1 and 1 not in self.differentJoke):
             self.differentJoke.append(1)
@@ -750,11 +791,8 @@ class SpeechController():
         self.funcName = "startRPSVoice"
         sign = random.randint(1, 3)
         self.playRPSPhrases()
-        tts1 = gTTS(text='Gör dig redo.', lang='sv')
-        tts1.save("Ljudfiler/newReady.mp3")
-        self.playSound("Ljudfiler/newReady.mp3")
         self.signalToHand(sign)
-        tts2 = gTTS(text='Sten'+'  '+'sax'+'  '+'påse', lang='sv')
+        tts2 = gTTS(text='Gör dig redo! Sten, ' + '  ' + ' sax, ' + '  ' + ' påse', lang='sv')
         tts2.save("Ljudfiler/stenSaxPase.mp3")
         self.playSound("Ljudfiler/stenSaxPase.mp3")
         print("sign:", sign)
@@ -898,6 +936,7 @@ class SpeechController():
 
     def playRPSPhrases(self):
         self.funcName = "playRPSPhrases"
+        self.counterRPS += 1
         currentWins = FileHandler().read(self.name, 'wins')
         if (currentWins == ""):
             currentWins = 0
@@ -912,25 +951,16 @@ class SpeechController():
         print('In playRPSPhrases')
         #if (("users/" + self.name + ".json")):
         #tts1 = gTTS(text='Kul att du vill spela med mig igen! Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
-        tts1 = gTTS(text='Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
-        tts1.save("Ljudfiler/existingUserRPS.mp3")
-        self.playSound("Ljudfiler/existingUserRPS.mp3")
-        if (currentWins > currentLosses):
-            tts = gTTS(text='Du leder!', lang='sv')
-            tts.save("Ljudfiler/youAreWinning.mp3")
-            self.playSound("Ljudfiler/youAreWinning.mp3")
-        elif (currentWins < currentLosses):
-            tts = gTTS(text='Jag leder!', lang='sv')
-            tts.save("Ljudfiler/youAreLoosing.mp3")
-            self.playSound("Ljudfiler/youAreLoosing.mp3")
-        elif(currentWins == 0 and currentLosses == 0):
-            tts = gTTS(text='Det här är vår första match, spännande!', lang='sv')
-            tts.save("Ljudfiler/firstGame.mp3")
-            self.playSound("Ljudfiler/firstGame.mp3")
-        else:
-            tts = gTTS(text='wow, det står lika, detta blir spännande!', lang='sv')
-            tts.save("Ljudfiler/weAreEven.mp3")
-            self.playSound("Ljudfiler/weAreEven.mp3")
+
+        if (self.counterRPS % 2 == 1):
+            self.currentScoreRPS(currentWins, currentLosses)
+
+        if(currentWins == 0 and currentLosses == 0 and not self.playedRPSBefore):
+                self.playedRPSBefore = True
+                tts = gTTS(text='Det här är vår första match, spännande!', lang='sv')
+                tts.save("Ljudfiler/firstGame.mp3")
+                self.playSound("Ljudfiler/firstGame.mp3")
+
 
         nr = random.randint(1, 10)
         if(nr == 1):
@@ -947,6 +977,37 @@ class SpeechController():
             tts = gTTS(text='Nu spelar vi!', lang='sv')
         tts.save("Ljudfiler/RPSPhrase.mp3")
         self.playSound("Ljudfiler/RPSPhrase.mp3")
+
+    def currentScoreRPS(self, currentWins, currentLosses):
+        nr = random.randint(1,2)
+        if nr == 1:
+            tts = gTTS(text='Du har vunnit ' + str(currentWins) + ' , och jag har vunnit ' + str(currentLosses), lang='sv')
+            if (currentWins > currentLosses):
+                tts = gTTS(text='Du leder!', lang='sv')
+                tts.save("Ljudfiler/youAreWinning.mp3")
+                self.playSound("Ljudfiler/youAreWinning.mp3")
+            elif (currentWins < currentLosses):
+                tts = gTTS(text='Jag leder!', lang='sv')
+                tts.save("Ljudfiler/youAreLoosing.mp3")
+                self.playSound("Ljudfiler/youAreLoosing.mp3")
+                # else:
+                #    tts = gTTS(text='wow, det står lika, detta blir spännande!', lang='sv')
+                #    tts.save("Ljudfiler/weAreEven.mp3")
+                #    self.playSound("Ljudfiler/weAreEven.mp3")
+        elif nr == 2:
+            if currentWins > currentLosses:
+                tts = gTTS(text='Ställningen är ' + str(currentWins) + ' ' + str(currentLosses) + ' till dig',
+                           lang='sv')
+            elif currentLosses > currentWins:
+                tts = gTTS(text='Ställningen är ' + str(currentLosses) + ' ' + str(currentWins) + ' till mig',
+                           lang='sv')
+            elif currentLosses == currentWins:
+                tts = gTTS(text='Ställningen är ' + str(currentWins) + ' ' + str(currentLosses),
+                           lang='sv')
+
+
+        tts.save("Ljudfiler/existingUserRPS.mp3")
+        self.playSound("Ljudfiler/existingUserRPS.mp3")
 
 
     def startSchedule(self):
