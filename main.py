@@ -145,7 +145,7 @@ class Manager(ScreenManager):
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
-        self.transition = SlideTransition()
+        self.transition = TransitionBase()
         self.transition.duration = 1
         self.transition.direction = 'up'
         self.current = 'sleep'
@@ -153,6 +153,24 @@ class Manager(ScreenManager):
               
 
     def initialize(self):
+        self.add_widget(ScheduleScreen(name='schedule'))
+        self.add_widget(Appview(name='appview'))
+        self.add_widget(MathScreen(name='math'))
+        self.add_widget(RPSScreen(name='rps'))
+        self.add_widget(ScreenOne(name='one'))
+        self.add_widget(ScreenTwo(name='two'))
+        self.add_widget(ScreenThree(name='three'))
+        self.add_widget(ScreenFour(name='four'))
+        self.add_widget(ScreenFive(name='five'))
+        self.add_widget(ScreenSix(name='six'))
+        self.add_widget(ScreenSeven(name='seven'))
+        self.add_widget(ScheduleScreenTwo(name='s2'))
+        self.add_widget(ScheduleScreenThree(name='s3'))
+        self.add_widget(ScheduleScreenFour(name='s4'))
+        self.add_widget(ScheduleScreenFive(name='s5'))
+        self.add_widget(ScheduleScreenSix(name='s6'))
+        self.add_widget(Calculator(name='calculator'))
+        self.add_widget(TestScreen(name='test'))
         self.add_widget(SleepScreen(name='sleep'))
         self.add_widget(MainScreen(name='mainscreen'))
         self.add_widget(TalkingScreen(name='talkingmainscreen'))
@@ -172,64 +190,32 @@ class Manager(ScreenManager):
         self.t = time.time()
 
     def updateScreen(self,sec):
-        self.transition = TransitionBase()
-        if(self.sc.name == ''):
-            if(self.sc.speaking):
-                self.current = 'talkingmainscreen'
+        if(self.isVoiceActive == True):
+            print("här")
+            self.transition = TransitionBase()
+            if(self.sc.name == ''):
+                if(self.sc.speaking):
+                    self.current = 'talkingmainscreen'
+                else:
+                    self.current = 'mainscreen'
             else:
-                self.current = 'mainscreen'
-        else:
-            if(FileHandler().readScreen(self.sc.name) == 'appview' and not(self.has_screen('appview'))):
-                self.startGUI()
-            self.current = FileHandler().readScreen(self.sc.name)
-            print(self.screens)
+                #if(FileHandler().readScreen(self.sc.name) == 'appview' and not(self.has_screen('appview'))):
+                #    self.startGUI()
+                self.current = FileHandler().readScreen(self.sc.name)
+            
 
     def unschedule(self):
         screen = self.get_screen('sleep')
         screen.event.cancel()
-        isVoiceActive = False
-        self.endVoice()
-        print("endVoice")
-        #FileHandler().append(self.sc.name, 'screen', 'sleep')
+        self.isVoiceActive = False
+        print("unschedule")
+        #self.startGUI()
+        #self.endVoice()
+        FileHandler().append(self.sc.name, 'screen', 'sleep')
 
 
     def startSchedule(self):
         pass
-
-    def startGUI(self):
-        self.add_widget(ScheduleScreen(name='schedule'))
-        self.add_widget(Appview(name='appview'))
-        self.add_widget(MathScreen(name='math'))
-        self.add_widget(RPSScreen(name='rps'))
-        self.add_widget(ScreenOne(name='one'))
-        self.add_widget(ScreenTwo(name='two'))
-        self.add_widget(ScreenThree(name='three'))
-        self.add_widget(ScreenFour(name='four'))
-        self.add_widget(ScreenFive(name='five'))
-        self.add_widget(ScreenSix(name='six'))
-        self.add_widget(ScreenSeven(name='seven'))
-        self.add_widget(ScheduleScreenTwo(name='s2'))
-        self.add_widget(ScheduleScreenThree(name='s3'))
-        self.add_widget(ScheduleScreenFour(name='s4'))
-        self.add_widget(ScheduleScreenFive(name='s5'))
-        self.add_widget(ScheduleScreenSix(name='s6'))
-        self.add_widget(Calculator(name='calculator'))
-        self.add_widget(TestScreen(name='test'))
-
-    def endVoice(self):
-        self.remove_widget(SleepScreen(name='sleep'))
-        self.remove_widget(MainScreen(name='mainscreen'))
-        self.remove_widget(TalkingScreen(name='talkingmainscreen'))
-        self.remove_widget(RPSFaceScreen(name='rpsface'))
-        self.remove_widget(MathVoiceScreen(name='mathvoicescreen'))
-        self.remove_widget(RedHeartScreen(name='redheartscreen'))
-        self.remove_widget(TalkingMathVoiceScreen(name='talkingmathvoicescreen'))
-        self.remove_widget(TalkingRedHeartScreen(name='talkingredheartscreen'))
-        self.remove_widget(TalkingConfusedScreen(name='talkingconfusedscreen'))
-        #self.add_widget(TalkingSmartScreen(name='talkingsmartscreen'))
-        self.remove_widget(ConfusedScreen(name='confusedscreen'))
-        #self.add_widget(SmartScreen(name='smartscreen'))
-        self.remove_widget(TalkingSleepScreen(name='talkingsleep'))
 
     
     def startKim(self):
