@@ -29,6 +29,7 @@ class SpeechController():
         self.speaking = False
         self.name = ""
         self.manager = ""
+        self.differentJoke = []
 
 
     def keywordRecognition(self, string, keyword):
@@ -371,7 +372,8 @@ class SpeechController():
     def whatToDo(self):
         FileHandler().append(self.name, 'screen','mainscreen')
         self.funcName = "whatToDo"
-        tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
+        #tts = gTTS(text='Vill du se schema, räkna matte, spela sten sax påse eller prata?', lang='sv')
+        tts = gTTS(text='säg klocka', lang='sv')
         tts.save("Ljudfiler/whatToDo.mp3")
         self.playSound("Ljudfiler/whatToDo.mp3")
         audio = self.listenSpeech(4)
@@ -454,7 +456,8 @@ class SpeechController():
         elif self.keywordRecognition(string, 'okej'):
             ArduinoHandler().write(b'd')
             ArduinoHandler().write(b'R')
-
+        elif self.keywordRecognition(string, 'skämt'):
+            self.joke()
         
 
                                     
@@ -512,7 +515,10 @@ class SpeechController():
         hour = str(datetime.datetime.now().hour)
         minute = str(datetime.datetime.now().minute)
 
-        tts = gTTS(text='Klockan är ' + hour + ' ' + minute, lang='sv') # Behöver testas!!
+        if(minute < 10):        
+            tts = gTTS(text='Klockan är ' + hour + ' noll ' + minute, lang='sv') # Behöver testas!!
+        else:
+            tts = gTTS(text='Klockan är ' + hour + ' ' + minute, lang='sv')
         tts.save("Ljudfiler/clock.mp3")
         self.playSound("Ljudfiler/clock.mp3")
         time.sleep(1)
@@ -648,40 +654,53 @@ class SpeechController():
 
     def joke(self):
         self.funcName = "joke"
-        nr = random.randint(2, 4)
-        if (nr == 1):
-            tts = gTTS(text='Det var en gång en dansk, en norsk och Bellman som skulle tävla om vem som kunde vara inne i en svinstia i längst tid.'
-                            'Först gick dansken in, men efter en minut kom han ut och stönade: Grisen fes!'
-                            'Då gick norsken in och efter två minuter kom han ut, grön i ansiktet och stönade: Grisen fes!'
-                            'Sedan var det Bellmans tur att gå in i svinstian. Efter tio minuter kom grisen ut och stönade: Bellman fes!', lang='sv')
-        elif (nr == 2):
+        nr = random.randint(1, 4)
+        if (len(self.differentJoke) == 4):
+            tts = gTTS(text = 'Nu har jag slut på skämt, du och jag ' + self.name + ' vilken skrattfest vi har haft. Låt oss fortsätta prata.', lang='sv')
+            tts.save("Ljudfiler/joke.mp3")
+            self.playSound("Ljudfiler/joke.mp3")
+            self.smallTalk()
+        elif (nr == 1 and 1 not in self.differentJoke):
+            self.differentJoke.append(1)
+            tts1 = gTTS(text='Vad sa den ena kannibalen till den andra?', lang='sv')
+            tts1.save("Ljudfiler/firstPartofJoke.mp3")
+            self.playSound("Ljudfiler/firstPartofJoke.mp3")
+            time.sleep(1)
+            tts = gTTS(text = 'Är du go eller!', lang='sv')
+        elif (nr == 2 and 2 not in self.differentJoke):
+            self.differentJoke.append(2)
             tts1 = gTTS(text = 'Vet du vad man får om man korsar en giraff och en igelkott? ', lang='sv')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
             time.sleep(1)
             tts = gTTS(text = 'En tre meter lång tandborste!', lang='sv')
         elif (nr == 3):
+            self.differentJoke.append(3)
             tts1 = gTTS(text='Vad sa marsgubbarna när de landade på jorden?', lang='sv')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
             time.sleep(1)
             tts = gTTS(text = 'Hej jordgubbar!', lang='sv')
         elif (nr == 4):
+            self.differentJoke.append(4)
             tts1 = gTTS(text='Vad är en groda utan ben?', lang='sv')
             tts1.save("Ljudfiler/firstPartofJoke.mp3")
             self.playSound("Ljudfiler/firstPartofJoke.mp3")
             time.sleep(1)
             tts = gTTS(text='Hopplös!', lang='sv')
+        else:
+            self.joke()
 
 
         time.sleep(0.5)
         tts.save("Ljudfiler/joke.mp3")
         self.playSound("Ljudfiler/joke.mp3")
-        self.playSound("Ljudfiler/drumroll.mp3")   #Dab?
-        ArduinoHandler().write(b'i')
-        tts1 = gTTS(text='Det var ett dåligt skämt', lang='sv')
-        tts1.save("Ljudfiler/badJoke.mp3")
-        self.playSound("Ljudfiler/badJoke.mp3")
+        self.playSound("Ljudfiler/drumroll.mp3")   #Dab?        
+        if(nr == 3):
+            #ArduinoHandler().write(b'i')
+            tts1 = gTTS(text='Det var ett dåligt skämt', lang='sv')
+            tts1.save("Ljudfiler/badJoke.mp3")
+            self.playSound("Ljudfiler/badJoke.mp3")
 
         self.postJoke()
 
