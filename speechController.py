@@ -30,6 +30,7 @@ class SpeechController():
         self.name = ""
         self.manager = ""
         self.differentJoke = []
+        self.differentSmallTalk =[]
 
 
     def keywordRecognition(self, string, keyword):
@@ -582,9 +583,16 @@ class SpeechController():
         return string
     
     def smallTalk(self):
-        question = random.randint(1,5)
+        question = random.randint(1,4)
 
-        if question == 1:
+        if (len(self.differentSmallTalk) == 4):
+            tts = gTTS(text='Nu har jag slut på samtalsämnen, men wow vilken intellektuell resa vi har gjort ' + self.name, lang='sv')
+            tts.save("Ljudfiler/endOfConversation.mp3")
+            self.playSound("Ljudfiler/endOfConversation.mp3")
+            self.differentSmallTalk = []
+            self.whatToDo()
+        if question == 1 and 1 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(1)
             tts = gTTS(text='Hur gammal är du? ' + self.name, lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name,"age",string)
@@ -592,22 +600,22 @@ class SpeechController():
             tts.save("Ljudfiler/wowage.mp3")
             self.playSound("Ljudfiler/wowage.mp3")
             
-        elif question == 2:
+        elif question == 2 and 2 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(2)
             tts = gTTS(text='Vilken är din favoritfärg?', lang='sv')
             string = self.askQuestion(tts)
             self.whatColor(string)
             FileHandler().append(self.name, "color", string)
 
-        elif question == 3:
+        elif question == 3 and 3 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(3)
             tts = gTTS(text='Vilken är din favoritsport?', lang='sv')
             string = self.askQuestion(tts)
             FileHandler().append(self.name, "sport", string)
 
-        elif question == 4:
+        elif question == 4 and 4 not in self.differentSmallTalk:
+            self.differentSmallTalk.append(4)
             self.wantToHearAJoke()
-
-        elif question == 5:
-            self.wantToContinueTalking()
 
         self.smallTalk()
 
@@ -659,6 +667,7 @@ class SpeechController():
             tts = gTTS(text = 'Nu har jag slut på skämt, du och jag ' + self.name + ' vilken skrattfest vi har haft. Låt oss fortsätta prata.', lang='sv')
             tts.save("Ljudfiler/joke.mp3")
             self.playSound("Ljudfiler/joke.mp3")
+            self.differentJoke = []
             self.smallTalk()
         elif (nr == 1 and 1 not in self.differentJoke):
             self.differentJoke.append(1)
@@ -754,7 +763,7 @@ class SpeechController():
         tts1.save("Ljudfiler/newReady.mp3")
         self.playSound("Ljudfiler/newReady.mp3")
         self.signalToHand(sign)
-        tts2 = gTTS(text='Sten'+'  '+'sax'+'  '+'påse', lang='sv')
+        tts2 = gTTS(text='Sten, ' + '  ' + ' sax, ' + '  ' + ' påse', lang='sv')
         tts2.save("Ljudfiler/stenSaxPase.mp3")
         self.playSound("Ljudfiler/stenSaxPase.mp3")
         print("sign:", sign)
