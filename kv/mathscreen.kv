@@ -54,8 +54,8 @@
             AnchorLayout:
                 TextInput:
                     id: entry
-                    font_size: 300
-                    multiline: False
+                    font_size: 85
+                    multiline: True
                     anchor_x: 'center'
                     anchor_y: 'center'
                     background_normal: 'Images/redbackground.png'
@@ -109,7 +109,7 @@
             spacing: 10
 
             Button:
-                on_press: entry.text += self.text
+                on_press: entry.text += "0"
                 background_normal: 'Images/mathbuttons/0button1.png'
                 background_down: 'Images/mathbuttons/0button1.png'
             Button:

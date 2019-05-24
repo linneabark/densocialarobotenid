@@ -51,6 +51,7 @@ class MainScreen(Screen):
     Window.clearcolor = (1, 1, 1, 1)
     speaking = False
     img_src = 'Images/Face/mouthClosed.jpg'
+    
 
       
 class SleepScreen(Screen):
@@ -64,7 +65,7 @@ class SleepScreen(Screen):
         # Kanske funkar self.manager.sc = SpeechController() för att göra en ny sc
         self.manager.startKimThread(5)
         self.event = Clock.schedule_interval(self.manager.updateScreen,0.1)
-        ArduinoHandler().write(b'l')
+        #ArduinoHandler().write(b'l')
 
 class TalkingScreen(Screen):
     pass
@@ -109,6 +110,7 @@ class Appview(Screen):
     def on_enter(self):
         self.manager.unschedule()
         
+    
     def launchRPS(self):
         print('Launch RPS')
         
@@ -144,7 +146,7 @@ class Manager(ScreenManager):
     def __init__(self, **kwargs):
         super(Manager, self).__init__(**kwargs)
         self.initialize()
-        self.transition = SlideTransition()
+        self.transition = TransitionBase()
         self.transition.duration = 1
         self.transition.direction = 'up'
         self.current = 'sleep'
@@ -152,8 +154,6 @@ class Manager(ScreenManager):
               
 
     def initialize(self):
-        self.add_widget(SleepScreen(name='sleep'))
-        self.add_widget(MainScreen(name='mainscreen'))
         self.add_widget(ScheduleScreen(name='schedule'))
         self.add_widget(Appview(name='appview'))
         self.add_widget(MathScreen(name='math'))
@@ -171,7 +171,9 @@ class Manager(ScreenManager):
         self.add_widget(ScheduleScreenFive(name='s5'))
         self.add_widget(ScheduleScreenSix(name='s6'))
         self.add_widget(Calculator(name='calculator'))
-        #self.add_widget(TestScreen(name='test'))
+        self.add_widget(TestScreen(name='test'))
+        self.add_widget(SleepScreen(name='sleep'))
+        self.add_widget(MainScreen(name='mainscreen'))
         self.add_widget(TalkingScreen(name='talkingmainscreen'))
         self.add_widget(RPSFaceScreen(name='rpsface'))
         self.add_widget(MathVoiceScreen(name='mathvoicescreen'))
@@ -189,36 +191,45 @@ class Manager(ScreenManager):
         self.t = time.time()
 
     def updateScreen(self,sec):
-        self.transition = TransitionBase()
-        if(self.sc.name == ''):
-            if(self.sc.speaking):
-                self.current = 'talkingmainscreen'
+        if(self.isVoiceActive == True):
+            print("här")
+            self.transition = TransitionBase()
+            if(self.sc.name == ''):
+                if(self.sc.speaking):
+                    self.current = 'talkingmainscreen'
+                else:
+                    self.current = 'mainscreen'
             else:
-                self.current = 'mainscreen'    
-        else:
-            self.current = FileHandler().readScreen(self.sc.name)
+                #if(FileHandler().readScreen(self.sc.name) == 'appview' and not(self.has_screen('appview'))):
+                #    self.startGUI()
+                self.current = FileHandler().readScreen(self.sc.name)
+            
 
     def unschedule(self):
         screen = self.get_screen('sleep')
         screen.event.cancel()
-        isVoiceActive = False
-        #FileHandler().append(self.sc.name, 'screen', 'sleep')
+        self.isVoiceActive = False
+        print("unschedule")
+        #self.startGUI()
+        #self.endVoice()
+        FileHandler().append(self.sc.name, 'screen', 'sleep')
 
 
     def startSchedule(self):
         pass
 
-
+    
     def startKim(self):
         print('Start Kim')
-        string = self.sc.listenForKim()
+        #string = self.sc.listenForKim()
         #self.sc.playHelloName()
-        print(string)
+        #print(string)
 
         #if string == 'familiarUser':
         #    self.isVoiceActive = True
         #    self.sc.playHelloName(self.sc.name)
-        if string == 'hej':
+        #if string == 'hej':
+        if(self.isVoiceActive == False):
             print('said hello')
             self.isVoiceActive = True
             self.sc.playHelloName()             
