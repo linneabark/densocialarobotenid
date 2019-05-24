@@ -421,6 +421,7 @@ class SpeechController():
             FileHandler().append(self.name,'screen','appview')
             sys.exit()
         elif self.keywordRecognition(string, 'avsluta'):
+            ArduinoHandler().write(b'k')
             sys.exit()
         elif self.keywordRecognition(string,'schema') or self.keywordRecognition(string,'kalender'):
             self.startSchedule()
@@ -746,10 +747,11 @@ class SpeechController():
         self.playSound("Ljudfiler/joke.mp3")
         self.playSound("Ljudfiler/drumroll.mp3")   #Dab?        
         if(nr == 3):
-            #ArduinoHandler().write(b'i')
+            ArduinoHandler().write(b'i')
             tts1 = gTTS(text='Det var ett dåligt skämt', lang='sv')
             tts1.save("Ljudfiler/badJoke.mp3")
             self.playSound("Ljudfiler/badJoke.mp3")
+            time.sleep(3)
 
         self.postJoke()
 
@@ -868,8 +870,8 @@ class SpeechController():
             tts.save("Ljudfiler/iChoseX.mp3")
             self.playSound("Ljudfiler/iChoseX.mp3")
             ArduinoHandler().write(b'e')
-            time.sleep(4)
             ArduinoHandler().write(b'R')
+            time.sleep(4)
         elif(sign == 1 and user == 3):
             tts = gTTS(text='Jag valde sten, så du vann, grattis!', lang='sv')
             currentWins += 1
@@ -893,8 +895,8 @@ class SpeechController():
             tts.save("Ljudfiler/iChoseX.mp3")
             self.playSound("Ljudfiler/iChoseX.mp3")
             ArduinoHandler().write(b'e')
-            time.sleep(4)
             ArduinoHandler().write(b'R')
+            time.sleep(4)
         elif (sign == 3 and user == 1):
             tts = gTTS(text='Jag valde påse, så då vann jag!', lang='sv')
             currentLosses += 1
@@ -902,8 +904,8 @@ class SpeechController():
             tts.save("Ljudfiler/iChoseX.mp3")
             self.playSound("Ljudfiler/iChoseX.mp3")
             ArduinoHandler().write(b'e')
-            time.sleep(4)
             ArduinoHandler().write(b'R')
+            time.sleep(4)
         elif(sign == 3 and user == 2):
             tts = gTTS(text='Jag valde påse, så du vann, grattis!', lang='sv')
             currentWins += 1
