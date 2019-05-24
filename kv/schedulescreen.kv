@@ -9,18 +9,18 @@
         allow_stretch: True
     BoxLayout:
         orientation: 'vertical'
-        AnchorLayout:
-            anchor_x: 'center'
-            anchor_y: 'top'
-            Button:
-                background_normal: 'Images/appviewbutton.png'
-                background_down: 'Images/appviewbutton.png'
-                size_hint: None, None
-                on_press:
-                    root.manager.transition.direction = "left"
-                    root.manager.transition.duration = 1
-                    root.manager.current = "appview"
+        #AnchorLayout:
+            #anchor_x: 'center'
+            #anchor_y: 'top'
+        Button:
+            background_normal: 'Images/appviewbutton.png'
+            background_down: 'Images/appviewbutton.png'
+            size_hint: None, None
+            on_press:
+                root.manager.transition.direction = "left"
+                root.manager.transition.duration = 1
+                root.manager.current = "appview"
         Image:
             allow_stretch: True
-            source: 'Images/schedule_pics/vecka2.jpeg'
+            source: 'Images/schedule_pics/schema2A.png'
 

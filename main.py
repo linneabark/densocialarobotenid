@@ -110,6 +110,7 @@ class Appview(Screen):
     def on_enter(self):
         self.manager.unschedule()
         
+    
     def launchRPS(self):
         print('Launch RPS')
         
